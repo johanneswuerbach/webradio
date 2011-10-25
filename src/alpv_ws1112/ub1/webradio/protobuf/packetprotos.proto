@@ -1,0 +1,10 @@
+package alpv_ws1112.ub1.webradio.protobuf;
+
+option java_package = "alpv_ws1112.ub1.webradio.protobuf";
+option java_outer_classname = "PacketProtos";
+
+message TestMessage {
+	required uint32 id = 1;
+	required bytes data = 2;
+	optional string message = 3;
+}
