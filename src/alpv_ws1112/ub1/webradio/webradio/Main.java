@@ -1,8 +1,12 @@
 package alpv_ws1112.ub1.webradio.webradio;
 
 import java.io.IOException;
+import java.net.URL;
 
+import alpv_ws1112.ub1.webradio.communication.tcp.ClientTcp;
 import alpv_ws1112.ub1.webradio.communication.tcp.ServerTcp;
+import alpv_ws1112.ub1.webradio.ui.cmd.ClientCMD;
+import alpv_ws1112.ub1.webradio.ui.cmd.ServerCMD;
 
 public class Main {
 	private static final String USAGE = String
@@ -51,13 +55,38 @@ public class Main {
 					System.err.println("protcol " + protocol
 							+ " is not supported.");
 				}
+				if (useGUI) {
+					//TBD
+				} else {
+					Runnable serverCmd = new ServerCMD();
+					Thread serverCmdThread = new Thread(serverCmd);
+					serverCmdThread.start();
+				}
 
 			} else if (args[i].equals("client")) {
-				
-				
-				
-			} else
+				URL server = new URL(args[i + 1]);
+				String protocol = args[i + 2];
+				int port = Integer.parseInt(args[i + 2]);
+				if (protocol.equals("tcp")) {
+					ClientTcp client = new ClientTcp(server, port);
+				} else if (protocol.equals("udp")) {
+					System.err.println("udp not supported.");
+				} else if (protocol.equals("mc")) {
+					System.err.println("mc not supported.");
+				} else {
+					System.err.println("protcol " + protocol
+							+ " is not supported.");
+				}
+				if (useGUI) {
+					//TBD
+				} else {
+					Runnable clientCmd = new ClientCMD();
+					Thread clientCmdThread = new Thread(clientCmd);
+					clientCmdThread.start();
+				}
+			} else {
 				throw new IllegalArgumentException();
+			}
 		} catch (ArrayIndexOutOfBoundsException e) {
 			System.err.println(USAGE);
 		} catch (NumberFormatException e) {

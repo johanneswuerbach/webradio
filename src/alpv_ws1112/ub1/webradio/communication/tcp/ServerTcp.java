@@ -27,7 +27,12 @@ public class ServerTcp implements alpv_ws1112.ub1.webradio.communication.Server 
 
 	@Override
 	public void close() {
-		// TODO Auto-generated method stub
+		try {
+			clientSocket.close();
+			serverSocket.close();
+		} catch (IOException e) {
+			System.err.println(e.getMessage());
+		}
 
 	}
 
@@ -39,10 +44,14 @@ public class ServerTcp implements alpv_ws1112.ub1.webradio.communication.Server 
 	}
 
 	public void writeHelloWorld() throws IOException {
-		PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(
-				clientSocket.getOutputStream()));
+		OutputStreamWriter outputStream = new OutputStreamWriter(
+				clientSocket.getOutputStream());
+		PrintWriter printWriter = new PrintWriter(outputStream);
 		printWriter.print("Hello World");
 		printWriter.flush();
+		outputStream.close();
+		printWriter.close();
+
 	}
 
 	@Override
