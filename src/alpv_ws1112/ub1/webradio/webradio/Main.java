@@ -1,9 +1,10 @@
 package alpv_ws1112.ub1.webradio.webradio;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.URL;
 
-import alpv_ws1112.ub1.webradio.communication.tcp.ClientTcp;
+import alpv_ws1112.ub1.webradio.communication.tcp.ClientTCP;
 import alpv_ws1112.ub1.webradio.communication.tcp.ServerTcp;
 import alpv_ws1112.ub1.webradio.ui.cmd.ClientCMD;
 import alpv_ws1112.ub1.webradio.ui.cmd.ServerCMD;
@@ -65,10 +66,15 @@ public class Main {
 
 			} else if (args[i].equals("client")) {
 				URL server = new URL(args[i + 1]);
-				String protocol = args[i + 2];
-				int port = Integer.parseInt(args[i + 2]);
+				String protocol = args[i + 1];
+				
 				if (protocol.equals("tcp")) {
-					ClientTcp client = new ClientTcp(server, port);
+					ClientTCP client = new ClientTCP();
+					
+					String host = args[i + 2];
+					int port = Integer.parseInt(args[i + 2]);
+					client.connect(InetSocketAddress.createUnresolved(host, port));
+					
 				} else if (protocol.equals("udp")) {
 					System.err.println("udp not supported.");
 				} else if (protocol.equals("mc")) {
@@ -80,7 +86,7 @@ public class Main {
 				if (useGUI) {
 					//TBD
 				} else {
-					Runnable clientCmd = new ClientCMD();
+					Runnable clientCmd = new ClientCMD(args[i + 3]);
 					Thread clientCmdThread = new Thread(clientCmd);
 					clientCmdThread.start();
 				}
