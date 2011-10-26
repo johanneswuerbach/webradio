@@ -2,7 +2,7 @@ package alpv_ws1112.ub1.webradio.webradio;
 
 import java.io.IOException;
 
-import alpv_ws1112.ub1.webradio.communication.tcp.Server;
+import alpv_ws1112.ub1.webradio.communication.tcp.ServerTcp;
 
 public class Main {
 	private static final String USAGE = String
@@ -41,8 +41,7 @@ public class Main {
 				String protocol = args[i + 1];
 				int port = Integer.parseInt(args[i + 2]);
 				if (protocol.equals("tcp")) {
-					Server server = new alpv_ws1112.ub1.webradio.communication.tcp.Server(
-							port);
+					ServerTcp server = new ServerTcp(port);
 					server.writeHelloWorld();
 				} else if (protocol.equals("udp")) {
 					System.err.println("udp not supported.");
