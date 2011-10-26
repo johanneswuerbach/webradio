@@ -18,7 +18,8 @@ public class ClientCMD implements ClientUI {
 		
 		System.out.print("Welcome to webradio client.\n" +
 				"Possible commands:\n" +
-				"N: <name> - to change your nickname");
+				"N: <new_name> - to change your nickname\n" +
+				"QUIT - quite the client\n");
 		
 		while(true) {
 			
@@ -31,6 +32,9 @@ public class ClientCMD implements ClientUI {
 				if(line.startsWith("N: ")) {
 					_username = line.substring(3);
 				}
+				else if(line.equals("QUIT")) {
+					break;
+				}
 				
 				br.close();
 				
@@ -38,9 +42,9 @@ public class ClientCMD implements ClientUI {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			
 		}
+		
+		System.out.println("Shutdown the client.");
 		
 	}
 

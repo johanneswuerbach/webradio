@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 
@@ -13,28 +14,24 @@ import alpv_ws1112.ub1.webradio.communication.Server;
 
 public class ServerTCP implements Server {
 
-	private ServerSocket server;
+	private ServerSocket _socket;
+	private boolean _closed;
 
 	// private Socket[] clients;
 
 	public ServerTCP(int port) throws IOException {
-		server = new ServerSocket(port);
+		_socket = new ServerSocket(port);
+		// Wait only 500ms for new connections
+		_socket.setSoTimeout(500);
 		
 		System.out.println("Starting server using port \"" + port + "\".");
 	}
 
-	@Override
+	/**
+	 * Set the close flag
+	 */
 	public void close() {
-		try {
-			// for (Socket client : clients) {
-			// client.close();
-			// }
-			server.close();
-
-		} catch (IOException e) {
-			System.err.println(e.getMessage());
-		}
-
+		_closed = true;
 	}
 
 	@Override
@@ -62,11 +59,13 @@ public class ServerTCP implements Server {
 
 		System.out.println("Server started.");
 
-		while (true) {
+		while (!_closed) {
 			Socket client = null;
 			try {
-				client = server.accept();
+				client = _socket.accept();
 				this.writeHelloWorld(client);
+			} catch (SocketTimeoutException e) {
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			} finally {
@@ -77,6 +76,16 @@ public class ServerTCP implements Server {
 						e.printStackTrace();
 					}
 			}
+		}
+		
+		try {
+			// for (Socket client : clients) {
+			// client.close();
+			// }
+			_socket.close();
+
+		} catch (IOException e) {
+			System.err.println(e.getMessage());
 		}
 
 	}

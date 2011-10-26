@@ -3,8 +3,12 @@ package alpv_ws1112.ub1.webradio.webradio;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
+import alpv_ws1112.ub1.webradio.communication.Client;
+import alpv_ws1112.ub1.webradio.communication.Server;
 import alpv_ws1112.ub1.webradio.communication.tcp.ClientTCP;
 import alpv_ws1112.ub1.webradio.communication.tcp.ServerTCP;
+import alpv_ws1112.ub1.webradio.ui.ClientUI;
+import alpv_ws1112.ub1.webradio.ui.ServerUI;
 import alpv_ws1112.ub1.webradio.ui.cmd.ClientCMD;
 import alpv_ws1112.ub1.webradio.ui.cmd.ServerCMD;
 
@@ -41,15 +45,13 @@ public class Main {
 				}
 			}
 
+			Server server = null;
+
 			if (args[i].equals("server")) {
 				String protocol = args[i + 1];
 				int port = Integer.parseInt(args[i + 2]);
 				if (protocol.equals("tcp")) {
-					ServerTCP server = new ServerTCP(port);
-					
-					Thread serverThread = new Thread(server);
-					serverThread.start();
-					
+					server = new ServerTCP(port);
 				} else if (protocol.equals("udp")) {
 					System.err.println("udp not supported.");
 				} else if (protocol.equals("mc")) {
@@ -58,27 +60,41 @@ public class Main {
 					System.err.println("protcol " + protocol
 							+ " is not supported.");
 				}
+
+				// Start server
+				Thread serverThread = new Thread(server);
+				serverThread.start();
+
+				// Run UI
+				ServerUI serverUI = null;
 				if (useGUI) {
-					//TBD
+					// TBD
 				} else {
-					Runnable serverCmd = new ServerCMD();
-					Thread serverCmdThread = new Thread(serverCmd);
-					serverCmdThread.start();
+					serverUI = new ServerCMD();
 				}
+				Thread serverUIThread = new Thread(serverUI);
+				serverUIThread.start();
+				while (serverUIThread.isAlive())
+					;
+
+				// Shutdown server
+				server.close();
+				while (serverThread.isAlive())
+					;
 
 			} else if (args[i].equals("client")) {
 				String protocol = args[i + 1];
-				
+
+				Client client = null;
+				Thread clientThread = null;
+
 				if (protocol.equals("tcp")) {
-					ClientTCP client = new ClientTCP();
-					
+					client = new ClientTCP();
 					String host = args[i + 2];
 					int port = Integer.parseInt(args[i + 3]);
-					client.connect(InetSocketAddress.createUnresolved(host, port));
-					
-					Thread clientThread = new Thread(client);
-					clientThread.start();
-					
+					client.connect(InetSocketAddress.createUnresolved(host,
+							port));
+
 				} else if (protocol.equals("udp")) {
 					System.err.println("udp not supported.");
 				} else if (protocol.equals("mc")) {
@@ -87,13 +103,28 @@ public class Main {
 					System.err.println("protcol " + protocol
 							+ " is not supported.");
 				}
+
+				// Create connection
+				clientThread = new Thread(client);
+				clientThread.start();
+
+				// Run UI
+				ClientUI clientUI = null;
 				if (useGUI) {
-					//TBD
+					// TBD
 				} else {
-					Runnable clientCmd = new ClientCMD(args[i + 3]);
-					Thread clientCmdThread = new Thread(clientCmd);
-					clientCmdThread.start();
+					clientUI = new ClientCMD(args[i + 3]);
 				}
+				Thread clientUIThread = new Thread(clientUI);
+				clientUIThread.start();
+				while (clientUIThread.isAlive())
+					;
+
+				// Shutdown client
+				client.close();
+				while (clientThread.isAlive())
+					;
+
 			} else {
 				throw new IllegalArgumentException();
 			}
@@ -109,5 +140,7 @@ public class Main {
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 		}
+
+		System.out.println("Bye.");
 	}
 }

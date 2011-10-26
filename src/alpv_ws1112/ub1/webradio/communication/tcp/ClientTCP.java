@@ -12,26 +12,38 @@ import alpv_ws1112.ub1.webradio.communication.Client;
 public class ClientTCP implements Client {
 
 	private Socket _socket;
+	private boolean _closed = false;
+	InputStreamReader isr;
 
 	@Override
 	public void run() {
-		while (true) {
+		while (!_closed) {
 
 			try {
-				BufferedReader br = new BufferedReader(new InputStreamReader(_socket.getInputStream()));
+				isr = new InputStreamReader(_socket.getInputStream());
+				BufferedReader br = new BufferedReader(isr);
 
 				System.out.println("Client: " + br.readLine());
 
 				br.close();
 			} catch (SocketException e) {
-				this.close();
+				
 			} catch (IOException e) {
 				System.out.println("Can't read input stream.");
 				e.printStackTrace();
 			}
 
 		}
+		
+		try {
+			// for (Socket client : clients) {
+			// client.close();
+			// }
+			_socket.close();
 
+		} catch (IOException e) {
+			System.err.println(e.getMessage());
+		}
 	}
 
 	public void connect(InetSocketAddress serverAddress) throws IOException {
@@ -40,17 +52,14 @@ public class ClientTCP implements Client {
 
 		System.out.println("Client connecting to \"" + host + ":" + port
 				+ "\".");
+
 		_socket = new Socket(serverAddress.getHostName(),
 				serverAddress.getPort());
+
 	}
 
 	public void close() {
-		try {
-			_socket.close();
-		} catch (IOException e) {
-			System.out.println("Can't close client socket.");
-			e.printStackTrace();
-		}
+		_closed = true;
 	}
 
 	@Override
