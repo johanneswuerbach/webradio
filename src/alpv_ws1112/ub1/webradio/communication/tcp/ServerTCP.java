@@ -9,27 +9,26 @@ import java.net.Socket;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-public class ServerTCP implements alpv_ws1112.ub1.webradio.communication.Server {
+import alpv_ws1112.ub1.webradio.communication.Server;
 
-	final private int port;
+public class ServerTCP implements Server {
+
 	private ServerSocket serverSocket;
-	private Socket clientSocket;
+
+	// private Socket[] clients;
 
 	public ServerTCP(int port) throws IOException {
-		this.port = port;
-		open();
-	}
-
-	private void open() throws IOException {
 		serverSocket = new ServerSocket(port);
-		clientSocket = serverSocket.accept();
 	}
 
 	@Override
 	public void close() {
 		try {
-			clientSocket.close();
+			// for (Socket client : clients) {
+			// client.close();
+			// }
 			serverSocket.close();
+
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 		}
@@ -43,11 +42,13 @@ public class ServerTCP implements alpv_ws1112.ub1.webradio.communication.Server 
 
 	}
 
-	public void writeHelloWorld() throws IOException {
+	public void writeHelloWorld(Socket client) throws IOException {
+
 		OutputStreamWriter outputStream = new OutputStreamWriter(
-				clientSocket.getOutputStream());
+				client.getOutputStream());
+
 		PrintWriter printWriter = new PrintWriter(outputStream);
-		printWriter.print("Hello World");
+		printWriter.println("Hello World");
 		printWriter.flush();
 		outputStream.close();
 		printWriter.close();
@@ -56,7 +57,16 @@ public class ServerTCP implements alpv_ws1112.ub1.webradio.communication.Server 
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+
+		while (true) {
+			try {
+				Socket client = serverSocket.accept();
+				this.writeHelloWorld(client);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
 	}
 

@@ -2,7 +2,6 @@ package alpv_ws1112.ub1.webradio.webradio;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.net.URL;
 
 import alpv_ws1112.ub1.webradio.communication.tcp.ClientTCP;
 import alpv_ws1112.ub1.webradio.communication.tcp.ServerTCP;
@@ -47,7 +46,10 @@ public class Main {
 				int port = Integer.parseInt(args[i + 2]);
 				if (protocol.equals("tcp")) {
 					ServerTCP server = new ServerTCP(port);
-					server.writeHelloWorld();
+					
+					Thread serverThread = new Thread(server);
+					serverThread.start();
+					
 				} else if (protocol.equals("udp")) {
 					System.err.println("udp not supported.");
 				} else if (protocol.equals("mc")) {
@@ -65,15 +67,17 @@ public class Main {
 				}
 
 			} else if (args[i].equals("client")) {
-				URL server = new URL(args[i + 1]);
 				String protocol = args[i + 1];
 				
 				if (protocol.equals("tcp")) {
 					ClientTCP client = new ClientTCP();
 					
 					String host = args[i + 2];
-					int port = Integer.parseInt(args[i + 2]);
+					int port = Integer.parseInt(args[i + 3]);
 					client.connect(InetSocketAddress.createUnresolved(host, port));
+					
+					Thread clientThread = new Thread(client);
+					clientThread.start();
 					
 				} else if (protocol.equals("udp")) {
 					System.err.println("udp not supported.");
@@ -95,10 +99,13 @@ public class Main {
 			}
 		} catch (ArrayIndexOutOfBoundsException e) {
 			System.err.println(USAGE);
+			e.printStackTrace();
 		} catch (NumberFormatException e) {
 			System.err.println(USAGE);
+			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
 			System.err.println(USAGE);
+			e.printStackTrace();
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 		}
