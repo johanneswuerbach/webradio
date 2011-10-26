@@ -13,12 +13,14 @@ import alpv_ws1112.ub1.webradio.communication.Server;
 
 public class ServerTCP implements Server {
 
-	private ServerSocket serverSocket;
+	private ServerSocket server;
 
 	// private Socket[] clients;
 
 	public ServerTCP(int port) throws IOException {
-		serverSocket = new ServerSocket(port);
+		server = new ServerSocket(port);
+		
+		System.out.println("Starting server using port \"" + port + "\".");
 	}
 
 	@Override
@@ -27,7 +29,7 @@ public class ServerTCP implements Server {
 			// for (Socket client : clients) {
 			// client.close();
 			// }
-			serverSocket.close();
+			server.close();
 
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
@@ -58,13 +60,22 @@ public class ServerTCP implements Server {
 	@Override
 	public void run() {
 
+		System.out.println("Server started.");
+
 		while (true) {
+			Socket client = null;
 			try {
-				Socket client = serverSocket.accept();
+				client = server.accept();
 				this.writeHelloWorld(client);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} finally {
+				if (client != null)
+					try {
+						client.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 			}
 		}
 
