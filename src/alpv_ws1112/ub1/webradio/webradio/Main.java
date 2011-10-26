@@ -53,7 +53,9 @@ public class Main {
 				}
 
 			} else if (args[i].equals("client")) {
-				// TODO
+				
+				
+				
 			} else
 				throw new IllegalArgumentException();
 		} catch (ArrayIndexOutOfBoundsException e) {
