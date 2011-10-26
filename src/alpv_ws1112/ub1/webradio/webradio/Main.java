@@ -41,7 +41,9 @@ public class Main {
 				String protocol = args[i + 1];
 				int port = Integer.parseInt(args[i + 2]);
 				if (protocol.equals("tcp")) {
-					Server server = new Server(port);
+					Server server = new alpv_ws1112.ub1.webradio.communication.tcp.Server(
+							port);
+					server.writeHelloWorld();
 				} else if (protocol.equals("udp")) {
 					System.err.println("udp not supported.");
 				} else if (protocol.equals("mc")) {
