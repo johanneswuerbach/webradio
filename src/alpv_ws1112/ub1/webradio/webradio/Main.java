@@ -5,7 +5,7 @@ import java.net.InetSocketAddress;
 import java.net.URL;
 
 import alpv_ws1112.ub1.webradio.communication.tcp.ClientTCP;
-import alpv_ws1112.ub1.webradio.communication.tcp.ServerTcp;
+import alpv_ws1112.ub1.webradio.communication.tcp.ServerTCP;
 import alpv_ws1112.ub1.webradio.ui.cmd.ClientCMD;
 import alpv_ws1112.ub1.webradio.ui.cmd.ServerCMD;
 
@@ -46,7 +46,7 @@ public class Main {
 				String protocol = args[i + 1];
 				int port = Integer.parseInt(args[i + 2]);
 				if (protocol.equals("tcp")) {
-					ServerTcp server = new ServerTcp(port);
+					ServerTCP server = new ServerTCP(port);
 					server.writeHelloWorld();
 				} else if (protocol.equals("udp")) {
 					System.err.println("udp not supported.");

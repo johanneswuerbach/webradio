@@ -9,13 +9,13 @@ import java.net.Socket;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-public class ServerTcp implements alpv_ws1112.ub1.webradio.communication.Server {
+public class ServerTCP implements alpv_ws1112.ub1.webradio.communication.Server {
 
 	final private int port;
 	private ServerSocket serverSocket;
 	private Socket clientSocket;
 
-	public ServerTcp(int port) throws IOException {
+	public ServerTCP(int port) throws IOException {
 		this.port = port;
 		open();
 	}
