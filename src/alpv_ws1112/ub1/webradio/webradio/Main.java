@@ -70,7 +70,7 @@ public class Main {
 				if (useGUI) {
 					// TBD
 				} else {
-					serverUI = new ServerCMD();
+					serverUI = new ServerCMD(server);
 				}
 				Thread serverUIThread = new Thread(serverUI);
 				serverUIThread.start();
@@ -113,7 +113,7 @@ public class Main {
 				if (useGUI) {
 					// TBD
 				} else {
-					clientUI = new ClientCMD(args[i + 3]);
+					clientUI = new ClientCMD(client, args[i + 3]);
 				}
 				Thread clientUIThread = new Thread(clientUI);
 				clientUIThread.start();

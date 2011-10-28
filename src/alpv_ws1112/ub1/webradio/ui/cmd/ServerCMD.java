@@ -4,31 +4,47 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import javax.sound.sampled.UnsupportedAudioFileException;
+
+import alpv_ws1112.ub1.webradio.communication.Server;
 import alpv_ws1112.ub1.webradio.ui.ServerUI;
 
 public class ServerCMD implements ServerUI {
 
-	@Override
+	private Server _server;
+
+	public ServerCMD(Server server) {
+		_server = server;
+	}
+
 	public void run() {
-		System.out.print("Welcome to webradio server.\n" +
-				"Possible commands:\n" +
-				"QUIT - shutdown the server\n");
-		
-		while(true) {
-			try {
-				BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		System.out.print("Welcome to webradio server.\n"
+				+ "Possible commands:\n" + "M: <path> - to play a music file\n"
+				+ "QUIT - shutdown the server\n");
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+		try {
+			while (true) {
 				String line = br.readLine();
-				br.close();
-				
-				if(line.equals("QUIT")) {
+				if (line.equals("QUIT")) {
 					break;
+				} else if (line.startsWith("M: ")) {
+					String path = line.substring(3);
+					try {
+						_server.playSong(path);
+					} catch (UnsupportedAudioFileException e) {
+						e.printStackTrace();
+					}
 				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
+
+			br.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.err.println("Can't read cmd input.");
 		}
-		
+		_server.close();
 		System.out.println("Shutdown the server.");
 	}
 }
