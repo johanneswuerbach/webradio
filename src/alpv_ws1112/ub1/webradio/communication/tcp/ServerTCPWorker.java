@@ -2,26 +2,29 @@ package alpv_ws1112.ub1.webradio.communication.tcp;
 
 import java.io.IOException;
 import java.io.OutputStream;
+
 import javax.sound.sampled.AudioFormat;
 import alpv_ws1112.ub1.webradio.audioplayer.AudioFormatTransport;
 import alpv_ws1112.ub1.webradio.communication.ByteArray;
 
 public class ServerTCPWorker implements Runnable {
 
-	private boolean _closed;
+	private boolean _close = false, _play = false;
 	private AudioFormat _audioFormat;
 	private OutputStream _client;
-	private boolean _play = false;
+	private ServerTCP _server;
 
-	public ServerTCPWorker(OutputStream client) throws IOException {
+	public ServerTCPWorker(ServerTCP server, OutputStream client)
+			throws IOException {
 		_client = client;
+		_server = server;
 	}
 
 	/**
 	 * Set the close flag
 	 */
 	public void close() {
-		_closed = true;
+		_close = true;
 	}
 
 	/**
@@ -29,7 +32,7 @@ public class ServerTCPWorker implements Runnable {
 	 */
 	public void setAudioFormat(AudioFormat audioFormat) {
 		_audioFormat = audioFormat;
-		this.sendAudioFormat();
+		sendAudioFormat();
 	}
 
 	/**
@@ -44,76 +47,58 @@ public class ServerTCPWorker implements Runnable {
 	}
 
 	/**
-	 * Send music to his client
-	 */
-	public void sendMusic() {
-
-		// try {
-		// while (!_closed) {
-		// _client.write(ServerTCP.musicBuffer);
-		// }
-		//
-		// } catch (IOException e) {
-		// System.err.println("Can't open audio file.");
-		// }
-
-	}
-
-	/**
 	 * Send audio format to client
 	 */
-	public void sendAudioFormat() {
+	private void sendAudioFormat() {
 
 		try {
 			AudioFormatTransport aft = new AudioFormatTransport(_audioFormat);
-			byte[] bytes = ByteArray.toBytes(aft);
+			byte[] format = ByteArray.toBytes(aft);
 
 			// Send size
-			byte[] data = new byte[4];
-			int length = bytes.length;
+			byte[] size = new byte[4];
+			int length = format.length;
 
 			// int -> byte[]
 			for (int i = 0; i < 4; ++i) {
 				int shift = i << 3; // i * 8
-				data[3 - i] = (byte) ((length & (0xff << shift)) >>> shift);
+				size[3 - i] = (byte) ((length & (0xff << shift)) >>> shift);
 			}
-
-			_client.write(data);
+			_client.write(size);
 
 			// Send format
-			_client.write(bytes);
+			_client.write(format);
 
 			System.out.println("AudioFormat transmitted.");
 		} catch (IOException e) {
-			System.out.println("Can't send audio format.");
-			try {
-				_client.close();
-			} catch (IOException e1) {
-
-			}
-
+			System.err.println("Can't send audio format.");
+			close();
 		}
 	}
 
+	/**
+	 * Runs the server worker
+	 */
 	public void run() {
-
-		while (true) {
+		
+		System.out.println("Worker started.");
+		
+		while (!_close) {
 			if (_play) {
-				this.sendAudioFormat();
-				// this.sendMusic();
+				try {
+					_client.write(_server.getBuffer());
+					_server.awaitBarrier();
+				} catch (IOException e) {
+					System.err.println("Can't send music data.");
+					close();
+				}
 			}
 		}
-
-	}
-
-	public void sendBuffer(byte[] musicBuffer) {
+		
 		try {
-			while (!_closed) {
-				_client.write(musicBuffer);
-			}
-
+			_client.close();
 		} catch (IOException e) {
-			System.err.println("Can't open audio file.");
+			System.err.println("Can't send close client connection.");
 		}
 	}
 }

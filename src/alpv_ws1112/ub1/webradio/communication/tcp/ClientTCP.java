@@ -16,43 +16,45 @@ import alpv_ws1112.ub1.webradio.communication.Client;
 
 public class ClientTCP implements Client {
 
-	private static final int BUFFER_SIZE = 1024;
+	private static final int BUFFER_SIZE = 64;
 
 	private Socket _socket;
-	private boolean _closed = false;
+	private boolean _close = false;
 	private InputStream _inputStream;
 
 	@Override
 	public void run() {
 
-		AudioPlayer audioPlayer = new AudioPlayer(
-				this.receiveAudioFormat(_inputStream));
-		;
-		
-		Thread AudioPlayerThread = new Thread(audioPlayer);
-		AudioPlayerThread.start();
-		
-		System.out.println("Size: " + audioPlayer.getSourceDataLine().getBufferSize());
+		AudioPlayer audioPlayer = new AudioPlayer(receiveAudioFormat());
+		byte[] buffer = new byte[BUFFER_SIZE];
+		boolean first = true;
 
-		while (!_closed) {
+		while (!_close) {
 
 			try {
-				byte[] buffer = new byte[BUFFER_SIZE];
-
-				while (_inputStream.read(buffer) > 0) {
-					audioPlayer.writeBytes(buffer);
-					audioPlayer.start();
+				int total = _inputStream.read(buffer);
+				if (total == -1) {
+					close();
+				} else {
+					while (total > 0) {
+						if (first) {
+							System.out.print("Start playing.");
+							first = false;
+						}
+						audioPlayer.writeBytes(buffer);
+						audioPlayer.start();
+					}
 				}
 
 			} catch (EOFException e) {
 				System.err.println("Can't play audio.");
-				this.close();
+				close();
 			} catch (SocketException e) {
 				System.err.println("Can't play audio.");
-				this.close();
+				close();
 			} catch (IOException e) {
 				System.err.println("Can't play audio.");
-				this.close();
+				close();
 			}
 
 		}
@@ -64,6 +66,9 @@ public class ClientTCP implements Client {
 		}
 	}
 
+	/**
+	 * Connect to a specific server
+	 */
 	public void connect(InetSocketAddress serverAddress) throws IOException {
 		String host = serverAddress.getHostName();
 		int port = serverAddress.getPort();
@@ -71,30 +76,35 @@ public class ClientTCP implements Client {
 		System.out.println("Client connecting to \"" + host + ":" + port
 				+ "\".");
 
-		_socket = new Socket(serverAddress.getHostName(),
-				serverAddress.getPort());
-
+		_socket = new Socket(host, port);
 		_inputStream = _socket.getInputStream();
 	}
 
+	/**
+	 * Closes the client
+	 */
 	public void close() {
-		_closed = true;
+		_close = true;
 	}
 
 	@Override
 	public void sendChatMessage(String message) throws IOException {
 		// TODO Auto-generated method stub
-
 	}
 
-	private AudioFormat receiveAudioFormat(InputStream is) {
+	/**
+	 * Receive the audio format form the server
+	 * 
+	 * @return
+	 */
+	private AudioFormat receiveAudioFormat() {
 
 		AudioFormat audioFormat = null;
 
 		try {
 			// first 4 bytes containing the size
 			byte[] lengthBuffer = new byte[4];
-			is.read(lengthBuffer);
+			_inputStream.read(lengthBuffer);
 
 			// byte[] -> int
 			int length = 0;
@@ -106,7 +116,7 @@ public class ClientTCP implements Client {
 
 			// read format
 			byte[] formatBuffer = new byte[length];
-			is.read(formatBuffer);
+			_inputStream.read(formatBuffer);
 
 			AudioFormatTransport aft = (AudioFormatTransport) ByteArray
 					.toObject(formatBuffer);
