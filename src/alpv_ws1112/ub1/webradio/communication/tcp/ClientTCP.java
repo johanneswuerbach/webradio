@@ -28,35 +28,28 @@ public class ClientTCP implements Client {
 		AudioPlayer audioPlayer = new AudioPlayer(receiveAudioFormat());
 		byte[] buffer = new byte[BUFFER_SIZE];
 		boolean first = true;
-
-		while (!_close) {
-
-			try {
-				int total = _inputStream.read(buffer);
-				if (total == -1) {
-					close();
-				} else {
-					while (total > 0) {
-						if (first) {
-							System.out.print("Start playing.");
-							first = false;
-						}
-						audioPlayer.writeBytes(buffer);
-						audioPlayer.start();
-					}
+		try {
+			while (!_close && _inputStream.read(buffer) > 0) {
+				if (first) {
+					System.out.print("Start playing.");
+					first = false;
 				}
-
-			} catch (EOFException e) {
-				System.err.println("Can't play audio.");
-				close();
-			} catch (SocketException e) {
-				System.err.println("Can't play audio.");
-				close();
-			} catch (IOException e) {
-				System.err.println("Can't play audio.");
-				close();
+				for (int i = 0; i < BUFFER_SIZE; i++) {
+					System.out.print(buffer[i]);
+				}
+				System.out.println("");
+				audioPlayer.start();
+				audioPlayer.writeBytes(buffer);
 			}
-
+		} catch (EOFException e) {
+			System.err.println("Can't play audio.");
+			close();
+		} catch (SocketException e) {
+			System.err.println("Can't play audio.");
+			close();
+		} catch (IOException e) {
+			System.err.println("Can't play audio.");
+			close();
 		}
 
 		try {
