@@ -48,7 +48,7 @@ public class ClientCMD implements ClientUI {
 
 		_client.close();
 		System.out.println("Shutdown the client.");
-
+		System.out.println("Bye.");
 	}
 
 	public String getUserName() {

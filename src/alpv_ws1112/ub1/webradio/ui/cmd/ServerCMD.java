@@ -46,5 +46,6 @@ public class ServerCMD implements ServerUI {
 		}
 		_server.close();
 		System.out.println("Shutdown the server.");
+		System.out.println("Bye.");
 	}
 }

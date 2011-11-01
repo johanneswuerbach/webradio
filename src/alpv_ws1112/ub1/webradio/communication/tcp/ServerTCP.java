@@ -33,7 +33,7 @@ public class ServerTCP implements Server {
 	public ServerTCP(int port) throws IOException {
 		// Create socket
 		_socket = new ServerSocket(port);
-		_socket.setSoTimeout(500); // Only 500ms timeout
+		_socket.setSoTimeout(2000); // Only 500ms timeout
 
 		// Create connection queues
 		_clients = new ArrayList<ServerTCPWorker>();

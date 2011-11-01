@@ -74,13 +74,6 @@ public class Main {
 				}
 				Thread serverUIThread = new Thread(serverUI);
 				serverUIThread.start();
-				while (serverUIThread.isAlive())
-					;
-
-				// Shutdown server
-				server.close();
-				while (serverThread.isAlive())
-					;
 
 			} else if (args[i].equals("client")) {
 				String protocol = args[i + 1];
@@ -117,14 +110,6 @@ public class Main {
 				}
 				Thread clientUIThread = new Thread(clientUI);
 				clientUIThread.start();
-				while (clientUIThread.isAlive())
-					;
-
-				// Shutdown client
-				client.close();
-				while (clientThread.isAlive())
-					;
-
 			} else {
 				throw new IllegalArgumentException();
 			}
@@ -140,7 +125,5 @@ public class Main {
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 		}
-
-		System.out.println("Bye.");
 	}
 }
