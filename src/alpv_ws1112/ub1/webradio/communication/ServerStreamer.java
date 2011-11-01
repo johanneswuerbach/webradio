@@ -87,7 +87,8 @@ public class ServerStreamer implements Runnable {
 	public void changePath(String path) throws MalformedURLException,
 			UnsupportedAudioFileException, IOException {
 		AudioInputStream ais = AudioPlayer.getAudioInputStream(path);
-		if (_audioFormat != null && !ais.getFormat().equals(_audioFormat)) {
+		if (_audioFormat != null
+				&& !ais.getFormat().toString().equals(_audioFormat.toString())) {
 			System.err
 					.println("It is not possible at the moment to change the audio format of the stream.");
 			System.err.println("Old format: " + _audioFormat.toString());
