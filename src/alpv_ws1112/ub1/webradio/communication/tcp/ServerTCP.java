@@ -33,7 +33,7 @@ public class ServerTCP implements Server {
 	public ServerTCP(int port) throws IOException {
 		// Create socket
 		_socket = new ServerSocket(port);
-		_socket.setSoTimeout(2000); // Only 500ms timeout
+		_socket.setSoTimeout(500); // Only 500ms timeout
 
 		// Create connection queues
 		_clients = new ArrayList<ServerTCPWorker>();
@@ -60,11 +60,13 @@ public class ServerTCP implements Server {
 		System.out.println("Play song: " + path);
 
 		try {
-			// Initialize the barrier
-			resetBarrier();
+			
+			
 			// Initialize the stream and start all clients
 			if (_streamer == null) {
 				_streamer = new ServerStreamer(this, path);
+				// Initialize the barrier
+				resetBarrier();
 				for (ServerTCPWorker client : _clients) {
 					startClient(client);
 				}
@@ -182,11 +184,7 @@ public class ServerTCP implements Server {
 		_pendingClients.clear();
 		// Remove merging lock
 		_currentlyMergingClients.set(false);
-		// Reset the barrier
-		if (_barrier != null) {
-			_barrier.reset();
-		}
-		// Create a new one
+		// Create a new barrier
 		int size = _clients.size();
 		if (size > 0) {
 			_barrier = new CyclicBarrier(size, _streamer);
@@ -199,6 +197,9 @@ public class ServerTCP implements Server {
 	 * Wait at the current barrier
 	 */
 	public void awaitBarrier() {
+		System.out.println(new java.util.Date());
+		System.out.println("awaitBarrier: " + _barrier.getParties());
+		System.out.println();
 		if (_barrier != null) {
 			while (_currentlyResetingBarrier.get())
 				;

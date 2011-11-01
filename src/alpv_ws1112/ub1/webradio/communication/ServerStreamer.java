@@ -34,6 +34,7 @@ public class ServerStreamer implements Runnable {
 	public void run() {
 		try {
 			if (_ais.read(_musicBuffer) <= 0) {
+				System.out.println("Repeat.");
 				_ais = AudioPlayer.getAudioInputStream(_path);
 				_ais.read(_musicBuffer);
 			}
