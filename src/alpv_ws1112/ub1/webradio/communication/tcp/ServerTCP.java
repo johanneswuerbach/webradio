@@ -60,8 +60,7 @@ public class ServerTCP implements Server {
 		System.out.println("Play song: " + path);
 
 		try {
-			
-			
+
 			// Initialize the stream and start all clients
 			if (_streamer == null) {
 				_streamer = new ServerStreamer(this, path);
@@ -107,8 +106,7 @@ public class ServerTCP implements Server {
 				ServerTCPWorker worker = new ServerTCPWorker(this,
 						client.getOutputStream());
 				addClient(worker);
-			} catch (SocketTimeoutException e) {
-			} catch (IOException e) {
+			} catch (SocketTimeoutException e) {} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
@@ -149,8 +147,8 @@ public class ServerTCP implements Server {
 			;
 		_pendingClients.add(worker);
 		System.out.println("New pending client.");
-		
-		if(_barrier == null) {
+
+		if (_barrier == null) {
 			resetBarrier();
 		}
 	}
@@ -197,9 +195,6 @@ public class ServerTCP implements Server {
 	 * Wait at the current barrier
 	 */
 	public void awaitBarrier() {
-		System.out.println(new java.util.Date());
-		System.out.println("awaitBarrier: " + _barrier.getParties());
-		System.out.println();
 		if (_barrier != null) {
 			while (_currentlyResetingBarrier.get())
 				;

@@ -34,7 +34,6 @@ public class ServerStreamer implements Runnable {
 	public void run() {
 		try {
 			if (_ais.read(_musicBuffer) <= 0) {
-				System.out.println("Repeat.");
 				_ais = AudioPlayer.getAudioInputStream(_path);
 				_ais.read(_musicBuffer);
 			}
@@ -88,12 +87,12 @@ public class ServerStreamer implements Runnable {
 	public void changePath(String path) throws MalformedURLException,
 			UnsupportedAudioFileException, IOException {
 		AudioInputStream ais = AudioPlayer.getAudioInputStream(path);
-		if(_audioFormat != null && !ais.getFormat().equals(_audioFormat)) {
-			System.err.println("It is not possible at the moment to change the audio format of the stream.");
+		if (_audioFormat != null && !ais.getFormat().equals(_audioFormat)) {
+			System.err
+					.println("It is not possible at the moment to change the audio format of the stream.");
 			System.err.println("Old format: " + _audioFormat.toString());
 			System.err.println("New format: " + ais.getFormat().toString());
-		}
-		else {
+		} else {
 			_ais = ais;
 			_audioFormat = ais.getFormat();
 			_ais.read(_musicBuffer);

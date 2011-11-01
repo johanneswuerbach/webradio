@@ -34,10 +34,6 @@ public class ClientTCP implements Client {
 					System.out.print("Start playing.");
 					first = false;
 				}
-				for (int i = 0; i < BUFFER_SIZE; i++) {
-					System.out.print(buffer[i]);
-				}
-				System.out.println("");
 				audioPlayer.start();
 				audioPlayer.writeBytes(buffer);
 			}
