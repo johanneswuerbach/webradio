@@ -148,7 +148,7 @@ public class ServerTCP implements Server {
 		_pendingClients.add(worker);
 		System.out.println("New pending client.");
 
-		if (_barrier == null) {
+		if (_barrier == null || _clients.size() == 0) {
 			resetBarrier();
 		}
 	}
@@ -206,5 +206,10 @@ public class ServerTCP implements Server {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public void removeClient(ServerTCPWorker serverTCPWorker) {
+		_pendingClients.remove(serverTCPWorker);
+		_clients.remove(serverTCPWorker);
 	}
 }

@@ -89,7 +89,9 @@ public class ServerTCPWorker implements Runnable {
 					_client.write(_server.getBuffer());
 					_server.awaitBarrier();
 				} catch (IOException e) {
-					System.err.println("Can't send music data.");
+					System.err.println("Client disconnected.");
+					_server.removeClient(this);
+					_server.awaitBarrier();
 					close();
 				}
 			}
