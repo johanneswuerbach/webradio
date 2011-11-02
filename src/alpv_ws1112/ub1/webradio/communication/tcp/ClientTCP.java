@@ -14,6 +14,9 @@ import alpv_ws1112.ub1.webradio.audioplayer.AudioPlayer;
 import alpv_ws1112.ub1.webradio.communication.ByteArray;
 import alpv_ws1112.ub1.webradio.communication.Client;
 
+/**
+ * A TCP client for the webradio
+ */
 public class ClientTCP implements Client {
 
 	private static final int BUFFER_SIZE = 64;
@@ -22,10 +25,15 @@ public class ClientTCP implements Client {
 	private boolean _close = false;
 	private InputStream _inputStream;
 
-	@Override
+	/**
+	 * Play the music
+	 */
 	public void run() {
 
+		// Start player and receive audio format
 		AudioPlayer audioPlayer = new AudioPlayer(receiveAudioFormat());
+		
+		// Start receiving bytes and playing music
 		byte[] buffer = new byte[BUFFER_SIZE];
 		boolean first = true;
 		try {
@@ -48,6 +56,7 @@ public class ClientTCP implements Client {
 			close();
 		}
 
+		// Close the stream
 		try {
 			_inputStream.close();
 		} catch (IOException e) {

@@ -9,6 +9,9 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import alpv_ws1112.ub1.webradio.communication.Server;
 import alpv_ws1112.ub1.webradio.ui.ServerUI;
 
+/**
+ * Command-line interface for controlling the server
+ */
 public class ServerCMD implements ServerUI {
 
 	private Server _server;
@@ -17,6 +20,9 @@ public class ServerCMD implements ServerUI {
 		_server = server;
 	}
 
+	/**
+	 * Run the ui
+	 */
 	public void run() {
 		System.out.print("Welcome to webradio server.\n"
 				+ "Possible commands:\n" + "M: <path> - to play a music file\n"

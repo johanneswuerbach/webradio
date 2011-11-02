@@ -6,6 +6,9 @@ import java.util.Map;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioFormat.Encoding;
 
+/**
+ * A wrapper for serializing an deserializing an AudioFormat object
+ */
 public class AudioFormatTransport implements Serializable {
 
 	private int _channels, _frameSize, _sampleSizeInBits;
@@ -14,6 +17,11 @@ public class AudioFormatTransport implements Serializable {
 	private Map<String, Object> _properties;
 	private String _encoding;
 
+	/**
+	 * Store an AudioFormat
+	 * 
+	 * @param audioFormat
+	 */
 	public AudioFormatTransport(AudioFormat audioFormat) {
 		_channels = audioFormat.getChannels();
 		_encoding = audioFormat.getEncoding().toString();
@@ -25,6 +33,11 @@ public class AudioFormatTransport implements Serializable {
 		_properties = audioFormat.properties();
 	}
 
+	/**
+	 * Get stored AudioFormat
+	 * 
+	 * @return
+	 */
 	public AudioFormat getAudioFormat() {
 
 		Encoding encoding = new Encoding(_encoding);
@@ -33,9 +46,5 @@ public class AudioFormatTransport implements Serializable {
 				_channels, _frameSize, _frameRate, _isBigEndian, _properties);
 	}
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1999629759312603648L;
-
 }

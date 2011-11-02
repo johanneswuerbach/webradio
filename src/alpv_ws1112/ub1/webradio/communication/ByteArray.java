@@ -7,7 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 /**
- * Object <-> byte[]
+ * Convert objects to byte arrays and vice versa
  */
 public class ByteArray {
 
@@ -33,9 +33,10 @@ public class ByteArray {
 	 * @param bytes
 	 * @return - object
 	 */
-	public static Object toObject(byte[] bytes) throws IOException, ClassNotFoundException {
-		Object object = new ObjectInputStream(
-					new ByteArrayInputStream(bytes)).readObject();
+	public static Object toObject(byte[] bytes) throws IOException,
+			ClassNotFoundException {
+		Object object = new ObjectInputStream(new ByteArrayInputStream(bytes))
+				.readObject();
 		return object;
 	}
 }

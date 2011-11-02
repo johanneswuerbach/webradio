@@ -7,6 +7,9 @@ import java.io.InputStreamReader;
 import alpv_ws1112.ub1.webradio.communication.Client;
 import alpv_ws1112.ub1.webradio.ui.ClientUI;
 
+/**
+ * Command-line interface for controlling the client
+ */
 public class ClientCMD implements ClientUI {
 
 	private String _username;
@@ -17,7 +20,9 @@ public class ClientCMD implements ClientUI {
 		_client = client;
 	}
 
-	@Override
+	/**
+	 * Run the ui
+	 */
 	public void run() {
 
 		System.out.print("Welcome to webradio client.\n"

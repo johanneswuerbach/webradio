@@ -7,6 +7,9 @@ import javax.sound.sampled.AudioFormat;
 import alpv_ws1112.ub1.webradio.audioplayer.AudioFormatTransport;
 import alpv_ws1112.ub1.webradio.communication.ByteArray;
 
+/**
+ * Handeling a single client and send audio format and music
+ */
 public class ServerTCPWorker implements Runnable {
 
 	private boolean _close = false, _play = false;
@@ -28,7 +31,7 @@ public class ServerTCPWorker implements Runnable {
 	}
 
 	/**
-	 * Set the audio format
+	 * Set the audio format and send it to client
 	 */
 	public void setAudioFormat(AudioFormat audioFormat) {
 		_audioFormat = audioFormat;
@@ -77,12 +80,12 @@ public class ServerTCPWorker implements Runnable {
 	}
 
 	/**
-	 * Runs the server worker
+	 * Send available bytes to client
 	 */
 	public void run() {
-		
+
 		System.out.println("Worker started.");
-		
+
 		while (!_close) {
 			if (_play) {
 				try {
@@ -96,7 +99,7 @@ public class ServerTCPWorker implements Runnable {
 				}
 			}
 		}
-		
+
 		try {
 			_client.close();
 		} catch (IOException e) {

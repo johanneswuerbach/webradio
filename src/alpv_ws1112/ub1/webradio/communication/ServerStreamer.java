@@ -10,6 +10,9 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import alpv_ws1112.ub1.webradio.audioplayer.AudioPlayer;
 import alpv_ws1112.ub1.webradio.communication.tcp.ServerTCP;
 
+/**
+ * AudioFile handling
+ */
 public class ServerStreamer implements Runnable {
 
 	private static final int BUFFER_SIZE = 64;
@@ -29,7 +32,7 @@ public class ServerStreamer implements Runnable {
 	}
 
 	/**
-	 * Runs the streamer
+	 * Read the next list of bytes from the audio file
 	 */
 	public void run() {
 		try {

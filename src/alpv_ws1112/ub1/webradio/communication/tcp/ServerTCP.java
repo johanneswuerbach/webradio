@@ -61,17 +61,15 @@ public class ServerTCP implements Server {
 
 		try {
 
-			// Initialize the stream and start all clients
+			// Initialize the stream
 			if (_streamer == null) {
 				_streamer = new ServerStreamer(this, path);
-				// Initialize the barrier
-				resetBarrier();
-				for (ServerTCPWorker client : _clients) {
-					startClient(client);
-				}
 			} else {
 				_streamer.changePath(path);
 			}
+
+			// Accept all pending clients and/or reset running
+			resetBarrier();
 
 		} catch (MalformedURLException e) {
 			System.err.println("Can't find audio file.");
@@ -106,7 +104,8 @@ public class ServerTCP implements Server {
 				ServerTCPWorker worker = new ServerTCPWorker(this,
 						client.getOutputStream());
 				addClient(worker);
-			} catch (SocketTimeoutException e) {} catch (IOException e) {
+			} catch (SocketTimeoutException e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
@@ -145,16 +144,18 @@ public class ServerTCP implements Server {
 	private void addClient(ServerTCPWorker worker) {
 		while (_currentlyMergingClients.get())
 			;
+
 		_pendingClients.add(worker);
 		System.out.println("New pending client.");
 
-		if (_barrier == null || _clients.size() == 0) {
+		// Music started and no clients connected -> start playing immediately
+		if (_streamer != null && _clients.size() == 0) {
 			resetBarrier();
 		}
 	}
 
 	/**
-	 * Returns the current buffer
+	 * Returns the current music buffer
 	 * 
 	 * @return
 	 */
@@ -166,7 +167,7 @@ public class ServerTCP implements Server {
 	 * Refresh the current barrier and merge pending and connected clients
 	 */
 	public void resetBarrier() {
-		// Set locks
+		// Set locks (reset barrier and merge clients)
 		_currentlyResetingBarrier.set(true);
 		_currentlyMergingClients.set(true);
 		// Add pending workers to connected worker queue and start them if radio
@@ -196,6 +197,7 @@ public class ServerTCP implements Server {
 	 */
 	public void awaitBarrier() {
 		if (_barrier != null) {
+			// Loop during reset
 			while (_currentlyResetingBarrier.get())
 				;
 			try {
@@ -208,8 +210,14 @@ public class ServerTCP implements Server {
 		}
 	}
 
-	public void removeClient(ServerTCPWorker serverTCPWorker) {
-		_pendingClients.remove(serverTCPWorker);
-		_clients.remove(serverTCPWorker);
+	/**
+	 * Remove disconnected clients
+	 * 
+	 * @param worker
+	 */
+	public void removeClient(ServerTCPWorker worker) {
+		 // Remove from both queues
+		_pendingClients.remove(worker);
+		_clients.remove(worker);
 	}
 }
