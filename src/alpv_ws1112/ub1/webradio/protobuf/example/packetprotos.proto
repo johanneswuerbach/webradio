@@ -1,6 +1,6 @@
 package alpv_ws1112.ub1.webradio.protobuf;
 
-option java_package = "alpv_ws1112.ub1.webradio.protobuf";
+option java_package = "alpv_ws1112.ub1.webradio.protobuf.example";
 option java_outer_classname = "PacketProtos";
 
 message TestMessage {

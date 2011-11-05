@@ -1,4 +1,4 @@
-package alpv_ws1112.ub1.webradio.communication;
+package alpv_ws1112.ub1.webradio.communication.tcp;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -8,12 +8,11 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import alpv_ws1112.ub1.webradio.audioplayer.AudioPlayer;
-import alpv_ws1112.ub1.webradio.communication.tcp.ServerTCP;
 
 /**
  * AudioFile handling
  */
-public class ServerStreamer implements Runnable {
+public class ServerTCPStreamer implements Runnable {
 
 	private static final int BUFFER_SIZE = 64;
 
@@ -23,7 +22,7 @@ public class ServerStreamer implements Runnable {
 	private ServerTCP _server;
 	private String _path;
 
-	public ServerStreamer(ServerTCP server, String path) throws IOException,
+	public ServerTCPStreamer(ServerTCP server, String path) throws IOException,
 			UnsupportedAudioFileException {
 		_server = server;
 		_path = path;

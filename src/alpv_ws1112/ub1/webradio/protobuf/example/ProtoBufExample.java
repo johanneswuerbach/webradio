@@ -1,6 +1,6 @@
-package alpv_ws1112.ub1.webradio.protobuf;
+package alpv_ws1112.ub1.webradio.protobuf.example;
 
-import alpv_ws1112.ub1.webradio.protobuf.PacketProtos.TestMessage;
+import alpv_ws1112.ub1.webradio.protobuf.example.PacketProtos.TestMessage;
 
 import com.google.protobuf.ByteString;
 

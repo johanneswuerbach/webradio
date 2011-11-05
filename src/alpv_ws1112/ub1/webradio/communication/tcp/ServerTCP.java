@@ -13,7 +13,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import alpv_ws1112.ub1.webradio.communication.Server;
-import alpv_ws1112.ub1.webradio.communication.ServerStreamer;
 
 public class ServerTCP implements Server {
 
@@ -26,7 +25,7 @@ public class ServerTCP implements Server {
 																	// clients
 
 	private CyclicBarrier _barrier; // Buffer sending barrier
-	private ServerStreamer _streamer;
+	private ServerTCPStreamer _streamer;
 	private AtomicBoolean _currentlyResetingBarrier;
 	private AtomicBoolean _currentlyMergingClients;
 
@@ -63,7 +62,7 @@ public class ServerTCP implements Server {
 
 			// Initialize the stream
 			if (_streamer == null) {
-				_streamer = new ServerStreamer(this, path);
+				_streamer = new ServerTCPStreamer(this, path);
 			} else {
 				_streamer.changePath(path);
 			}

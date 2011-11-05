@@ -5,12 +5,15 @@ import java.net.InetSocketAddress;
 
 import alpv_ws1112.ub1.webradio.communication.Client;
 import alpv_ws1112.ub1.webradio.communication.Server;
+import alpv_ws1112.ub1.webradio.communication.protobuf.ClientProtoBuf;
+import alpv_ws1112.ub1.webradio.communication.protobuf.ServerProtoBuf;
 import alpv_ws1112.ub1.webradio.communication.tcp.ClientTCP;
 import alpv_ws1112.ub1.webradio.communication.tcp.ServerTCP;
 import alpv_ws1112.ub1.webradio.ui.ClientUI;
 import alpv_ws1112.ub1.webradio.ui.ServerUI;
 import alpv_ws1112.ub1.webradio.ui.cmd.ClientCMD;
 import alpv_ws1112.ub1.webradio.ui.cmd.ServerCMD;
+import alpv_ws1112.ub1.webradio.ui.swing.ClientSwing;
 
 public class Main {
 	private static final String USAGE = String
@@ -28,88 +31,57 @@ public class Main {
 	public static void main(String[] args) {
 		try {
 			boolean useGUI = false;
-			int i = -1;
+			int argumentIndex = -1;
 
 			// Parse options. Add additional options here if you have to. Do not
 			// forget to mention their usage in the help-string!
-			while (args[++i].startsWith("-")) {
-				if (args[i].equals("-help")) {
+			while (args[++argumentIndex].startsWith("-")) {
+				if (args[argumentIndex].equals("-help")) {
 					System.out.println(USAGE
 							+ String.format("%n%nwhere options include:"));
 					System.out.println("  -help      Show this text.");
 					System.out
 							.println("  -gui       Show a graphical user interface.");
 					System.exit(0);
-				} else if (args[i].equals("-gui")) {
+				} else if (args[argumentIndex].equals("-gui")) {
 					useGUI = true;
 				}
 			}
 
-			Server server = null;
+			if (args[argumentIndex].equals("server")) {
+				Server server = null;
+				String protocol = args[argumentIndex + 1];
+				int port = Integer.parseInt(args[argumentIndex + 2]);
 
-			if (args[i].equals("server")) {
-				String protocol = args[i + 1];
-				int port = Integer.parseInt(args[i + 2]);
 				if (protocol.equals("tcp")) {
 					server = new ServerTCP(port);
-				} else if (protocol.equals("udp")) {
-					System.err.println("udp not supported.");
-				} else if (protocol.equals("mc")) {
-					System.err.println("mc not supported.");
+				} else if (protocol.equals("protobuf")) {
+					server = new ServerProtoBuf(port);
 				} else {
 					System.err.println("protcol " + protocol
 							+ " is not supported.");
+					return;
 				}
+				startServer(server);
+				startServerUi(useGUI, server);
 
-				// Start server
-				Thread serverThread = new Thread(server);
-				serverThread.start();
-
-				// Run UI
-				ServerUI serverUI = null;
-				if (useGUI) {
-					// TBD
-				} else {
-					serverUI = new ServerCMD(server);
-				}
-				Thread serverUIThread = new Thread(serverUI);
-				serverUIThread.start();
-
-			} else if (args[i].equals("client")) {
-				String protocol = args[i + 1];
-
+			} else if (args[argumentIndex].equals("client")) {
+				String protocol = args[argumentIndex + 1];
+				String host = args[argumentIndex + 2];
+				int port = Integer.parseInt(args[argumentIndex + 3]);
 				Client client = null;
-				Thread clientThread = null;
 
 				if (protocol.equals("tcp")) {
 					client = new ClientTCP();
-					String host = args[i + 2];
-					int port = Integer.parseInt(args[i + 3]);
-					client.connect(InetSocketAddress.createUnresolved(host,
-							port));
-
-				} else if (protocol.equals("udp")) {
-					System.err.println("udp not supported.");
-				} else if (protocol.equals("mc")) {
-					System.err.println("mc not supported.");
+				} else if (protocol.equals("protobuf")) {
+					client = new ClientProtoBuf();
 				} else {
 					System.err.println("protcol " + protocol
 							+ " is not supported.");
+					return;
 				}
-
-				// Create connection
-				clientThread = new Thread(client);
-				clientThread.start();
-
-				// Run UI
-				ClientUI clientUI = null;
-				if (useGUI) {
-					// TBD
-				} else {
-					clientUI = new ClientCMD(client, args[i + 3]);
-				}
-				Thread clientUIThread = new Thread(clientUI);
-				clientUIThread.start();
+				startClient(host, port, client);
+				startClientUi(args[argumentIndex + 3], useGUI, client);
 			} else {
 				throw new IllegalArgumentException();
 			}
@@ -125,5 +97,42 @@ public class Main {
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 		}
+	}
+
+	private static void startServerUi(boolean useGUI, Server server) {
+		// Run UI
+		ServerUI serverUI = null;
+		if (useGUI) {
+			// TBD
+		} else {
+			serverUI = new ServerCMD(server);
+		}
+		Thread serverUIThread = new Thread(serverUI);
+		serverUIThread.start();
+	}
+
+	private static void startServer(Server server) {
+		Thread serverThread = new Thread(server);
+		serverThread.start();
+	}
+
+	private static void startClient(String host, int port, Client client)
+			throws IOException {
+		client.connect(InetSocketAddress.createUnresolved(host, port));
+		Thread clientThread = new Thread(client);
+		clientThread.start();
+	}
+
+	private static void startClientUi(String username, boolean useGUI,
+			Client client) {
+		ClientUI clientUI = null;
+		// Run UI
+		if (useGUI) {
+			clientUI = new ClientSwing(client, username);
+		} else {
+			clientUI = new ClientCMD(client, username);
+		}
+		Thread clientUIThread = new Thread(clientUI);
+		clientUIThread.start();
 	}
 }
