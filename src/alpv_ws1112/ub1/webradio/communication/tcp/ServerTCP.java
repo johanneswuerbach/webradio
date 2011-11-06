@@ -13,6 +13,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import alpv_ws1112.ub1.webradio.communication.Server;
+import alpv_ws1112.ub1.webradio.ui.ServerUI;
+import alpv_ws1112.ub1.webradio.ui.cmd.ServerCMD;
+import alpv_ws1112.ub1.webradio.ui.swing.ServerSwing;
 
 public class ServerTCP implements Server {
 
@@ -28,8 +31,9 @@ public class ServerTCP implements Server {
 	private ServerTCPStreamer _streamer;
 	private AtomicBoolean _currentlyResetingBarrier;
 	private AtomicBoolean _currentlyMergingClients;
+	private boolean _useGUI;
 
-	public ServerTCP(int port) throws IOException {
+	public ServerTCP(int port, boolean useGUI) throws IOException {
 		// Create socket
 		_socket = new ServerSocket(port);
 		_socket.setSoTimeout(500); // Only 500ms timeout
@@ -39,6 +43,7 @@ public class ServerTCP implements Server {
 		_pendingClients = new ArrayList<ServerTCPWorker>();
 		_currentlyMergingClients = new AtomicBoolean();
 		_currentlyResetingBarrier = new AtomicBoolean();
+		_useGUI = useGUI;
 
 		System.out.println("Starting server using port \"" + port + "\".");
 	}
@@ -94,17 +99,15 @@ public class ServerTCP implements Server {
 	 * Handles client server socket connections
 	 */
 	public void run() {
-
 		System.out.println("Server started.");
-
+		startServerUI();
 		while (!_close) {
 			try {
 				Socket client = _socket.accept();
 				ServerTCPWorker worker = new ServerTCPWorker(this,
 						client.getOutputStream());
 				addClient(worker);
-			} catch (SocketTimeoutException e) {
-			} catch (IOException e) {
+			} catch (SocketTimeoutException e) {} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
@@ -133,6 +136,18 @@ public class ServerTCP implements Server {
 			System.err.println(e.getMessage());
 		}
 		System.out.println("Server closed.");
+	}
+
+	private void startServerUI() {
+		// Run UI
+		ServerUI serverUI = null;
+		if (_useGUI) {
+			serverUI = new ServerSwing(this);
+		} else {
+			serverUI = new ServerCMD(this);
+		}
+		Thread serverUIThread = new Thread(serverUI);
+		serverUIThread.start();
 	}
 
 	/**
@@ -215,7 +230,7 @@ public class ServerTCP implements Server {
 	 * @param worker
 	 */
 	public void removeClient(ServerTCPWorker worker) {
-		 // Remove from both queues
+		// Remove from both queues
 		_pendingClients.remove(worker);
 		_clients.remove(worker);
 	}

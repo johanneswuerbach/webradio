@@ -8,8 +8,6 @@ import alpv_ws1112.ub1.webradio.communication.protobuf.ClientProtoBuf;
 import alpv_ws1112.ub1.webradio.communication.protobuf.ServerProtoBuf;
 import alpv_ws1112.ub1.webradio.communication.tcp.ClientTCP;
 import alpv_ws1112.ub1.webradio.communication.tcp.ServerTCP;
-import alpv_ws1112.ub1.webradio.ui.ServerUI;
-import alpv_ws1112.ub1.webradio.ui.cmd.ServerCMD;
 
 public class Main {
 	private static final String USAGE = String
@@ -50,9 +48,9 @@ public class Main {
 				int port = Integer.parseInt(args[argumentIndex + 2]);
 
 				if (protocol.equals("tcp")) {
-					server = new ServerTCP(port);
+					server = new ServerTCP(port, useGUI);
 				} else if (protocol.equals("protobuf")) {
-					server = new ServerProtoBuf(port);
+					server = new ServerProtoBuf(port, useGUI);
 				} else {
 					System.err.println("protcol " + protocol
 							+ " is not supported.");
@@ -98,14 +96,6 @@ public class Main {
 	}
 
 	private static void startServerUi(boolean useGUI, Server server) {
-		// Run UI
-		ServerUI serverUI = null;
-		if (useGUI) {
-			// TBD
-		} else {
-			serverUI = new ServerCMD(server);
-		}
-		Thread serverUIThread = new Thread(serverUI);
-		serverUIThread.start();
+
 	}
 }
