@@ -1,18 +1,20 @@
 package alpv_ws1112.ub1.webradio.communication.protobuf;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketException;
 
 import javax.sound.sampled.AudioFormat;
 
 import alpv_ws1112.ub1.webradio.audioplayer.AudioFormatTransport;
+import alpv_ws1112.ub1.webradio.audioplayer.AudioPlayer;
 import alpv_ws1112.ub1.webradio.communication.ByteArray;
 import alpv_ws1112.ub1.webradio.communication.Client;
-import alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData;
-import alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage;
+import alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage;
 import alpv_ws1112.ub1.webradio.ui.ClientUI;
 import alpv_ws1112.ub1.webradio.ui.cmd.ClientCMD;
 import alpv_ws1112.ub1.webradio.ui.swing.ClientSwing;
@@ -30,6 +32,7 @@ public class ClientProtoBuf implements Client {
 	private String _username;
 	private boolean _useGUI;
 	private ClientUI _clientUI;
+	private AudioPlayer _audioPlayer;
 
 	public ClientProtoBuf(String host, int port, String username, boolean useGUI) {
 		_useGUI = useGUI;
@@ -52,16 +55,49 @@ public class ClientProtoBuf implements Client {
 				size = _inputStream.read();
 				byte[] bytes = new byte[size];
 				_inputStream.read(bytes);
-				TextMessage message = TextMessage.parseFrom(bytes);
-				System.out.println("Message received: "
-						+ message.getTextMessage());
-				_clientUI.pushChatMessage(message.getUsername() + ": "
-						+ message.getTextMessage());
+				WebradioMessage message = WebradioMessage.parseFrom(bytes);
+				if (message.getIsChatMessage()) {
+					receiveChatMessage(message);
+				} else if (message.getIsAudioFormat()) {
+					receiveAudioFormat(message);
+				} else if (message.getIsAudioData()) {
+					receiveAudioData();
+				}
 			} catch (IOException e) {
 				System.err.println("Can't reveice message from server.");
 				e.printStackTrace();
 			}
 		}
+	}
+
+	private void receiveAudioData() {
+		byte[] buffer = new byte[BUFFER_SIZE];
+		boolean first = true;
+		try {
+			while (!_close && _inputStream.read(buffer) > 0) {
+				if (first) {
+					System.out.print("Start playing.");
+					first = false;
+				}
+				_audioPlayer.start();
+				_audioPlayer.writeBytes(buffer);
+			}
+		} catch (EOFException e) {
+			System.err.println("Can't play audio.");
+			close();
+		} catch (SocketException e) {
+			System.err.println("Can't play audio.");
+			close();
+		} catch (IOException e) {
+			System.err.println("Can't play audio.");
+			close();
+		}
+	}
+
+	private void receiveChatMessage(WebradioMessage message) {
+		System.out.println("Message received: " + message.getTextMessage());
+		_clientUI.pushChatMessage(message.getUsername() + ": "
+				+ message.getTextMessage());
 	}
 
 	private void startClientUi() {
@@ -145,10 +181,13 @@ public class ClientProtoBuf implements Client {
 	@Override
 	public void sendChatMessage(String message) throws IOException {
 		System.out.println("sending chat message to server.");
-		TextMessage.Builder builder = TextMessage.newBuilder();
+		WebradioMessage.Builder builder = WebradioMessage.newBuilder();
 		builder.setTextMessage(message);
 		builder.setUsername(_username);
-		TextMessage textMessage = builder.build();
+		builder.setIsAudioData(false);
+		builder.setIsAudioFormat(false);
+		builder.setIsChatMessage(true);
+		WebradioMessage textMessage = builder.build();
 		//		textMessage.writeTo(_outputStrem);
 		byte size = (byte) textMessage.getSerializedSize();
 		_outputStream.write(size);
@@ -158,19 +197,16 @@ public class ClientProtoBuf implements Client {
 	/**
 	 * Receive the audio format form the server
 	 * 
-	 * @return
 	 * @throws IOException
 	 */
-	private AudioFormat receiveAudioFormat() throws IOException {
+	private void receiveAudioFormat(WebradioMessage audioFormatMessage)
+			throws IOException {
 		try {
-			AudioFormatData.Builder builder = AudioFormatData.newBuilder();
-			builder.mergeFrom(_inputStream);
-			AudioFormatData audioFormatMessage = builder.build();
 			AudioFormat audioFormat = ((AudioFormatTransport) ByteArray
 					.toObject(audioFormatMessage.getData().toByteArray()))
 					.getAudioFormat();
 			System.out.println("Audio Format: " + audioFormat.toString());
-			return audioFormat;
+			_audioPlayer = new AudioPlayer(audioFormat);
 		} catch (ClassNotFoundException e) {
 			throw new IOException(e);
 		}

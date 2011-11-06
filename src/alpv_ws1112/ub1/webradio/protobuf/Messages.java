@@ -4,1391 +4,853 @@
 package alpv_ws1112.ub1.webradio.protobuf;
 
 public final class Messages {
-  private Messages() {}
-  public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistry registry) {
-  }
-  public interface TextMessageOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
-    
-    // required string username = 1;
-    boolean hasUsername();
-    String getUsername();
-    
-    // required string textMessage = 2;
-    boolean hasTextMessage();
-    String getTextMessage();
-  }
-  public static final class TextMessage extends
-      com.google.protobuf.GeneratedMessage
-      implements TextMessageOrBuilder {
-    // Use TextMessage.newBuilder() to construct.
-    private TextMessage(Builder builder) {
-      super(builder);
-    }
-    private TextMessage(boolean noInit) {}
-    
-    private static final TextMessage defaultInstance;
-    public static TextMessage getDefaultInstance() {
-      return defaultInstance;
-    }
-    
-    public TextMessage getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-    
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_TextMessage_descriptor;
-    }
-    
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_TextMessage_fieldAccessorTable;
-    }
-    
-    private int bitField0_;
-    // required string username = 1;
-    public static final int USERNAME_FIELD_NUMBER = 1;
-    private java.lang.Object username_;
-    public boolean hasUsername() {
-      return ((bitField0_ & 0x00000001) == 0x00000001);
-    }
-    public String getUsername() {
-      java.lang.Object ref = username_;
-      if (ref instanceof String) {
-        return (String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
-        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
-          username_ = s;
-        }
-        return s;
-      }
-    }
-    private com.google.protobuf.ByteString getUsernameBytes() {
-      java.lang.Object ref = username_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
-        username_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    
-    // required string textMessage = 2;
-    public static final int TEXTMESSAGE_FIELD_NUMBER = 2;
-    private java.lang.Object textMessage_;
-    public boolean hasTextMessage() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
-    }
-    public String getTextMessage() {
-      java.lang.Object ref = textMessage_;
-      if (ref instanceof String) {
-        return (String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
-        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
-          textMessage_ = s;
-        }
-        return s;
-      }
-    }
-    private com.google.protobuf.ByteString getTextMessageBytes() {
-      java.lang.Object ref = textMessage_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
-        textMessage_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    
-    private void initFields() {
-      username_ = "";
-      textMessage_ = "";
-    }
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
-      
-      if (!hasUsername()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasTextMessage()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      memoizedIsInitialized = 1;
-      return true;
-    }
-    
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      getSerializedSize();
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeBytes(1, getUsernameBytes());
-      }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeBytes(2, getTextMessageBytes());
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(1, getUsernameBytes());
-      }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(2, getTextMessageBytes());
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-    
-    private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-    
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
-    }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
-    }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    
-    public static Builder newBuilder() { return Builder.create(); }
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage prototype) {
-      return newBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() { return newBuilder(this); }
-    
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessageOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_TextMessage_descriptor;
-      }
-      
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_TextMessage_fieldAccessorTable;
-      }
-      
-      // Construct using alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-      
-      private Builder(BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
-        }
-      }
-      private static Builder create() {
-        return new Builder();
-      }
-      
-      public Builder clear() {
-        super.clear();
-        username_ = "";
-        bitField0_ = (bitField0_ & ~0x00000001);
-        textMessage_ = "";
-        bitField0_ = (bitField0_ & ~0x00000002);
-        return this;
-      }
-      
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
-      }
-      
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage.getDescriptor();
-      }
-      
-      public alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage getDefaultInstanceForType() {
-        return alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage.getDefaultInstance();
-      }
-      
-      public alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage build() {
-        alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-      
-      private alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return result;
-      }
-      
-      public alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage buildPartial() {
-        alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage result = new alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage(this);
-        int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
-          to_bitField0_ |= 0x00000001;
-        }
-        result.username_ = username_;
-        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
-          to_bitField0_ |= 0x00000002;
-        }
-        result.textMessage_ = textMessage_;
-        result.bitField0_ = to_bitField0_;
-        onBuilt();
-        return result;
-      }
-      
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage) {
-          return mergeFrom((alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage other) {
-        if (other == alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage.getDefaultInstance()) return this;
-        if (other.hasUsername()) {
-          setUsername(other.getUsername());
-        }
-        if (other.hasTextMessage()) {
-          setTextMessage(other.getTextMessage());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      public final boolean isInitialized() {
-        if (!hasUsername()) {
-          
-          return false;
-        }
-        if (!hasTextMessage()) {
-          
-          return false;
-        }
-        return true;
-      }
-      
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              onChanged();
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              bitField0_ |= 0x00000001;
-              username_ = input.readBytes();
-              break;
-            }
-            case 18: {
-              bitField0_ |= 0x00000002;
-              textMessage_ = input.readBytes();
-              break;
-            }
-          }
-        }
-      }
-      
-      private int bitField0_;
-      
-      // required string username = 1;
-      private java.lang.Object username_ = "";
-      public boolean hasUsername() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
-      }
-      public String getUsername() {
-        java.lang.Object ref = username_;
-        if (!(ref instanceof String)) {
-          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
-          username_ = s;
-          return s;
-        } else {
-          return (String) ref;
-        }
-      }
-      public Builder setUsername(String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000001;
-        username_ = value;
-        onChanged();
-        return this;
-      }
-      public Builder clearUsername() {
-        bitField0_ = (bitField0_ & ~0x00000001);
-        username_ = getDefaultInstance().getUsername();
-        onChanged();
-        return this;
-      }
-      void setUsername(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000001;
-        username_ = value;
-        onChanged();
-      }
-      
-      // required string textMessage = 2;
-      private java.lang.Object textMessage_ = "";
-      public boolean hasTextMessage() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
-      }
-      public String getTextMessage() {
-        java.lang.Object ref = textMessage_;
-        if (!(ref instanceof String)) {
-          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
-          textMessage_ = s;
-          return s;
-        } else {
-          return (String) ref;
-        }
-      }
-      public Builder setTextMessage(String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000002;
-        textMessage_ = value;
-        onChanged();
-        return this;
-      }
-      public Builder clearTextMessage() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        textMessage_ = getDefaultInstance().getTextMessage();
-        onChanged();
-        return this;
-      }
-      void setTextMessage(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000002;
-        textMessage_ = value;
-        onChanged();
-      }
-      
-      // @@protoc_insertion_point(builder_scope:alpv_ws1112.ub1.webradio.protobuf.TextMessage)
-    }
-    
-    static {
-      defaultInstance = new TextMessage(true);
-      defaultInstance.initFields();
-    }
-    
-    // @@protoc_insertion_point(class_scope:alpv_ws1112.ub1.webradio.protobuf.TextMessage)
-  }
-  
-  public interface AudioFormatDataOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
-    
-    // required uint32 id = 1;
-    boolean hasId();
-    int getId();
-    
-    // required bytes data = 2;
-    boolean hasData();
-    com.google.protobuf.ByteString getData();
-  }
-  public static final class AudioFormatData extends
-      com.google.protobuf.GeneratedMessage
-      implements AudioFormatDataOrBuilder {
-    // Use AudioFormatData.newBuilder() to construct.
-    private AudioFormatData(Builder builder) {
-      super(builder);
-    }
-    private AudioFormatData(boolean noInit) {}
-    
-    private static final AudioFormatData defaultInstance;
-    public static AudioFormatData getDefaultInstance() {
-      return defaultInstance;
-    }
-    
-    public AudioFormatData getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-    
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_AudioFormatData_descriptor;
-    }
-    
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_AudioFormatData_fieldAccessorTable;
-    }
-    
-    private int bitField0_;
-    // required uint32 id = 1;
-    public static final int ID_FIELD_NUMBER = 1;
-    private int id_;
-    public boolean hasId() {
-      return ((bitField0_ & 0x00000001) == 0x00000001);
-    }
-    public int getId() {
-      return id_;
-    }
-    
-    // required bytes data = 2;
-    public static final int DATA_FIELD_NUMBER = 2;
-    private com.google.protobuf.ByteString data_;
-    public boolean hasData() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
-    }
-    public com.google.protobuf.ByteString getData() {
-      return data_;
-    }
-    
-    private void initFields() {
-      id_ = 0;
-      data_ = com.google.protobuf.ByteString.EMPTY;
-    }
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
-      
-      if (!hasId()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasData()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      memoizedIsInitialized = 1;
-      return true;
-    }
-    
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      getSerializedSize();
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeUInt32(1, id_);
-      }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeBytes(2, data_);
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(1, id_);
-      }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(2, data_);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-    
-    private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-    
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
-    }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
-    }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    
-    public static Builder newBuilder() { return Builder.create(); }
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData prototype) {
-      return newBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() { return newBuilder(this); }
-    
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatDataOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_AudioFormatData_descriptor;
-      }
-      
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_AudioFormatData_fieldAccessorTable;
-      }
-      
-      // Construct using alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-      
-      private Builder(BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
-        }
-      }
-      private static Builder create() {
-        return new Builder();
-      }
-      
-      public Builder clear() {
-        super.clear();
-        id_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000001);
-        data_ = com.google.protobuf.ByteString.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000002);
-        return this;
-      }
-      
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
-      }
-      
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData.getDescriptor();
-      }
-      
-      public alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData getDefaultInstanceForType() {
-        return alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData.getDefaultInstance();
-      }
-      
-      public alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData build() {
-        alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-      
-      private alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return result;
-      }
-      
-      public alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData buildPartial() {
-        alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData result = new alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData(this);
-        int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
-          to_bitField0_ |= 0x00000001;
-        }
-        result.id_ = id_;
-        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
-          to_bitField0_ |= 0x00000002;
-        }
-        result.data_ = data_;
-        result.bitField0_ = to_bitField0_;
-        onBuilt();
-        return result;
-      }
-      
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData) {
-          return mergeFrom((alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData other) {
-        if (other == alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData.getDefaultInstance()) return this;
-        if (other.hasId()) {
-          setId(other.getId());
-        }
-        if (other.hasData()) {
-          setData(other.getData());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      public final boolean isInitialized() {
-        if (!hasId()) {
-          
-          return false;
-        }
-        if (!hasData()) {
-          
-          return false;
-        }
-        return true;
-      }
-      
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              onChanged();
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
-              }
-              break;
-            }
-            case 8: {
-              bitField0_ |= 0x00000001;
-              id_ = input.readUInt32();
-              break;
-            }
-            case 18: {
-              bitField0_ |= 0x00000002;
-              data_ = input.readBytes();
-              break;
-            }
-          }
-        }
-      }
-      
-      private int bitField0_;
-      
-      // required uint32 id = 1;
-      private int id_ ;
-      public boolean hasId() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
-      }
-      public int getId() {
-        return id_;
-      }
-      public Builder setId(int value) {
-        bitField0_ |= 0x00000001;
-        id_ = value;
-        onChanged();
-        return this;
-      }
-      public Builder clearId() {
-        bitField0_ = (bitField0_ & ~0x00000001);
-        id_ = 0;
-        onChanged();
-        return this;
-      }
-      
-      // required bytes data = 2;
-      private com.google.protobuf.ByteString data_ = com.google.protobuf.ByteString.EMPTY;
-      public boolean hasData() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
-      }
-      public com.google.protobuf.ByteString getData() {
-        return data_;
-      }
-      public Builder setData(com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000002;
-        data_ = value;
-        onChanged();
-        return this;
-      }
-      public Builder clearData() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        data_ = getDefaultInstance().getData();
-        onChanged();
-        return this;
-      }
-      
-      // @@protoc_insertion_point(builder_scope:alpv_ws1112.ub1.webradio.protobuf.AudioFormatData)
-    }
-    
-    static {
-      defaultInstance = new AudioFormatData(true);
-      defaultInstance.initFields();
-    }
-    
-    // @@protoc_insertion_point(class_scope:alpv_ws1112.ub1.webradio.protobuf.AudioFormatData)
-  }
-  
-  public interface AudioDataOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
-    
-    // required uint32 id = 1;
-    boolean hasId();
-    int getId();
-    
-    // required bytes data = 2;
-    boolean hasData();
-    com.google.protobuf.ByteString getData();
-  }
-  public static final class AudioData extends
-      com.google.protobuf.GeneratedMessage
-      implements AudioDataOrBuilder {
-    // Use AudioData.newBuilder() to construct.
-    private AudioData(Builder builder) {
-      super(builder);
-    }
-    private AudioData(boolean noInit) {}
-    
-    private static final AudioData defaultInstance;
-    public static AudioData getDefaultInstance() {
-      return defaultInstance;
-    }
-    
-    public AudioData getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-    
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_AudioData_descriptor;
-    }
-    
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_AudioData_fieldAccessorTable;
-    }
-    
-    private int bitField0_;
-    // required uint32 id = 1;
-    public static final int ID_FIELD_NUMBER = 1;
-    private int id_;
-    public boolean hasId() {
-      return ((bitField0_ & 0x00000001) == 0x00000001);
-    }
-    public int getId() {
-      return id_;
-    }
-    
-    // required bytes data = 2;
-    public static final int DATA_FIELD_NUMBER = 2;
-    private com.google.protobuf.ByteString data_;
-    public boolean hasData() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
-    }
-    public com.google.protobuf.ByteString getData() {
-      return data_;
-    }
-    
-    private void initFields() {
-      id_ = 0;
-      data_ = com.google.protobuf.ByteString.EMPTY;
-    }
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
-      
-      if (!hasId()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasData()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      memoizedIsInitialized = 1;
-      return true;
-    }
-    
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      getSerializedSize();
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeUInt32(1, id_);
-      }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeBytes(2, data_);
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(1, id_);
-      }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(2, data_);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-    
-    private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-    
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.AudioData parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.AudioData parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.AudioData parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.AudioData parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.AudioData parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.AudioData parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.AudioData parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
-    }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.AudioData parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
-    }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.AudioData parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.AudioData parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    
-    public static Builder newBuilder() { return Builder.create(); }
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(alpv_ws1112.ub1.webradio.protobuf.Messages.AudioData prototype) {
-      return newBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() { return newBuilder(this); }
-    
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements alpv_ws1112.ub1.webradio.protobuf.Messages.AudioDataOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_AudioData_descriptor;
-      }
-      
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_AudioData_fieldAccessorTable;
-      }
-      
-      // Construct using alpv_ws1112.ub1.webradio.protobuf.Messages.AudioData.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-      
-      private Builder(BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
-        }
-      }
-      private static Builder create() {
-        return new Builder();
-      }
-      
-      public Builder clear() {
-        super.clear();
-        id_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000001);
-        data_ = com.google.protobuf.ByteString.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000002);
-        return this;
-      }
-      
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
-      }
-      
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return alpv_ws1112.ub1.webradio.protobuf.Messages.AudioData.getDescriptor();
-      }
-      
-      public alpv_ws1112.ub1.webradio.protobuf.Messages.AudioData getDefaultInstanceForType() {
-        return alpv_ws1112.ub1.webradio.protobuf.Messages.AudioData.getDefaultInstance();
-      }
-      
-      public alpv_ws1112.ub1.webradio.protobuf.Messages.AudioData build() {
-        alpv_ws1112.ub1.webradio.protobuf.Messages.AudioData result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-      
-      private alpv_ws1112.ub1.webradio.protobuf.Messages.AudioData buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        alpv_ws1112.ub1.webradio.protobuf.Messages.AudioData result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return result;
-      }
-      
-      public alpv_ws1112.ub1.webradio.protobuf.Messages.AudioData buildPartial() {
-        alpv_ws1112.ub1.webradio.protobuf.Messages.AudioData result = new alpv_ws1112.ub1.webradio.protobuf.Messages.AudioData(this);
-        int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
-          to_bitField0_ |= 0x00000001;
-        }
-        result.id_ = id_;
-        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
-          to_bitField0_ |= 0x00000002;
-        }
-        result.data_ = data_;
-        result.bitField0_ = to_bitField0_;
-        onBuilt();
-        return result;
-      }
-      
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof alpv_ws1112.ub1.webradio.protobuf.Messages.AudioData) {
-          return mergeFrom((alpv_ws1112.ub1.webradio.protobuf.Messages.AudioData)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(alpv_ws1112.ub1.webradio.protobuf.Messages.AudioData other) {
-        if (other == alpv_ws1112.ub1.webradio.protobuf.Messages.AudioData.getDefaultInstance()) return this;
-        if (other.hasId()) {
-          setId(other.getId());
-        }
-        if (other.hasData()) {
-          setData(other.getData());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      public final boolean isInitialized() {
-        if (!hasId()) {
-          
-          return false;
-        }
-        if (!hasData()) {
-          
-          return false;
-        }
-        return true;
-      }
-      
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              onChanged();
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
-              }
-              break;
-            }
-            case 8: {
-              bitField0_ |= 0x00000001;
-              id_ = input.readUInt32();
-              break;
-            }
-            case 18: {
-              bitField0_ |= 0x00000002;
-              data_ = input.readBytes();
-              break;
-            }
-          }
-        }
-      }
-      
-      private int bitField0_;
-      
-      // required uint32 id = 1;
-      private int id_ ;
-      public boolean hasId() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
-      }
-      public int getId() {
-        return id_;
-      }
-      public Builder setId(int value) {
-        bitField0_ |= 0x00000001;
-        id_ = value;
-        onChanged();
-        return this;
-      }
-      public Builder clearId() {
-        bitField0_ = (bitField0_ & ~0x00000001);
-        id_ = 0;
-        onChanged();
-        return this;
-      }
-      
-      // required bytes data = 2;
-      private com.google.protobuf.ByteString data_ = com.google.protobuf.ByteString.EMPTY;
-      public boolean hasData() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
-      }
-      public com.google.protobuf.ByteString getData() {
-        return data_;
-      }
-      public Builder setData(com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000002;
-        data_ = value;
-        onChanged();
-        return this;
-      }
-      public Builder clearData() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        data_ = getDefaultInstance().getData();
-        onChanged();
-        return this;
-      }
-      
-      // @@protoc_insertion_point(builder_scope:alpv_ws1112.ub1.webradio.protobuf.AudioData)
-    }
-    
-    static {
-      defaultInstance = new AudioData(true);
-      defaultInstance.initFields();
-    }
-    
-    // @@protoc_insertion_point(class_scope:alpv_ws1112.ub1.webradio.protobuf.AudioData)
-  }
-  
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_alpv_ws1112_ub1_webradio_protobuf_TextMessage_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_alpv_ws1112_ub1_webradio_protobuf_TextMessage_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_alpv_ws1112_ub1_webradio_protobuf_AudioFormatData_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_alpv_ws1112_ub1_webradio_protobuf_AudioFormatData_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_alpv_ws1112_ub1_webradio_protobuf_AudioData_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_alpv_ws1112_ub1_webradio_protobuf_AudioData_fieldAccessorTable;
-  
-  public static com.google.protobuf.Descriptors.FileDescriptor
-      getDescriptor() {
-    return descriptor;
-  }
-  private static com.google.protobuf.Descriptors.FileDescriptor
-      descriptor;
-  static {
-    java.lang.String[] descriptorData = {
-      "\n\022chatAndAudio.proto\022!alpv_ws1112.ub1.we" +
-      "bradio.protobuf\"4\n\013TextMessage\022\020\n\010userna" +
-      "me\030\001 \002(\t\022\023\n\013textMessage\030\002 \002(\t\"+\n\017AudioFo" +
-      "rmatData\022\n\n\002id\030\001 \002(\r\022\014\n\004data\030\002 \002(\014\"%\n\tAu" +
-      "dioData\022\n\n\002id\030\001 \002(\r\022\014\n\004data\030\002 \002(\014B-\n!alp" +
-      "v_ws1112.ub1.webradio.protobufB\010Messages"
-    };
-    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
-        public com.google.protobuf.ExtensionRegistry assignDescriptors(
-            com.google.protobuf.Descriptors.FileDescriptor root) {
-          descriptor = root;
-          internal_static_alpv_ws1112_ub1_webradio_protobuf_TextMessage_descriptor =
-            getDescriptor().getMessageTypes().get(0);
-          internal_static_alpv_ws1112_ub1_webradio_protobuf_TextMessage_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_alpv_ws1112_ub1_webradio_protobuf_TextMessage_descriptor,
-              new java.lang.String[] { "Username", "TextMessage", },
-              alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage.class,
-              alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage.Builder.class);
-          internal_static_alpv_ws1112_ub1_webradio_protobuf_AudioFormatData_descriptor =
-            getDescriptor().getMessageTypes().get(1);
-          internal_static_alpv_ws1112_ub1_webradio_protobuf_AudioFormatData_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_alpv_ws1112_ub1_webradio_protobuf_AudioFormatData_descriptor,
-              new java.lang.String[] { "Id", "Data", },
-              alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData.class,
-              alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData.Builder.class);
-          internal_static_alpv_ws1112_ub1_webradio_protobuf_AudioData_descriptor =
-            getDescriptor().getMessageTypes().get(2);
-          internal_static_alpv_ws1112_ub1_webradio_protobuf_AudioData_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_alpv_ws1112_ub1_webradio_protobuf_AudioData_descriptor,
-              new java.lang.String[] { "Id", "Data", },
-              alpv_ws1112.ub1.webradio.protobuf.Messages.AudioData.class,
-              alpv_ws1112.ub1.webradio.protobuf.Messages.AudioData.Builder.class);
-          return null;
-        }
-      };
-    com.google.protobuf.Descriptors.FileDescriptor
-      .internalBuildGeneratedFileFrom(descriptorData,
-        new com.google.protobuf.Descriptors.FileDescriptor[] {
-        }, assigner);
-  }
-  
-  // @@protoc_insertion_point(outer_class_scope)
+	private Messages() {
+	}
+
+	public static void registerAllExtensions(
+			com.google.protobuf.ExtensionRegistry registry) {
+	}
+
+	public interface WebradioMessageOrBuilder extends
+			com.google.protobuf.MessageOrBuilder {
+
+		// required bool isChatMessage = 1;
+		boolean hasIsChatMessage();
+
+		boolean getIsChatMessage();
+
+		// required bool isAudioFormat = 2;
+		boolean hasIsAudioFormat();
+
+		boolean getIsAudioFormat();
+
+		// required bool isAudioData = 3;
+		boolean hasIsAudioData();
+
+		boolean getIsAudioData();
+
+		// optional string username = 4;
+		boolean hasUsername();
+
+		String getUsername();
+
+		// optional string textMessage = 5;
+		boolean hasTextMessage();
+
+		String getTextMessage();
+
+		// optional bytes data = 6;
+		boolean hasData();
+
+		com.google.protobuf.ByteString getData();
+	}
+
+	public static final class WebradioMessage extends
+			com.google.protobuf.GeneratedMessage implements
+			WebradioMessageOrBuilder {
+		// Use WebradioMessage.newBuilder() to construct.
+		private WebradioMessage(Builder builder) {
+			super(builder);
+		}
+
+		private WebradioMessage(boolean noInit) {
+		}
+
+		private static final WebradioMessage defaultInstance;
+
+		public static WebradioMessage getDefaultInstance() {
+			return defaultInstance;
+		}
+
+		public WebradioMessage getDefaultInstanceForType() {
+			return defaultInstance;
+		}
+
+		public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
+			return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_WebradioMessage_descriptor;
+		}
+
+		protected com.google.protobuf.GeneratedMessage.FieldAccessorTable internalGetFieldAccessorTable() {
+			return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_WebradioMessage_fieldAccessorTable;
+		}
+
+		private int bitField0_;
+		// required bool isChatMessage = 1;
+		public static final int ISCHATMESSAGE_FIELD_NUMBER = 1;
+		private boolean isChatMessage_;
+
+		public boolean hasIsChatMessage() {
+			return ((bitField0_ & 0x00000001) == 0x00000001);
+		}
+
+		public boolean getIsChatMessage() {
+			return isChatMessage_;
+		}
+
+		// required bool isAudioFormat = 2;
+		public static final int ISAUDIOFORMAT_FIELD_NUMBER = 2;
+		private boolean isAudioFormat_;
+
+		public boolean hasIsAudioFormat() {
+			return ((bitField0_ & 0x00000002) == 0x00000002);
+		}
+
+		public boolean getIsAudioFormat() {
+			return isAudioFormat_;
+		}
+
+		// required bool isAudioData = 3;
+		public static final int ISAUDIODATA_FIELD_NUMBER = 3;
+		private boolean isAudioData_;
+
+		public boolean hasIsAudioData() {
+			return ((bitField0_ & 0x00000004) == 0x00000004);
+		}
+
+		public boolean getIsAudioData() {
+			return isAudioData_;
+		}
+
+		// optional string username = 4;
+		public static final int USERNAME_FIELD_NUMBER = 4;
+		private java.lang.Object username_;
+
+		public boolean hasUsername() {
+			return ((bitField0_ & 0x00000008) == 0x00000008);
+		}
+
+		public String getUsername() {
+			java.lang.Object ref = username_;
+			if (ref instanceof String) {
+				return (String) ref;
+			} else {
+				com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+				String s = bs.toStringUtf8();
+				if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+					username_ = s;
+				}
+				return s;
+			}
+		}
+
+		private com.google.protobuf.ByteString getUsernameBytes() {
+			java.lang.Object ref = username_;
+			if (ref instanceof String) {
+				com.google.protobuf.ByteString b = com.google.protobuf.ByteString
+						.copyFromUtf8((String) ref);
+				username_ = b;
+				return b;
+			} else {
+				return (com.google.protobuf.ByteString) ref;
+			}
+		}
+
+		// optional string textMessage = 5;
+		public static final int TEXTMESSAGE_FIELD_NUMBER = 5;
+		private java.lang.Object textMessage_;
+
+		public boolean hasTextMessage() {
+			return ((bitField0_ & 0x00000010) == 0x00000010);
+		}
+
+		public String getTextMessage() {
+			java.lang.Object ref = textMessage_;
+			if (ref instanceof String) {
+				return (String) ref;
+			} else {
+				com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+				String s = bs.toStringUtf8();
+				if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+					textMessage_ = s;
+				}
+				return s;
+			}
+		}
+
+		private com.google.protobuf.ByteString getTextMessageBytes() {
+			java.lang.Object ref = textMessage_;
+			if (ref instanceof String) {
+				com.google.protobuf.ByteString b = com.google.protobuf.ByteString
+						.copyFromUtf8((String) ref);
+				textMessage_ = b;
+				return b;
+			} else {
+				return (com.google.protobuf.ByteString) ref;
+			}
+		}
+
+		// optional bytes data = 6;
+		public static final int DATA_FIELD_NUMBER = 6;
+		private com.google.protobuf.ByteString data_;
+
+		public boolean hasData() {
+			return ((bitField0_ & 0x00000020) == 0x00000020);
+		}
+
+		public com.google.protobuf.ByteString getData() {
+			return data_;
+		}
+
+		private void initFields() {
+			isChatMessage_ = false;
+			isAudioFormat_ = false;
+			isAudioData_ = false;
+			username_ = "";
+			textMessage_ = "";
+			data_ = com.google.protobuf.ByteString.EMPTY;
+		}
+
+		private byte memoizedIsInitialized = -1;
+
+		public final boolean isInitialized() {
+			byte isInitialized = memoizedIsInitialized;
+			if (isInitialized != -1)
+				return isInitialized == 1;
+
+			if (!hasIsChatMessage()) {
+				memoizedIsInitialized = 0;
+				return false;
+			}
+			if (!hasIsAudioFormat()) {
+				memoizedIsInitialized = 0;
+				return false;
+			}
+			if (!hasIsAudioData()) {
+				memoizedIsInitialized = 0;
+				return false;
+			}
+			memoizedIsInitialized = 1;
+			return true;
+		}
+
+		public void writeTo(com.google.protobuf.CodedOutputStream output)
+				throws java.io.IOException {
+			getSerializedSize();
+			if (((bitField0_ & 0x00000001) == 0x00000001)) {
+				output.writeBool(1, isChatMessage_);
+			}
+			if (((bitField0_ & 0x00000002) == 0x00000002)) {
+				output.writeBool(2, isAudioFormat_);
+			}
+			if (((bitField0_ & 0x00000004) == 0x00000004)) {
+				output.writeBool(3, isAudioData_);
+			}
+			if (((bitField0_ & 0x00000008) == 0x00000008)) {
+				output.writeBytes(4, getUsernameBytes());
+			}
+			if (((bitField0_ & 0x00000010) == 0x00000010)) {
+				output.writeBytes(5, getTextMessageBytes());
+			}
+			if (((bitField0_ & 0x00000020) == 0x00000020)) {
+				output.writeBytes(6, data_);
+			}
+			getUnknownFields().writeTo(output);
+		}
+
+		private int memoizedSerializedSize = -1;
+
+		public int getSerializedSize() {
+			int size = memoizedSerializedSize;
+			if (size != -1)
+				return size;
+
+			size = 0;
+			if (((bitField0_ & 0x00000001) == 0x00000001)) {
+				size += com.google.protobuf.CodedOutputStream.computeBoolSize(
+						1, isChatMessage_);
+			}
+			if (((bitField0_ & 0x00000002) == 0x00000002)) {
+				size += com.google.protobuf.CodedOutputStream.computeBoolSize(
+						2, isAudioFormat_);
+			}
+			if (((bitField0_ & 0x00000004) == 0x00000004)) {
+				size += com.google.protobuf.CodedOutputStream.computeBoolSize(
+						3, isAudioData_);
+			}
+			if (((bitField0_ & 0x00000008) == 0x00000008)) {
+				size += com.google.protobuf.CodedOutputStream.computeBytesSize(
+						4, getUsernameBytes());
+			}
+			if (((bitField0_ & 0x00000010) == 0x00000010)) {
+				size += com.google.protobuf.CodedOutputStream.computeBytesSize(
+						5, getTextMessageBytes());
+			}
+			if (((bitField0_ & 0x00000020) == 0x00000020)) {
+				size += com.google.protobuf.CodedOutputStream.computeBytesSize(
+						6, data_);
+			}
+			size += getUnknownFields().getSerializedSize();
+			memoizedSerializedSize = size;
+			return size;
+		}
+
+		private static final long serialVersionUID = 0L;
+
+		@java.lang.Override
+		protected java.lang.Object writeReplace()
+				throws java.io.ObjectStreamException {
+			return super.writeReplace();
+		}
+
+		public static alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage parseFrom(
+				com.google.protobuf.ByteString data)
+				throws com.google.protobuf.InvalidProtocolBufferException {
+			return newBuilder().mergeFrom(data).buildParsed();
+		}
+
+		public static alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage parseFrom(
+				com.google.protobuf.ByteString data,
+				com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+				throws com.google.protobuf.InvalidProtocolBufferException {
+			return newBuilder().mergeFrom(data, extensionRegistry)
+					.buildParsed();
+		}
+
+		public static alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage parseFrom(
+				byte[] data)
+				throws com.google.protobuf.InvalidProtocolBufferException {
+			return newBuilder().mergeFrom(data).buildParsed();
+		}
+
+		public static alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage parseFrom(
+				byte[] data,
+				com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+				throws com.google.protobuf.InvalidProtocolBufferException {
+			return newBuilder().mergeFrom(data, extensionRegistry)
+					.buildParsed();
+		}
+
+		public static alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage parseFrom(
+				java.io.InputStream input) throws java.io.IOException {
+			return newBuilder().mergeFrom(input).buildParsed();
+		}
+
+		public static alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage parseFrom(
+				java.io.InputStream input,
+				com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+				throws java.io.IOException {
+			return newBuilder().mergeFrom(input, extensionRegistry)
+					.buildParsed();
+		}
+
+		public static alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage parseDelimitedFrom(
+				java.io.InputStream input) throws java.io.IOException {
+			Builder builder = newBuilder();
+			if (builder.mergeDelimitedFrom(input)) {
+				return builder.buildParsed();
+			} else {
+				return null;
+			}
+		}
+
+		public static alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage parseDelimitedFrom(
+				java.io.InputStream input,
+				com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+				throws java.io.IOException {
+			Builder builder = newBuilder();
+			if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+				return builder.buildParsed();
+			} else {
+				return null;
+			}
+		}
+
+		public static alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage parseFrom(
+				com.google.protobuf.CodedInputStream input)
+				throws java.io.IOException {
+			return newBuilder().mergeFrom(input).buildParsed();
+		}
+
+		public static alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage parseFrom(
+				com.google.protobuf.CodedInputStream input,
+				com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+				throws java.io.IOException {
+			return newBuilder().mergeFrom(input, extensionRegistry)
+					.buildParsed();
+		}
+
+		public static Builder newBuilder() {
+			return Builder.create();
+		}
+
+		public Builder newBuilderForType() {
+			return newBuilder();
+		}
+
+		public static Builder newBuilder(
+				alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage prototype) {
+			return newBuilder().mergeFrom(prototype);
+		}
+
+		public Builder toBuilder() {
+			return newBuilder(this);
+		}
+
+		@java.lang.Override
+		protected Builder newBuilderForType(
+				com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+			Builder builder = new Builder(parent);
+			return builder;
+		}
+
+		public static final class Builder extends
+				com.google.protobuf.GeneratedMessage.Builder<Builder>
+				implements
+				alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessageOrBuilder {
+			public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
+				return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_WebradioMessage_descriptor;
+			}
+
+			protected com.google.protobuf.GeneratedMessage.FieldAccessorTable internalGetFieldAccessorTable() {
+				return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_WebradioMessage_fieldAccessorTable;
+			}
+
+			// Construct using alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage.newBuilder()
+			private Builder() {
+				maybeForceBuilderInitialization();
+			}
+
+			private Builder(BuilderParent parent) {
+				super(parent);
+				maybeForceBuilderInitialization();
+			}
+
+			private void maybeForceBuilderInitialization() {
+				if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {}
+			}
+
+			private static Builder create() {
+				return new Builder();
+			}
+
+			public Builder clear() {
+				super.clear();
+				isChatMessage_ = false;
+				bitField0_ = (bitField0_ & ~0x00000001);
+				isAudioFormat_ = false;
+				bitField0_ = (bitField0_ & ~0x00000002);
+				isAudioData_ = false;
+				bitField0_ = (bitField0_ & ~0x00000004);
+				username_ = "";
+				bitField0_ = (bitField0_ & ~0x00000008);
+				textMessage_ = "";
+				bitField0_ = (bitField0_ & ~0x00000010);
+				data_ = com.google.protobuf.ByteString.EMPTY;
+				bitField0_ = (bitField0_ & ~0x00000020);
+				return this;
+			}
+
+			public Builder clone() {
+				return create().mergeFrom(buildPartial());
+			}
+
+			public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
+				return alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage
+						.getDescriptor();
+			}
+
+			public alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage getDefaultInstanceForType() {
+				return alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage
+						.getDefaultInstance();
+			}
+
+			public alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage build() {
+				alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage result = buildPartial();
+				if (!result.isInitialized()) {
+					throw newUninitializedMessageException(result);
+				}
+				return result;
+			}
+
+			private alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage buildParsed()
+					throws com.google.protobuf.InvalidProtocolBufferException {
+				alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage result = buildPartial();
+				if (!result.isInitialized()) {
+					throw newUninitializedMessageException(result)
+							.asInvalidProtocolBufferException();
+				}
+				return result;
+			}
+
+			public alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage buildPartial() {
+				alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage result = new alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage(
+						this);
+				int from_bitField0_ = bitField0_;
+				int to_bitField0_ = 0;
+				if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+					to_bitField0_ |= 0x00000001;
+				}
+				result.isChatMessage_ = isChatMessage_;
+				if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+					to_bitField0_ |= 0x00000002;
+				}
+				result.isAudioFormat_ = isAudioFormat_;
+				if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+					to_bitField0_ |= 0x00000004;
+				}
+				result.isAudioData_ = isAudioData_;
+				if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+					to_bitField0_ |= 0x00000008;
+				}
+				result.username_ = username_;
+				if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+					to_bitField0_ |= 0x00000010;
+				}
+				result.textMessage_ = textMessage_;
+				if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+					to_bitField0_ |= 0x00000020;
+				}
+				result.data_ = data_;
+				result.bitField0_ = to_bitField0_;
+				onBuilt();
+				return result;
+			}
+
+			public Builder mergeFrom(com.google.protobuf.Message other) {
+				if (other instanceof alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage) {
+					return mergeFrom((alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage) other);
+				} else {
+					super.mergeFrom(other);
+					return this;
+				}
+			}
+
+			public Builder mergeFrom(
+					alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage other) {
+				if (other == alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage
+						.getDefaultInstance())
+					return this;
+				if (other.hasIsChatMessage()) {
+					setIsChatMessage(other.getIsChatMessage());
+				}
+				if (other.hasIsAudioFormat()) {
+					setIsAudioFormat(other.getIsAudioFormat());
+				}
+				if (other.hasIsAudioData()) {
+					setIsAudioData(other.getIsAudioData());
+				}
+				if (other.hasUsername()) {
+					setUsername(other.getUsername());
+				}
+				if (other.hasTextMessage()) {
+					setTextMessage(other.getTextMessage());
+				}
+				if (other.hasData()) {
+					setData(other.getData());
+				}
+				this.mergeUnknownFields(other.getUnknownFields());
+				return this;
+			}
+
+			public final boolean isInitialized() {
+				if (!hasIsChatMessage()) {
+
+					return false;
+				}
+				if (!hasIsAudioFormat()) {
+
+					return false;
+				}
+				if (!hasIsAudioData()) {
+
+					return false;
+				}
+				return true;
+			}
+
+			public Builder mergeFrom(
+					com.google.protobuf.CodedInputStream input,
+					com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+					throws java.io.IOException {
+				com.google.protobuf.UnknownFieldSet.Builder unknownFields = com.google.protobuf.UnknownFieldSet
+						.newBuilder(this.getUnknownFields());
+				while (true) {
+					int tag = input.readTag();
+					switch (tag) {
+						case 0:
+							this.setUnknownFields(unknownFields.build());
+							onChanged();
+							return this;
+						default: {
+							if (!parseUnknownField(input, unknownFields,
+									extensionRegistry, tag)) {
+								this.setUnknownFields(unknownFields.build());
+								onChanged();
+								return this;
+							}
+							break;
+						}
+						case 8: {
+							bitField0_ |= 0x00000001;
+							isChatMessage_ = input.readBool();
+							break;
+						}
+						case 16: {
+							bitField0_ |= 0x00000002;
+							isAudioFormat_ = input.readBool();
+							break;
+						}
+						case 24: {
+							bitField0_ |= 0x00000004;
+							isAudioData_ = input.readBool();
+							break;
+						}
+						case 34: {
+							bitField0_ |= 0x00000008;
+							username_ = input.readBytes();
+							break;
+						}
+						case 42: {
+							bitField0_ |= 0x00000010;
+							textMessage_ = input.readBytes();
+							break;
+						}
+						case 50: {
+							bitField0_ |= 0x00000020;
+							data_ = input.readBytes();
+							break;
+						}
+					}
+				}
+			}
+
+			private int bitField0_;
+
+			// required bool isChatMessage = 1;
+			private boolean isChatMessage_;
+
+			public boolean hasIsChatMessage() {
+				return ((bitField0_ & 0x00000001) == 0x00000001);
+			}
+
+			public boolean getIsChatMessage() {
+				return isChatMessage_;
+			}
+
+			public Builder setIsChatMessage(boolean value) {
+				bitField0_ |= 0x00000001;
+				isChatMessage_ = value;
+				onChanged();
+				return this;
+			}
+
+			public Builder clearIsChatMessage() {
+				bitField0_ = (bitField0_ & ~0x00000001);
+				isChatMessage_ = false;
+				onChanged();
+				return this;
+			}
+
+			// required bool isAudioFormat = 2;
+			private boolean isAudioFormat_;
+
+			public boolean hasIsAudioFormat() {
+				return ((bitField0_ & 0x00000002) == 0x00000002);
+			}
+
+			public boolean getIsAudioFormat() {
+				return isAudioFormat_;
+			}
+
+			public Builder setIsAudioFormat(boolean value) {
+				bitField0_ |= 0x00000002;
+				isAudioFormat_ = value;
+				onChanged();
+				return this;
+			}
+
+			public Builder clearIsAudioFormat() {
+				bitField0_ = (bitField0_ & ~0x00000002);
+				isAudioFormat_ = false;
+				onChanged();
+				return this;
+			}
+
+			// required bool isAudioData = 3;
+			private boolean isAudioData_;
+
+			public boolean hasIsAudioData() {
+				return ((bitField0_ & 0x00000004) == 0x00000004);
+			}
+
+			public boolean getIsAudioData() {
+				return isAudioData_;
+			}
+
+			public Builder setIsAudioData(boolean value) {
+				bitField0_ |= 0x00000004;
+				isAudioData_ = value;
+				onChanged();
+				return this;
+			}
+
+			public Builder clearIsAudioData() {
+				bitField0_ = (bitField0_ & ~0x00000004);
+				isAudioData_ = false;
+				onChanged();
+				return this;
+			}
+
+			// optional string username = 4;
+			private java.lang.Object username_ = "";
+
+			public boolean hasUsername() {
+				return ((bitField0_ & 0x00000008) == 0x00000008);
+			}
+
+			public String getUsername() {
+				java.lang.Object ref = username_;
+				if (!(ref instanceof String)) {
+					String s = ((com.google.protobuf.ByteString) ref)
+							.toStringUtf8();
+					username_ = s;
+					return s;
+				} else {
+					return (String) ref;
+				}
+			}
+
+			public Builder setUsername(String value) {
+				if (value == null) {
+					throw new NullPointerException();
+				}
+				bitField0_ |= 0x00000008;
+				username_ = value;
+				onChanged();
+				return this;
+			}
+
+			public Builder clearUsername() {
+				bitField0_ = (bitField0_ & ~0x00000008);
+				username_ = getDefaultInstance().getUsername();
+				onChanged();
+				return this;
+			}
+
+			void setUsername(com.google.protobuf.ByteString value) {
+				bitField0_ |= 0x00000008;
+				username_ = value;
+				onChanged();
+			}
+
+			// optional string textMessage = 5;
+			private java.lang.Object textMessage_ = "";
+
+			public boolean hasTextMessage() {
+				return ((bitField0_ & 0x00000010) == 0x00000010);
+			}
+
+			public String getTextMessage() {
+				java.lang.Object ref = textMessage_;
+				if (!(ref instanceof String)) {
+					String s = ((com.google.protobuf.ByteString) ref)
+							.toStringUtf8();
+					textMessage_ = s;
+					return s;
+				} else {
+					return (String) ref;
+				}
+			}
+
+			public Builder setTextMessage(String value) {
+				if (value == null) {
+					throw new NullPointerException();
+				}
+				bitField0_ |= 0x00000010;
+				textMessage_ = value;
+				onChanged();
+				return this;
+			}
+
+			public Builder clearTextMessage() {
+				bitField0_ = (bitField0_ & ~0x00000010);
+				textMessage_ = getDefaultInstance().getTextMessage();
+				onChanged();
+				return this;
+			}
+
+			void setTextMessage(com.google.protobuf.ByteString value) {
+				bitField0_ |= 0x00000010;
+				textMessage_ = value;
+				onChanged();
+			}
+
+			// optional bytes data = 6;
+			private com.google.protobuf.ByteString data_ = com.google.protobuf.ByteString.EMPTY;
+
+			public boolean hasData() {
+				return ((bitField0_ & 0x00000020) == 0x00000020);
+			}
+
+			public com.google.protobuf.ByteString getData() {
+				return data_;
+			}
+
+			public Builder setData(com.google.protobuf.ByteString value) {
+				if (value == null) {
+					throw new NullPointerException();
+				}
+				bitField0_ |= 0x00000020;
+				data_ = value;
+				onChanged();
+				return this;
+			}
+
+			public Builder clearData() {
+				bitField0_ = (bitField0_ & ~0x00000020);
+				data_ = getDefaultInstance().getData();
+				onChanged();
+				return this;
+			}
+
+			// @@protoc_insertion_point(builder_scope:alpv_ws1112.ub1.webradio.protobuf.WebradioMessage)
+		}
+
+		static {
+			defaultInstance = new WebradioMessage(true);
+			defaultInstance.initFields();
+		}
+
+		// @@protoc_insertion_point(class_scope:alpv_ws1112.ub1.webradio.protobuf.WebradioMessage)
+	}
+
+	private static com.google.protobuf.Descriptors.Descriptor internal_static_alpv_ws1112_ub1_webradio_protobuf_WebradioMessage_descriptor;
+	private static com.google.protobuf.GeneratedMessage.FieldAccessorTable internal_static_alpv_ws1112_ub1_webradio_protobuf_WebradioMessage_fieldAccessorTable;
+
+	public static com.google.protobuf.Descriptors.FileDescriptor getDescriptor() {
+		return descriptor;
+	}
+
+	private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
+	static {
+		java.lang.String[] descriptorData = { "\n\022chatAndAudio.proto\022!alpv_ws1112.ub1.we"
+				+ "bradio.protobuf\"\211\001\n\017WebradioMessage\022\025\n\ri"
+				+ "sChatMessage\030\001 \002(\010\022\025\n\risAudioFormat\030\002 \002("
+				+ "\010\022\023\n\013isAudioData\030\003 \002(\010\022\020\n\010username\030\004 \001(\t"
+				+ "\022\023\n\013textMessage\030\005 \001(\t\022\014\n\004data\030\006 \001(\014B-\n!a"
+				+ "lpv_ws1112.ub1.webradio.protobufB\010Messag" + "es" };
+		com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+			public com.google.protobuf.ExtensionRegistry assignDescriptors(
+					com.google.protobuf.Descriptors.FileDescriptor root) {
+				descriptor = root;
+				internal_static_alpv_ws1112_ub1_webradio_protobuf_WebradioMessage_descriptor = getDescriptor()
+						.getMessageTypes().get(0);
+				internal_static_alpv_ws1112_ub1_webradio_protobuf_WebradioMessage_fieldAccessorTable = new com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+						internal_static_alpv_ws1112_ub1_webradio_protobuf_WebradioMessage_descriptor,
+						new java.lang.String[] { "IsChatMessage",
+								"IsAudioFormat", "IsAudioData", "Username",
+								"TextMessage", "Data", },
+						alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage.class,
+						alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage.Builder.class);
+				return null;
+			}
+		};
+		com.google.protobuf.Descriptors.FileDescriptor
+				.internalBuildGeneratedFileFrom(
+						descriptorData,
+						new com.google.protobuf.Descriptors.FileDescriptor[] {},
+						assigner);
+	}
+
+	// @@protoc_insertion_point(outer_class_scope)
 }

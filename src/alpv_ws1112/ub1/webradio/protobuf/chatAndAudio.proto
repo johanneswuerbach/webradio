@@ -3,17 +3,11 @@ package alpv_ws1112.ub1.webradio.protobuf;
 option java_package = "alpv_ws1112.ub1.webradio.protobuf";
 option java_outer_classname = "Messages";
 
-message TextMessage {
-	required string username = 1;
-	required string textMessage = 2;
-}
-
-message AudioFormatData {		
-	required uint32 id = 1;
-	required bytes data = 2;
-}
-
-message AudioData {		
-	required uint32 id = 1;
-	required bytes data = 2;
+message WebradioMessage {
+	required bool isChatMessage =1;
+	required bool isAudioFormat = 2;
+	required bool isAudioData = 3;
+	optional string username = 4;
+	optional string textMessage = 5;
+	optional bytes data = 6;
 }

@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-import alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage;
+import alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage;
 
 /**
  * Handeling all clients and receive their chat messages.
@@ -39,7 +39,7 @@ public class ServerProtoBufChatWorker implements Runnable {
 		System.out.println("Chat Worker started.");
 		while (!_close) {
 			try {
-				receiveMessages();
+				receiveWebradioMessage();
 			} catch (IOException e) {
 				System.err
 						.println("Can't receive message. Closing client socket.");
@@ -48,22 +48,28 @@ public class ServerProtoBufChatWorker implements Runnable {
 		}
 		try {
 			_inputStream.close();
+			_outputStream.close();
+			_server.removeClient(this);
 		} catch (IOException e) {
 			System.err.println("Can't send close client connection.");
 		}
 	}
 
-	private void receiveMessages() throws IOException {
+	private void receiveWebradioMessage() throws IOException {
 		int size = _inputStream.read();
 		byte[] bytes = new byte[size];
 		_inputStream.read(bytes);
-		TextMessage message = TextMessage.parseFrom(bytes);
-		System.out.println("Message from " + message.getUsername()
-				+ " received: " + message.getTextMessage());
-		_server.sendChatMessage(message);
+		WebradioMessage message = WebradioMessage.parseFrom(bytes);
+		if (message.getIsChatMessage()) {
+			System.out.println("Message from " + message.getUsername()
+					+ " received: " + message.getTextMessage());
+			_server.sendChatMessage(message);
+		} else {
+			System.err.println("not a text message");
+		}
 	}
 
-	public void sendMessage(TextMessage textMessage) {
+	public void sendMessage(WebradioMessage textMessage) {
 		System.out.println("sending chat message to client.");
 		byte size = (byte) textMessage.getSerializedSize();
 		try {

@@ -2,12 +2,13 @@ package alpv_ws1112.ub1.webradio.communication.protobuf;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.Socket;
 
 import javax.sound.sampled.AudioFormat;
 
 import alpv_ws1112.ub1.webradio.audioplayer.AudioFormatTransport;
 import alpv_ws1112.ub1.webradio.communication.ByteArray;
-import alpv_ws1112.ub1.webradio.protobuf.Messages.AudioFormatData;
+import alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage;
 
 import com.google.protobuf.ByteString;
 
@@ -18,12 +19,14 @@ public class ServerProtoBufWorker implements Runnable {
 
 	private boolean _close = false, _play = false;
 	private AudioFormat _audioFormat;
-	private OutputStream _client;
+	private Socket _client;
 	private ServerProtoBuf _server;
+	private OutputStream _outputStream;
 
-	public ServerProtoBufWorker(ServerProtoBuf server, OutputStream client)
+	public ServerProtoBufWorker(ServerProtoBuf server, Socket client)
 			throws IOException {
 		_client = client;
+		_outputStream = _client.getOutputStream();
 		_server = server;
 	}
 
@@ -61,12 +64,15 @@ public class ServerProtoBufWorker implements Runnable {
 		try {
 			AudioFormatTransport aft = new AudioFormatTransport(_audioFormat);
 			byte[] format = ByteArray.toBytes(aft);
-			AudioFormatData.Builder builder = AudioFormatData.newBuilder();
-			builder.setId(132);
+			WebradioMessage.Builder builder = WebradioMessage.newBuilder();
 			builder.setData(ByteString.copyFrom(format));
-			AudioFormatData message = builder.build();
-			assert (message.isInitialized());
-			message.writeTo(_client);
+			builder.setIsAudioData(false);
+			builder.setIsAudioFormat(true);
+			builder.setIsChatMessage(false);
+			WebradioMessage message = builder.build();
+			byte size = (byte) message.getSerializedSize();
+			_outputStream.write(size);
+			_outputStream.write(message.toByteArray());
 			System.out.println("AudioFormat transmitted.");
 		} catch (IOException e) {
 			System.err.println("Can't send audio format.");
@@ -74,17 +80,35 @@ public class ServerProtoBufWorker implements Runnable {
 		}
 	}
 
+	public void sendMessage(WebradioMessage textMessage) {
+		System.out.println("sending chat message to client.");
+		byte size = (byte) textMessage.getSerializedSize();
+		try {
+			_outputStream.write(size);
+			_outputStream.write(textMessage.toByteArray());
+		} catch (IOException e) {
+			System.err.println("Can't send message to client.");
+		}
+	}
+
 	/**
 	 * Send available bytes to client
 	 */
 	public void run() {
-
 		System.out.println("Worker started.");
 
 		while (!_close) {
 			if (_play) {
 				try {
-					_client.write(_server.getBuffer());
+					WebradioMessage.Builder builder = WebradioMessage
+							.newBuilder();
+					builder.setData(ByteString.copyFrom(_server.getBuffer()));
+					builder.setIsAudioData(true);
+					builder.setIsAudioFormat(false);
+					builder.setIsChatMessage(false);
+					WebradioMessage message = builder.build();
+					assert (message.isInitialized());
+					message.writeTo(_outputStream);
 					_server.awaitBarrier();
 				} catch (IOException e) {
 					System.err.println("Client disconnected.");
@@ -94,9 +118,8 @@ public class ServerProtoBufWorker implements Runnable {
 				}
 			}
 		}
-
 		try {
-			_client.close();
+			_outputStream.close();
 		} catch (IOException e) {
 			System.err.println("Can't send close client connection.");
 		}

@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import alpv_ws1112.ub1.webradio.communication.Server;
-import alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage;
+import alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage;
 import alpv_ws1112.ub1.webradio.ui.ServerUI;
 import alpv_ws1112.ub1.webradio.ui.cmd.ServerCMD;
 import alpv_ws1112.ub1.webradio.ui.swing.ServerSwing;
@@ -108,9 +108,9 @@ public class ServerProtoBuf implements Server {
 		while (!_close) {
 			try {
 				Socket client = _socket.accept();
-				ServerProtoBufWorker audioWorker = new ServerProtoBufWorker(
-						this, client.getOutputStream());
-				addClient(audioWorker);
+				ServerProtoBufWorker worker = new ServerProtoBufWorker(this,
+						client);
+				addClient(worker);
 				startChatWorker(client);
 			} catch (SocketTimeoutException e) {} catch (IOException e) {
 				e.printStackTrace();
@@ -249,7 +249,11 @@ public class ServerProtoBuf implements Server {
 		_clients.remove(worker);
 	}
 
-	public void sendChatMessage(TextMessage message) {
+	public void removeClient(ServerProtoBufChatWorker worker) {
+		_chatClients.remove(worker);
+	}
+
+	public void sendChatMessage(WebradioMessage message) {
 		for (ServerProtoBufChatWorker chatClient : _chatClients) {
 			chatClient.sendMessage(message);
 		}
