@@ -6,6 +6,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -13,21 +14,23 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import alpv_ws1112.ub1.webradio.communication.Server;
+import alpv_ws1112.ub1.webradio.protobuf.Messages.TextMessage;
 
 public class ServerProtoBuf implements Server {
 
 	private ServerSocket _socket;
 	private boolean _close = false;
-	private ArrayList<ServerProtoBufWorker> _clients, _pendingClients; // Number of
-																		// connected
-																		// and
-																		// pending
-																		// clients
+	private List<ServerProtoBufWorker> _clients, _pendingClients; // Number of
+																	// connected
+																	// and
+																	// pending
+																	// clients
 
 	private CyclicBarrier _barrier; // Buffer sending barrier
 	private ServerProtoBufStreamer _streamer;
 	private AtomicBoolean _currentlyResetingBarrier;
 	private AtomicBoolean _currentlyMergingClients;
+	private List<ServerProtoBufChatWorker> _chatClients;
 
 	public ServerProtoBuf(int port) throws IOException {
 		// Create socket
@@ -36,6 +39,7 @@ public class ServerProtoBuf implements Server {
 		// Create connection queues
 		_clients = new ArrayList<ServerProtoBufWorker>();
 		_pendingClients = new ArrayList<ServerProtoBufWorker>();
+		_chatClients = new ArrayList<ServerProtoBufChatWorker>();
 		_currentlyMergingClients = new AtomicBoolean();
 		_currentlyResetingBarrier = new AtomicBoolean();
 
@@ -135,10 +139,11 @@ public class ServerProtoBuf implements Server {
 
 	private void startChatWorker(Socket client) throws IOException {
 		ServerProtoBufChatWorker chatServer = new ServerProtoBufChatWorker(
-				this, client.getInputStream());
+				this, client);
 		Thread chatServerThread = new Thread(chatServer);
 		System.out.println("New chat client connected.");
 		chatServerThread.start();
+		_chatClients.add(chatServer);
 	}
 
 	/**
@@ -224,5 +229,12 @@ public class ServerProtoBuf implements Server {
 		// Remove from both queues
 		_pendingClients.remove(worker);
 		_clients.remove(worker);
+	}
+
+	public void sendChatMessage(TextMessage message) {
+		for (ServerProtoBufChatWorker chatClient : _chatClients) {
+			chatClient.sendMessage(message);
+		}
+
 	}
 }

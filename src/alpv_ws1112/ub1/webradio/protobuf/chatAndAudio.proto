@@ -4,7 +4,8 @@ option java_package = "alpv_ws1112.ub1.webradio.protobuf";
 option java_outer_classname = "Messages";
 
 message TextMessage {
-	required string textMessage = 1;
+	required string username = 1;
+	required string textMessage = 2;
 }
 
 message AudioFormatData {		

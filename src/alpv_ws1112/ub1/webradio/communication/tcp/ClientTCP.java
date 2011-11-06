@@ -13,6 +13,9 @@ import alpv_ws1112.ub1.webradio.audioplayer.AudioFormatTransport;
 import alpv_ws1112.ub1.webradio.audioplayer.AudioPlayer;
 import alpv_ws1112.ub1.webradio.communication.ByteArray;
 import alpv_ws1112.ub1.webradio.communication.Client;
+import alpv_ws1112.ub1.webradio.ui.ClientUI;
+import alpv_ws1112.ub1.webradio.ui.cmd.ClientCMD;
+import alpv_ws1112.ub1.webradio.ui.swing.ClientSwing;
 
 /**
  * A TCP client for the webradio
@@ -24,15 +27,29 @@ public class ClientTCP implements Client {
 	private Socket _socket;
 	private boolean _close = false;
 	private InputStream _inputStream;
+	private boolean _useGUI;
+	private String _username;
+
+	public ClientTCP(String host, int port, String username, boolean useGUI) {
+		_useGUI = useGUI;
+		_username = username;
+		try {
+			connect(InetSocketAddress.createUnresolved(host, port));
+		} catch (IOException e) {
+			System.err.println("Can't connect to host " + host + " on port "
+					+ port);
+			return;
+		}
+	}
 
 	/**
 	 * Play the music
 	 */
 	public void run() {
-
+		startClientUI();
 		// Start player and receive audio format
 		AudioPlayer audioPlayer = new AudioPlayer(receiveAudioFormat());
-		
+
 		// Start receiving bytes and playing music
 		byte[] buffer = new byte[BUFFER_SIZE];
 		boolean first = true;
@@ -62,6 +79,18 @@ public class ClientTCP implements Client {
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 		}
+	}
+
+	private void startClientUI() {
+		ClientUI clientUI = null;
+		// Run UI
+		if (_useGUI) {
+			clientUI = new ClientSwing(this, _username);
+		} else {
+			clientUI = new ClientCMD(this, _username);
+		}
+		Thread clientUIThread = new Thread(clientUI);
+		clientUIThread.start();
 	}
 
 	/**

@@ -40,6 +40,10 @@ public class ClientSwing extends JFrame implements ClientUI {
 
 	@Override
 	public void pushChatMessage(String message) {
+		textArea.append(message + "\n");
+	}
+
+	public void sendChatMessage(String message) {
 		try {
 			_client.sendChatMessage(message);
 		} catch (IOException e) {
@@ -78,8 +82,7 @@ public class ClientSwing extends JFrame implements ClientUI {
 		public void actionPerformed(ActionEvent evt) {
 			String line = inputTextField.getText();
 			if ((line.trim()).length() > 0) {
-				pushChatMessage(line);
-				textArea.append(inputTextField.getText() + "\n");
+				sendChatMessage(line);
 			}
 			inputTextField.setText("");
 			textArea.setCaretPosition(textArea.getDocument().getLength());

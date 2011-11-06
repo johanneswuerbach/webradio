@@ -1,7 +1,6 @@
 package alpv_ws1112.ub1.webradio.webradio;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
 
 import alpv_ws1112.ub1.webradio.communication.Client;
 import alpv_ws1112.ub1.webradio.communication.Server;
@@ -9,11 +8,8 @@ import alpv_ws1112.ub1.webradio.communication.protobuf.ClientProtoBuf;
 import alpv_ws1112.ub1.webradio.communication.protobuf.ServerProtoBuf;
 import alpv_ws1112.ub1.webradio.communication.tcp.ClientTCP;
 import alpv_ws1112.ub1.webradio.communication.tcp.ServerTCP;
-import alpv_ws1112.ub1.webradio.ui.ClientUI;
 import alpv_ws1112.ub1.webradio.ui.ServerUI;
-import alpv_ws1112.ub1.webradio.ui.cmd.ClientCMD;
 import alpv_ws1112.ub1.webradio.ui.cmd.ServerCMD;
-import alpv_ws1112.ub1.webradio.ui.swing.ClientSwing;
 
 public class Main {
 	private static final String USAGE = String
@@ -62,26 +58,28 @@ public class Main {
 							+ " is not supported.");
 					return;
 				}
-				startServer(server);
+				Thread serverThread = new Thread(server);
+				serverThread.start();
 				startServerUi(useGUI, server);
 
 			} else if (args[argumentIndex].equals("client")) {
 				String protocol = args[argumentIndex + 1];
 				String host = args[argumentIndex + 2];
 				int port = Integer.parseInt(args[argumentIndex + 3]);
+				String username = args[argumentIndex + 4];
 				Client client = null;
 
 				if (protocol.equals("tcp")) {
-					client = new ClientTCP();
+					client = new ClientTCP(host, port, username, useGUI);
 				} else if (protocol.equals("protobuf")) {
-					client = new ClientProtoBuf();
+					client = new ClientProtoBuf(host, port, username, useGUI);
 				} else {
 					System.err.println("protcol " + protocol
 							+ " is not supported.");
 					return;
 				}
-				startClient(host, port, client);
-				startClientUi(args[argumentIndex + 3], useGUI, client);
+				Thread clientThread = new Thread(client);
+				clientThread.start();
 			} else {
 				throw new IllegalArgumentException();
 			}
@@ -109,30 +107,5 @@ public class Main {
 		}
 		Thread serverUIThread = new Thread(serverUI);
 		serverUIThread.start();
-	}
-
-	private static void startServer(Server server) {
-		Thread serverThread = new Thread(server);
-		serverThread.start();
-	}
-
-	private static void startClient(String host, int port, Client client)
-			throws IOException {
-		client.connect(InetSocketAddress.createUnresolved(host, port));
-		Thread clientThread = new Thread(client);
-		clientThread.start();
-	}
-
-	private static void startClientUi(String username, boolean useGUI,
-			Client client) {
-		ClientUI clientUI = null;
-		// Run UI
-		if (useGUI) {
-			clientUI = new ClientSwing(client, username);
-		} else {
-			clientUI = new ClientCMD(client, username);
-		}
-		Thread clientUIThread = new Thread(clientUI);
-		clientUIThread.start();
 	}
 }
