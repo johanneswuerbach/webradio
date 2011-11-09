@@ -5,9 +5,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.Socket;
+import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Queue;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.sound.sampled.AudioFormat;
@@ -19,6 +19,7 @@ import com.google.protobuf.ByteString;
 import alpv_ws1112.ub1.webradio.audioplayer.AudioFormatTransport;
 import alpv_ws1112.ub1.webradio.audioplayer.AudioPlayer;
 import alpv_ws1112.ub1.webradio.communication.ByteArray;
+import alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage;
 import alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage;
 
 /**
@@ -26,28 +27,28 @@ import alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage;
  */
 public class ServerTCPLion implements Runnable {
 
-	private static final int BUFFER_SIZE = 64;
+	private static final int BUFFER_SIZE = 256;
 
 	private AudioInputStream _ais;
 	private AudioFormat _audioFormat;
 	private ServerTCP _server;
 	private String _path;
 	private List<Client> _clients; // Connected clients
-	private Queue<ChatMessage> _messageQueue;
 	private boolean _close = false;
 
 	public ServerTCPLion(ServerTCP server) {
 		_server = server;
 		_clients = new CopyOnWriteArrayList<Client>();
-		_messageQueue = new ArrayBlockingQueue<ChatMessage>(100);
 	}
 
 	/**
 	 * Read the next list of bytes from the audio file
 	 */
 	public void run() {
+		byte[] buffer;
 		while (!_close) {
-			byte[] buffer = null;
+
+			// Read audio data, if available
 			if (_ais != null) {
 				buffer = new byte[BUFFER_SIZE];
 				try {
@@ -62,20 +63,26 @@ public class ServerTCPLion implements Runnable {
 					System.err.println("Unsupported file type.");
 					_server.close();
 				}
+			} else {
+				buffer = null;
+				// Fixed heavy CPU load
+				try {
+					Thread.sleep(5);
+				} catch (InterruptedException e) {
+				}
+
 			}
 
-			ChatMessage chatMessage = null;
-			if (!_messageQueue.isEmpty()) {
-				chatMessage = _messageQueue.poll();
-			}
-
+			// Send audio data to all clients and check for new chat messages
 			for (Client client : _clients) {
 				try {
 					if (client.hasChatMessage()) {
 						try {
-							ChatMessage message = client.receiveChatMessage();
-							if (message != null) {
-								_messageQueue.add(message);
+							Chat chat = client.receiveChatMessage();
+							for (Client chatClient : _clients) {
+								if (!chat.isSource(chatClient)) {
+									chatClient.addChat(chat);
+								}
 							}
 						} catch (IOException e) {
 							System.err
@@ -83,13 +90,7 @@ public class ServerTCPLion implements Runnable {
 						}
 					}
 
-					if (chatMessage != null && !chatMessage.isSource(client)) {
-						client.sendMessage(chatMessage.getMessage());
-					}
-
-					if (buffer != null) {
-						client.sendAudioData(buffer);
-					}
+					client.sendDataMessage(buffer);
 
 				} catch (IOException e) {
 					client.close();
@@ -97,16 +98,14 @@ public class ServerTCPLion implements Runnable {
 				}
 			}
 
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-			}
 		}
 
+		// Close all connections
 		for (Client client : _clients) {
 			client.close();
 		}
 
+		// Close stream
 		if (_ais != null) {
 			try {
 				_ais.close();
@@ -147,15 +146,14 @@ public class ServerTCPLion implements Runnable {
 		}
 	}
 
-	public boolean isPlaying() {
-		return _audioFormat != null;
-	}
-
+	/**
+	 * Add a new client to client pool
+	 */
 	public void addClient(Socket socket) {
 		try {
 
 			Client client = new Client(socket);
-			if (isPlaying()) {
+			if (_audioFormat != null) {
 				client.sendAudioFormat(_audioFormat);
 			}
 			_clients.add(client);
@@ -167,84 +165,101 @@ public class ServerTCPLion implements Runnable {
 		}
 	}
 
+	/**
+	 * A client
+	 */
 	private class Client {
 
 		private Socket _socket;
 		private InputStream _is;
 		private OutputStream _os;
+		private Queue<Chat> _chats;
 
 		Client(Socket socket) throws IOException {
 			_socket = socket;
 			_is = socket.getInputStream();
 			_os = socket.getOutputStream();
-		}
-
-		public void sendMessage(WebradioMessage message) throws IOException {
-			message.writeDelimitedTo(_os);
-		}
-
-		public void sendAudioFormat(AudioFormat audioFormat) throws IOException {
-			System.out.println("Start: sendAudioFormat");
-			AudioFormatTransport aft = new AudioFormatTransport(audioFormat);
-			byte[] format = ByteArray.toBytes(aft);
-			WebradioMessage.Builder builder = WebradioMessage.newBuilder();
-			builder.setData(ByteString.copyFrom(format));
-			builder.setIsAudioData(false);
-			builder.setIsAudioFormat(true);
-			builder.setIsChatMessage(false);
-			WebradioMessage message = builder.build();
-			sendMessage(message);
-			System.out.println("End: sendAudioFormat");
+			_chats = new ArrayDeque<Chat>();
 		}
 
 		/**
-		 * Send audioData
+		 * Add chat message to local queue
+		 */
+		public void addChat(Chat chat) {
+			_chats.add(chat);
+		}
+
+		/**
+		 * Send audio format
 		 * 
 		 * @throws IOException
 		 */
-		public void sendAudioData(byte[] buffer) throws IOException {
-
+		public void sendAudioFormat(AudioFormat audioFormat) throws IOException {
+			AudioFormatTransport aft = new AudioFormatTransport(audioFormat);
+			byte[] format = ByteArray.toBytes(aft);
 			WebradioMessage.Builder builder = WebradioMessage.newBuilder();
-			builder.setData(ByteString.copyFrom(buffer));
-			builder.setIsAudioData(true);
-			builder.setIsAudioFormat(false);
-			builder.setIsChatMessage(false);
+			builder.setIsAudioFormat(true);
+			builder.setIsDataMessage(false);
+			builder.setData(ByteString.copyFrom(format));
 			WebradioMessage message = builder.build();
-			assert (message.isInitialized());
-			sendMessage(message);
+			message.writeDelimitedTo(_os);
+
+			System.out.println("AudioFormat transmitted.");
 		}
 
+		/**
+		 * Send data (includs audio and chat)
+		 * 
+		 * @throws IOException
+		 */
+		public void sendDataMessage(byte[] buffer) throws IOException {
+
+			WebradioMessage.Builder builder = WebradioMessage.newBuilder();
+			builder.setIsDataMessage(true);
+			builder.setIsAudioFormat(false);
+
+			// Add available audio data
+			if (buffer != null) {
+				builder.setData(ByteString.copyFrom(buffer));
+			}
+
+			// Add chat messages
+			while (!_chats.isEmpty()) {
+				Chat chat = _chats.poll();
+				builder.addUsername(chat.getUsername());
+				builder.addText(chat.getText());
+			}
+
+			// Send
+			WebradioMessage message = builder.build();
+			assert (message.isInitialized());
+			message.writeDelimitedTo(_os);
+		}
+
+		/**
+		 * Check, whether a new chat message is available
+		 * 
+		 * @throws IOException
+		 */
 		public boolean hasChatMessage() throws IOException {
 			return _is.available() > 0;
 		}
 
 		/**
 		 * Receive a chat message
+		 * 
+		 * @throws IOException
 		 */
-		public ChatMessage receiveChatMessage() throws IOException {
-
-			System.out.println("Start: receiveWebradioMessage");
-
-			ChatMessage chatMessage = null;
-
-			int size = _is.read();
-			byte[] bytes = new byte[size];
-			_is.read(bytes);
-			WebradioMessage message = WebradioMessage.parseFrom(bytes);
-			if (message.getIsChatMessage()) {
-				System.out.println("Message from " + message.getUsername()
-						+ " received: " + message.getTextMessage());
-
-				chatMessage = new ChatMessage(this, message);
-			} else {
-				System.err.println("not a text message");
-			}
-
-			System.out.println("End: receiveWebradioMessage");
-
-			return chatMessage;
+		public Chat receiveChatMessage() throws IOException {
+			ChatMessage message = ChatMessage.parseDelimitedFrom(_is);
+			System.out
+					.println("Message from \"" + message.getUsername() + "\"");
+			return new Chat(this, message.getUsername(), message.getText());
 		}
 
+		/**
+		 * Close client socket
+		 */
 		public void close() {
 			try {
 				_socket.close();
@@ -255,21 +270,38 @@ public class ServerTCPLion implements Runnable {
 
 	}
 
-	private class ChatMessage {
+	/**
+	 * A chat line
+	 */
+	private class Chat {
 		private Client _source;
-		private WebradioMessage _message;
+		private String _username, _text;
 
-		ChatMessage(Client source, WebradioMessage message) {
+		Chat(Client source, String username, String text) {
 			_source = source;
-			_message = message;
+			_username = username;
+			_text = text;
 		}
 
+		/**
+		 * Is the client to source of this message?
+		 */
 		public boolean isSource(Client client) {
 			return _source.equals(client);
 		}
 
-		public WebradioMessage getMessage() {
-			return _message;
+		/**
+		 * Text of this message
+		 */
+		public String getText() {
+			return _text;
+		}
+
+		/**
+		 * User of this message
+		 */
+		public String getUsername() {
+			return _username;
 		}
 	}
 }

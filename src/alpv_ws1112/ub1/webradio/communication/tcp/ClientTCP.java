@@ -13,6 +13,7 @@ import alpv_ws1112.ub1.webradio.audioplayer.AudioPlayer;
 import alpv_ws1112.ub1.webradio.communication.ByteArray;
 import alpv_ws1112.ub1.webradio.communication.Client;
 import alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage;
+import alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage;
 import alpv_ws1112.ub1.webradio.ui.ClientUI;
 import alpv_ws1112.ub1.webradio.webradio.Main;
 
@@ -34,39 +35,52 @@ public class ClientTCP implements Client {
 			System.err.println("Can't connect to host " + host + " on port "
 					+ port);
 		}
-
 	}
 
-	@Override
+	/**
+	 * Start receiving messages
+	 */
 	public void run() {
 		while (!_close) {
 			try {
-				WebradioMessage message = WebradioMessage.parseDelimitedFrom(_inputStream);
-				if (message.getIsChatMessage()) {
-					receiveChatMessage(message);
-				} else if (message.getIsAudioFormat()) {
+				WebradioMessage message = WebradioMessage
+						.parseDelimitedFrom(_inputStream);
+				if (message.getIsAudioFormat()) {
 					receiveAudioFormat(message);
-				} else if (message.getIsAudioData()) {
-					receiveAudioData(message);
+				} else if (message.getIsDataMessage()) {
+					receiveDataMessage(message);
 				}
-			} catch (IOException e) {
-				System.err.println("Can't reveice message from server.");
-				close();
+			} catch (Exception e) {
+				System.err.println("Can't receive message from server.");
+				System.exit(0);
 			}
 		}
 		
+		try {
+			_socket.close();
+		} catch (IOException e) {}
 	}
 
-	private void receiveAudioData(WebradioMessage message) {
-		_audioPlayer.start();
-		_audioPlayer.writeBytes(message.getData().toByteArray());
+	/**
+	 * Receive and handle a data message
+	 */
+	private void receiveDataMessage(WebradioMessage message) {
+		// Receive chat messages
+		int numberOfMessages = message.getUsernameCount();
+		for (int i = 0; i < numberOfMessages; i++) {
+			displayMessage(message.getUsername(i), message.getText(i));
+		}
+
+		// Play audio
+		if(message.hasData() && _audioPlayer != null) {
+			_audioPlayer.start();
+			_audioPlayer.writeBytes(message.getData().toByteArray());
+		}
 	}
 
-	private void receiveChatMessage(WebradioMessage message) {
-		System.out.println("Message received: " + message.getTextMessage());
-		displayMessage(message.getUsername(), message.getTextMessage());
-	}
-
+	/**
+	 * Displays a chat message in the current UI
+	 */
 	private void displayMessage(String username, String message) {
 		clientUI().pushChatMessage(username + ": " + message);
 	}
@@ -93,23 +107,21 @@ public class ClientTCP implements Client {
 		_close = true;
 	}
 
-	@Override
+	/**
+	 * Send chat messages to server
+	 */
 	public void sendChatMessage(String message) throws IOException {
-		
+
 		displayMessage(clientUI().getUserName(), message);
-		
-		System.out.println("sending chat message to server.");
-		WebradioMessage.Builder builder = WebradioMessage.newBuilder();
-		builder.setTextMessage(message);
+
+		System.out.println("Sending chat message to server.");
+		ChatMessage.Builder builder = ChatMessage.newBuilder();
+		builder.setText(message);
 		builder.setUsername(clientUI().getUserName());
-		builder.setIsAudioData(false);
-		builder.setIsAudioFormat(false);
-		builder.setIsChatMessage(true);
-		WebradioMessage textMessage = builder.build();
-		// textMessage.writeTo(_outputStrem);
-		byte size = (byte) textMessage.getSerializedSize();
-		_outputStream.write(size);
-		_outputStream.write(textMessage.toByteArray());
+
+		ChatMessage chatMessage = builder.build();
+		chatMessage.writeDelimitedTo(_outputStream);
+
 	}
 
 	/**
@@ -129,7 +141,7 @@ public class ClientTCP implements Client {
 			throw new IOException(e);
 		}
 	}
-	
+
 	private ClientUI clientUI() {
 		return Main.clientUI;
 	}
