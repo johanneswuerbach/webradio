@@ -13,6 +13,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import alpv_ws1112.ub1.webradio.communication.Server;
+import alpv_ws1112.ub1.webradio.webradio.Main;
 
 public class ServerTCP implements Server {
 
@@ -106,6 +107,8 @@ public class ServerTCP implements Server {
 				e.printStackTrace();
 			}
 		}
+		
+		Main.serverUIThread.interrupt();
 
 		try {
 
@@ -130,6 +133,7 @@ public class ServerTCP implements Server {
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 		}
+		
 		System.out.println("Server closed.");
 	}
 	

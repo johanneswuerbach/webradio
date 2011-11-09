@@ -24,6 +24,8 @@ public class Main {
 	
 	public static ServerUI serverUI = null;
 	public static ClientUI clientUI = null;
+	public static Thread serverUIThread = null;
+	public static Thread clientUIThread = null;
 
 	/**
 	 * Starts a server/client according to the given arguments, using a GUI or
@@ -70,11 +72,11 @@ public class Main {
 				
 				// Run UI
 				if (useGUI) {
-					serverUI = new ServerSwing(server, serverThread);
+					serverUI = new ServerSwing(server);
 				} else {
-					serverUI = new ServerCMD(server, serverThread);
+					serverUI = new ServerCMD(server);
 				}
-				Thread serverUIThread = new Thread(serverUI);
+				serverUIThread = new Thread(serverUI);
 				serverUIThread.start();
 				
 			} else if (args[argumentIndex].equals("client")) {
@@ -99,11 +101,11 @@ public class Main {
 				// Run UI
 				clientUI = null;
 				if (useGUI) {
-					clientUI = new ClientSwing(client, clientThread, username);
+					clientUI = new ClientSwing(client, username);
 				} else {
-					clientUI = new ClientCMD(client, clientThread, username);
+					clientUI = new ClientCMD(client, username);
 				}
-				Thread clientUIThread = new Thread(clientUI);
+				clientUIThread = new Thread(clientUI);
 				clientUIThread.start();
 				
 			} else {

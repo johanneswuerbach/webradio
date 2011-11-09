@@ -39,11 +39,19 @@ public class ServerProtoBufStreamer implements Runnable {
 				}
 			} catch (IOException e) {
 				System.err.println("IO-Error while reading the file.");
-				e.printStackTrace();
 				_server.close();
 			} catch (UnsupportedAudioFileException e) {
 				System.err.println("Unsupported file type.");
 				_server.close();
+			}
+		}
+		else {
+			// Add a small sleep, to decrease CPU load
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		_server.resetBarrier();

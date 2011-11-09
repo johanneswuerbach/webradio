@@ -46,11 +46,8 @@ public class ServerSwing extends JFrame implements ServerUI {
 		}
 	};
 
-	private Thread _serverThread;
-
-	public ServerSwing(Server server, Thread serverThread) {
+	public ServerSwing(Server server) {
 		_server = server;
-		_serverThread = serverThread;
 		fileDialog = new JFileChooser();
 	}
 

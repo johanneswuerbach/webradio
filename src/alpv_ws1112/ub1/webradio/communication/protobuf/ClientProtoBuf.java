@@ -62,6 +62,8 @@ public class ClientProtoBuf implements Client {
 				close();
 			}
 		}
+		
+		Main.clientUIThread.interrupt();
 	}
 
 	private void receiveAudioData(WebradioMessage message) {

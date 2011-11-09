@@ -16,6 +16,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import alpv_ws1112.ub1.webradio.communication.Server;
 import alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage;
+import alpv_ws1112.ub1.webradio.webradio.Main;
 
 public class ServerProtoBuf implements Server {
 
@@ -106,6 +107,8 @@ public class ServerProtoBuf implements Server {
 				e.printStackTrace();
 			}
 		}
+		
+		Main.serverUIThread.interrupt();
 
 		try {
 

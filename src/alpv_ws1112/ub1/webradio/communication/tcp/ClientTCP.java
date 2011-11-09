@@ -14,6 +14,7 @@ import alpv_ws1112.ub1.webradio.audioplayer.AudioPlayer;
 import alpv_ws1112.ub1.webradio.communication.ByteArray;
 import alpv_ws1112.ub1.webradio.communication.Client;
 import alpv_ws1112.ub1.webradio.communication.FixedInteger;
+import alpv_ws1112.ub1.webradio.webradio.Main;
 
 /**
  * A TCP client for the webradio
@@ -65,6 +66,8 @@ public class ClientTCP implements Client {
 			System.err.println("Can't play audio.");
 			close();
 		}
+		
+		Main.clientUIThread.interrupt();
 
 		// Close the stream
 		try {

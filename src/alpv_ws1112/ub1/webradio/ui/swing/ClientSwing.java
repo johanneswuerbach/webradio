@@ -26,12 +26,10 @@ public class ClientSwing extends JFrame implements ClientUI {
 
 	protected JTextField inputTextField;
 	protected JTextArea textArea;
-	private Thread _clientThread;
 
-	public ClientSwing(Client client, Thread clientThread, String username) {
+	public ClientSwing(Client client, String username) {
 		super();
 		_username = username;
-		_clientThread = clientThread;
 		_client = client;
 	}
 

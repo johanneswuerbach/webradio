@@ -14,12 +14,10 @@ public class ClientCMD implements ClientUI {
 
 	private String _username;
 	private Client _client;
-	private Thread _clientThread;
 
-	public ClientCMD(Client client, Thread clientThread, String username) {
+	public ClientCMD(Client client, String username) {
 		_username = username;
 		_client = client;
-		_clientThread = clientThread;
 	}
 
 	/**
@@ -34,7 +32,7 @@ public class ClientCMD implements ClientUI {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		try {
-			while (_clientThread.isAlive()) {
+			while (true) {
 
 				String line = br.readLine();
 
