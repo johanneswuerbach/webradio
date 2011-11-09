@@ -1,11 +1,10 @@
 package alpv_ws1112.ub1.webradio.communication.tcp;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketException;
 
 import javax.sound.sampled.AudioFormat;
 
@@ -13,7 +12,8 @@ import alpv_ws1112.ub1.webradio.audioplayer.AudioFormatTransport;
 import alpv_ws1112.ub1.webradio.audioplayer.AudioPlayer;
 import alpv_ws1112.ub1.webradio.communication.ByteArray;
 import alpv_ws1112.ub1.webradio.communication.Client;
-import alpv_ws1112.ub1.webradio.communication.FixedInteger;
+import alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage;
+import alpv_ws1112.ub1.webradio.ui.ClientUI;
 import alpv_ws1112.ub1.webradio.webradio.Main;
 
 /**
@@ -21,11 +21,11 @@ import alpv_ws1112.ub1.webradio.webradio.Main;
  */
 public class ClientTCP implements Client {
 
-	private static final int BUFFER_SIZE = 64;
-
 	private Socket _socket;
 	private boolean _close = false;
 	private InputStream _inputStream;
+	private OutputStream _outputStream;
+	private AudioPlayer _audioPlayer;
 
 	public ClientTCP(String host, int port) {
 		try {
@@ -33,48 +33,42 @@ public class ClientTCP implements Client {
 		} catch (IOException e) {
 			System.err.println("Can't connect to host " + host + " on port "
 					+ port);
-			return;
 		}
+
 	}
 
-	/**
-	 * Play the music
-	 */
+	@Override
 	public void run() {
-		// Start player and receive audio format
-		AudioPlayer audioPlayer = new AudioPlayer(receiveAudioFormat());
-
-		// Start receiving bytes and playing music
-		byte[] buffer = new byte[BUFFER_SIZE];
-		boolean first = true;
-		try {
-			while (!_close && _inputStream.read(buffer) > 0) {
-				if (first) {
-					System.out.print("Start playing.");
-					first = false;
+		while (!_close) {
+			try {
+				WebradioMessage message = WebradioMessage.parseDelimitedFrom(_inputStream);
+				if (message.getIsChatMessage()) {
+					receiveChatMessage(message);
+				} else if (message.getIsAudioFormat()) {
+					receiveAudioFormat(message);
+				} else if (message.getIsAudioData()) {
+					receiveAudioData(message);
 				}
-				audioPlayer.start();
-				audioPlayer.writeBytes(buffer);
+			} catch (IOException e) {
+				System.err.println("Can't reveice message from server.");
+				close();
 			}
-		} catch (EOFException e) {
-			System.err.println("Can't play audio.");
-			close();
-		} catch (SocketException e) {
-			System.err.println("Can't play audio.");
-			close();
-		} catch (IOException e) {
-			System.err.println("Can't play audio.");
-			close();
 		}
 		
-		Main.clientUIThread.interrupt();
+	}
 
-		// Close the stream
-		try {
-			_inputStream.close();
-		} catch (IOException e) {
-			System.err.println(e.getMessage());
-		}
+	private void receiveAudioData(WebradioMessage message) {
+		_audioPlayer.start();
+		_audioPlayer.writeBytes(message.getData().toByteArray());
+	}
+
+	private void receiveChatMessage(WebradioMessage message) {
+		System.out.println("Message received: " + message.getTextMessage());
+		displayMessage(message.getUsername(), message.getTextMessage());
+	}
+
+	private void displayMessage(String username, String message) {
+		clientUI().pushChatMessage(username + ": " + message);
 	}
 
 	/**
@@ -89,6 +83,7 @@ public class ClientTCP implements Client {
 
 		_socket = new Socket(host, port);
 		_inputStream = _socket.getInputStream();
+		_outputStream = _socket.getOutputStream();
 	}
 
 	/**
@@ -100,46 +95,43 @@ public class ClientTCP implements Client {
 
 	@Override
 	public void sendChatMessage(String message) throws IOException {
-		// TODO Auto-generated method stub
+		
+		displayMessage(clientUI().getUserName(), message);
+		
+		System.out.println("sending chat message to server.");
+		WebradioMessage.Builder builder = WebradioMessage.newBuilder();
+		builder.setTextMessage(message);
+		builder.setUsername(clientUI().getUserName());
+		builder.setIsAudioData(false);
+		builder.setIsAudioFormat(false);
+		builder.setIsChatMessage(true);
+		WebradioMessage textMessage = builder.build();
+		// textMessage.writeTo(_outputStrem);
+		byte size = (byte) textMessage.getSerializedSize();
+		_outputStream.write(size);
+		_outputStream.write(textMessage.toByteArray());
 	}
 
 	/**
 	 * Receive the audio format form the server
 	 * 
-	 * @return
+	 * @throws IOException
 	 */
-	private AudioFormat receiveAudioFormat() {
-
-		AudioFormat audioFormat = null;
-
+	private void receiveAudioFormat(WebradioMessage audioFormatMessage)
+			throws IOException {
 		try {
-			// first 4 bytes containing the size
-			byte[] lengthBuffer = new byte[4];
-			_inputStream.read(lengthBuffer);
-			
-			int length = FixedInteger.toInt(lengthBuffer);
-
-			System.out.println("Länge: " + length);
-
-			// read format
-			byte[] formatBuffer = new byte[length];
-			_inputStream.read(formatBuffer);
-
-			AudioFormatTransport aft = (AudioFormatTransport) ByteArray
-					.toObject(formatBuffer);
-			audioFormat = aft.getAudioFormat();
-
-			System.out.println("AudioFormat received.");
-			System.out.println("Format: " + audioFormat.toString());
-
+			AudioFormat audioFormat = ((AudioFormatTransport) ByteArray
+					.toObject(audioFormatMessage.getData().toByteArray()))
+					.getAudioFormat();
+			System.out.println("Audio Format: " + audioFormat.toString());
+			_audioPlayer = new AudioPlayer(audioFormat);
 		} catch (ClassNotFoundException e) {
-			System.err.println("Can't receive audio format.");
-			System.exit(1);
-		} catch (IOException e) {
-			System.err.println("Can't receive audio format.");
-			System.exit(1);
+			throw new IOException(e);
 		}
-
-		return audioFormat;
 	}
+	
+	private ClientUI clientUI() {
+		return Main.clientUI;
+	}
+
 }

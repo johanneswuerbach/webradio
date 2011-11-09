@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import alpv_ws1112.ub1.webradio.communication.Client;
 import alpv_ws1112.ub1.webradio.communication.Server;
-import alpv_ws1112.ub1.webradio.communication.protobuf.ClientProtoBuf;
-import alpv_ws1112.ub1.webradio.communication.protobuf.ServerProtoBuf;
 import alpv_ws1112.ub1.webradio.communication.tcp.ClientTCP;
 import alpv_ws1112.ub1.webradio.communication.tcp.ServerTCP;
 import alpv_ws1112.ub1.webradio.ui.ClientUI;
@@ -21,12 +19,9 @@ public class Main {
 					+ "         (to start a server)%n"
 					+ "or:    java -jar UB%%X_%%NAMEN [-options] client tcp|udp|mc SERVERIPADDRESS SERVERPORT USERNAME%n"
 					+ "         (to start a client)");
-	
-	public static ServerUI serverUI = null;
-	public static ClientUI clientUI = null;
-	public static Thread serverUIThread = null;
-	public static Thread clientUIThread = null;
 
+	public static ClientUI clientUI;
+	
 	/**
 	 * Starts a server/client according to the given arguments, using a GUI or
 	 * just the command-line according to the given arguments.
@@ -60,8 +55,6 @@ public class Main {
 
 				if (protocol.equals("tcp")) {
 					server = new ServerTCP(port);
-				} else if (protocol.equals("protobuf")) {
-					server = new ServerProtoBuf(port);
 				} else {
 					System.err.println("protcol " + protocol
 							+ " is not supported.");
@@ -71,12 +64,13 @@ public class Main {
 				serverThread.start();
 				
 				// Run UI
+				ServerUI serverUI = null;
 				if (useGUI) {
 					serverUI = new ServerSwing(server);
 				} else {
 					serverUI = new ServerCMD(server);
 				}
-				serverUIThread = new Thread(serverUI);
+				Thread serverUIThread = new Thread(serverUI);
 				serverUIThread.start();
 				
 			} else if (args[argumentIndex].equals("client")) {
@@ -88,8 +82,6 @@ public class Main {
 
 				if (protocol.equals("tcp")) {
 					client = new ClientTCP(host, port);
-				} else if (protocol.equals("protobuf")) {
-					client = new ClientProtoBuf(host, port);
 				} else {
 					System.err.println("protcol " + protocol
 							+ " is not supported.");
@@ -105,7 +97,7 @@ public class Main {
 				} else {
 					clientUI = new ClientCMD(client, username);
 				}
-				clientUIThread = new Thread(clientUI);
+				Thread clientUIThread = new Thread(clientUI);
 				clientUIThread.start();
 				
 			} else {
