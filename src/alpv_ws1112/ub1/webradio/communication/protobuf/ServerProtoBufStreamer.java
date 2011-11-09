@@ -22,31 +22,31 @@ public class ServerProtoBufStreamer implements Runnable {
 	private ServerProtoBuf _server;
 	private String _path;
 
-	public ServerProtoBufStreamer(ServerProtoBuf server, String path)
-			throws IOException, UnsupportedAudioFileException {
+	public ServerProtoBufStreamer(ServerProtoBuf server) {
 		_server = server;
-		_path = path;
 		_musicBuffer = new byte[BUFFER_SIZE];
-		changePath(path);
 	}
 
 	/**
 	 * Read the next list of bytes from the audio file
 	 */
 	public void run() {
-		try {
-			if (_ais.read(_musicBuffer) <= 0) {
-				_ais = AudioPlayer.getAudioInputStream(_path);
-				_ais.read(_musicBuffer);
+		if (_ais != null) {
+			try {
+				if (_ais.read(_musicBuffer) <= 0) {
+					_ais = AudioPlayer.getAudioInputStream(_path);
+					_ais.read(_musicBuffer);
+				}
+			} catch (IOException e) {
+				System.err.println("IO-Error while reading the file.");
+				e.printStackTrace();
+				_server.close();
+			} catch (UnsupportedAudioFileException e) {
+				System.err.println("Unsupported file type.");
+				_server.close();
 			}
-			_server.resetBarrier();
-		} catch (IOException e) {
-			System.err.println("IO-Error while reading the file.");
-			_server.close();
-		} catch (UnsupportedAudioFileException e) {
-			System.err.println("Unsupported file type.");
-			_server.close();
 		}
+		_server.resetBarrier();
 	}
 
 	/**
@@ -79,26 +79,19 @@ public class ServerProtoBufStreamer implements Runnable {
 	}
 
 	/**
-	 * Change the path of the current stream
+	 * Play a song
 	 * 
 	 * @param path
 	 * @throws IOException
 	 * @throws UnsupportedAudioFileException
 	 * @throws MalformedURLException
 	 */
-	public void changePath(String path) throws MalformedURLException,
+	public void playSong(String path) throws MalformedURLException,
 			UnsupportedAudioFileException, IOException {
-		AudioInputStream ais = AudioPlayer.getAudioInputStream(path);
-		if (_audioFormat != null
-				&& !ais.getFormat().toString().equals(_audioFormat.toString())) {
-			System.err
-					.println("It is not possible at the moment to change the audio format of the stream.");
-			System.err.println("Old format: " + _audioFormat.toString());
-			System.err.println("New format: " + ais.getFormat().toString());
-		} else {
-			_ais = ais;
-			_audioFormat = ais.getFormat();
-			_ais.read(_musicBuffer);
-		}
+		_path = path;
+		_ais = AudioPlayer.getAudioInputStream(_path);
+		_audioFormat = _ais.getFormat();
+		_server.newAudioFormat(_audioFormat);
+		_ais.read(_musicBuffer);
 	}
 }

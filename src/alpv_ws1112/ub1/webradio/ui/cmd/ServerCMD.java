@@ -15,9 +15,11 @@ import alpv_ws1112.ub1.webradio.ui.ServerUI;
 public class ServerCMD implements ServerUI {
 
 	private Server _server;
+	private Thread _serverThread;
 
-	public ServerCMD(Server server) {
+	public ServerCMD(Server server, Thread serverThread) {
 		_server = server;
+		_serverThread = serverThread;
 	}
 
 	/**
@@ -31,7 +33,7 @@ public class ServerCMD implements ServerUI {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		try {
-			while (true) {
+			while (_serverThread.isAlive()) {
 				String line = br.readLine();
 				if (line.equals("QUIT")) {
 					break;

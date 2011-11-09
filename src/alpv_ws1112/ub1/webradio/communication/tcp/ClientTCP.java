@@ -13,9 +13,7 @@ import alpv_ws1112.ub1.webradio.audioplayer.AudioFormatTransport;
 import alpv_ws1112.ub1.webradio.audioplayer.AudioPlayer;
 import alpv_ws1112.ub1.webradio.communication.ByteArray;
 import alpv_ws1112.ub1.webradio.communication.Client;
-import alpv_ws1112.ub1.webradio.ui.ClientUI;
-import alpv_ws1112.ub1.webradio.ui.cmd.ClientCMD;
-import alpv_ws1112.ub1.webradio.ui.swing.ClientSwing;
+import alpv_ws1112.ub1.webradio.communication.FixedInteger;
 
 /**
  * A TCP client for the webradio
@@ -27,12 +25,8 @@ public class ClientTCP implements Client {
 	private Socket _socket;
 	private boolean _close = false;
 	private InputStream _inputStream;
-	private boolean _useGUI;
-	private String _username;
 
-	public ClientTCP(String host, int port, String username, boolean useGUI) {
-		_useGUI = useGUI;
-		_username = username;
+	public ClientTCP(String host, int port) {
 		try {
 			connect(InetSocketAddress.createUnresolved(host, port));
 		} catch (IOException e) {
@@ -46,7 +40,6 @@ public class ClientTCP implements Client {
 	 * Play the music
 	 */
 	public void run() {
-		startClientUI();
 		// Start player and receive audio format
 		AudioPlayer audioPlayer = new AudioPlayer(receiveAudioFormat());
 
@@ -79,18 +72,6 @@ public class ClientTCP implements Client {
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 		}
-	}
-
-	private void startClientUI() {
-		ClientUI clientUI = null;
-		// Run UI
-		if (_useGUI) {
-			clientUI = new ClientSwing(this, _username);
-		} else {
-			clientUI = new ClientCMD(this, _username);
-		}
-		Thread clientUIThread = new Thread(clientUI);
-		clientUIThread.start();
 	}
 
 	/**
@@ -132,12 +113,8 @@ public class ClientTCP implements Client {
 			// first 4 bytes containing the size
 			byte[] lengthBuffer = new byte[4];
 			_inputStream.read(lengthBuffer);
-
-			// byte[] -> int
-			int length = 0;
-			for (int i = 0; i < 4; ++i) {
-				length |= (lengthBuffer[3 - i] & 0xff) << (i << 3);
-			}
+			
+			int length = FixedInteger.toInt(lengthBuffer);
 
 			System.out.println("Länge: " + length);
 

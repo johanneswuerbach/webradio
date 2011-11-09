@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import javax.sound.sampled.AudioFormat;
 import alpv_ws1112.ub1.webradio.audioplayer.AudioFormatTransport;
 import alpv_ws1112.ub1.webradio.communication.ByteArray;
+import alpv_ws1112.ub1.webradio.communication.FixedInteger;
 
 /**
  * Handeling a single client and send audio format and music
@@ -57,16 +58,9 @@ public class ServerTCPWorker implements Runnable {
 		try {
 			AudioFormatTransport aft = new AudioFormatTransport(_audioFormat);
 			byte[] format = ByteArray.toBytes(aft);
-
+			
 			// Send size
-			byte[] size = new byte[4];
-			int length = format.length;
-
-			// int -> byte[]
-			for (int i = 0; i < 4; ++i) {
-				int shift = i << 3; // i * 8
-				size[3 - i] = (byte) ((length & (0xff << shift)) >>> shift);
-			}
+			byte[] size = FixedInteger.toBytes(format.length);
 			_client.write(size);
 
 			// Send format

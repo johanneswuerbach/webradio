@@ -11,13 +11,11 @@ import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import alpv_ws1112.ub1.webradio.communication.Server;
 import alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage;
-import alpv_ws1112.ub1.webradio.ui.ServerUI;
-import alpv_ws1112.ub1.webradio.ui.cmd.ServerCMD;
-import alpv_ws1112.ub1.webradio.ui.swing.ServerSwing;
 
 public class ServerProtoBuf implements Server {
 
@@ -33,20 +31,19 @@ public class ServerProtoBuf implements Server {
 	private ServerProtoBufStreamer _streamer;
 	private AtomicBoolean _currentlyResetingBarrier;
 	private AtomicBoolean _currentlyMergingClients;
-	private List<ServerProtoBufChatWorker> _chatClients;
-	private boolean _useGUI;
+	private AudioFormat _audioFormat;
 
-	public ServerProtoBuf(int port, boolean useGUI) throws IOException {
+	public ServerProtoBuf(int port) throws IOException {
 		// Create socket
 		_socket = new ServerSocket(port);
 		_socket.setSoTimeout(500); // Only 500ms timeout
+		// Create streamer
+		_streamer = new ServerProtoBufStreamer(this);
 		// Create connection queues
 		_clients = new ArrayList<ServerProtoBufWorker>();
 		_pendingClients = new ArrayList<ServerProtoBufWorker>();
-		_chatClients = new ArrayList<ServerProtoBufChatWorker>();
 		_currentlyMergingClients = new AtomicBoolean();
 		_currentlyResetingBarrier = new AtomicBoolean();
-		_useGUI = useGUI;
 
 		System.out.println("Starting server using port \"" + port + "\".");
 	}
@@ -67,17 +64,8 @@ public class ServerProtoBuf implements Server {
 		System.out.println("Play song: " + path);
 
 		try {
-
 			// Initialize the stream
-			if (_streamer == null) {
-				_streamer = new ServerProtoBufStreamer(this, path);
-			} else {
-				_streamer.changePath(path);
-			}
-
-			// Accept all pending clients and/or reset running
-			resetBarrier();
-
+			_streamer.playSong(path);
 		} catch (MalformedURLException e) {
 			System.err.println("Can't find audio file.");
 		} catch (UnsupportedAudioFileException e) {
@@ -88,13 +76,15 @@ public class ServerProtoBuf implements Server {
 	}
 
 	/**
-	 * Start client playback
+	 * Start client
 	 */
-	public void startClient(ServerProtoBufWorker worker) {
-		worker.setAudioFormat(_streamer.getAudioFormat());
-		worker.play();
-
-		Thread thread = new Thread(worker);
+	public void startClient(ServerProtoBufWorker client) {
+		// Send audioFormat, if music is playing
+		if(_audioFormat != null) {
+			client.setAudioFormat(_audioFormat);
+			client.play();
+		}
+		Thread thread = new Thread(client);
 		thread.start();
 	}
 
@@ -104,15 +94,15 @@ public class ServerProtoBuf implements Server {
 	public void run() {
 
 		System.out.println("Server started.");
-		startServerUI();
+		
 		while (!_close) {
 			try {
 				Socket client = _socket.accept();
 				ServerProtoBufWorker worker = new ServerProtoBufWorker(this,
 						client);
 				addClient(worker);
-				startChatWorker(client);
-			} catch (SocketTimeoutException e) {} catch (IOException e) {
+			} catch (SocketTimeoutException e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
@@ -143,27 +133,6 @@ public class ServerProtoBuf implements Server {
 		System.out.println("Server closed.");
 	}
 
-	private void startServerUI() {
-		// Run UI
-		ServerUI serverUI = null;
-		if (_useGUI) {
-			serverUI = new ServerSwing(this);
-		} else {
-			serverUI = new ServerCMD(this);
-		}
-		Thread serverUIThread = new Thread(serverUI);
-		serverUIThread.start();
-	}
-
-	private void startChatWorker(Socket client) throws IOException {
-		ServerProtoBufChatWorker chatServer = new ServerProtoBufChatWorker(
-				this, client);
-		Thread chatServerThread = new Thread(chatServer);
-		System.out.println("New chat client connected.");
-		chatServerThread.start();
-		_chatClients.add(chatServer);
-	}
-
 	/**
 	 * Add a new client to the pending queue
 	 * 
@@ -177,9 +146,16 @@ public class ServerProtoBuf implements Server {
 		System.out.println("New pending client.");
 
 		// Music started and no clients connected -> start playing immediately
-		if (_streamer != null && _clients.size() == 0) {
+		if (_clients.size() == 0) {
 			resetBarrier();
 		}
+	}
+
+	/**
+	 * Returns the current audio format
+	 */
+	public AudioFormat getAudioFormat() {
+		return _streamer.getAudioFormat();
 	}
 
 	/**
@@ -202,9 +178,7 @@ public class ServerProtoBuf implements Server {
 		// is already playing
 		for (ServerProtoBufWorker pendingClient : _pendingClients) {
 			_clients.add(pendingClient);
-			if (_streamer != null) {
-				startClient(pendingClient);
-			}
+			startClient(pendingClient);
 			System.out.println("Client added.");
 		}
 		// Remove added workers from pending queue
@@ -249,14 +223,30 @@ public class ServerProtoBuf implements Server {
 		_clients.remove(worker);
 	}
 
-	public void removeClient(ServerProtoBufChatWorker worker) {
-		_chatClients.remove(worker);
+	/**
+	 * Send chat message to all connected clients
+	 * 
+	 * @param message
+	 * @param source
+	 */
+	public void sendChatMessage(WebradioMessage message,
+			ServerProtoBufWorker source) {
+		for (ServerProtoBufWorker client : _clients) {
+			if (!client.equals(source)) {
+				client.queueMessage(message);
+			}
+		}
 	}
 
-	public void sendChatMessage(WebradioMessage message) {
-		for (ServerProtoBufChatWorker chatClient : _chatClients) {
-			chatClient.sendMessage(message);
+	/**
+	 * Publish new audio format to all clients
+	 */
+	public void newAudioFormat(AudioFormat audioFormat) {
+		System.out.println("Broadcast new audio format.");
+		_audioFormat = audioFormat;
+		for (ServerProtoBufWorker client : _clients) {
+			client.setAudioFormat(audioFormat);
+			client.play();
 		}
-
 	}
 }

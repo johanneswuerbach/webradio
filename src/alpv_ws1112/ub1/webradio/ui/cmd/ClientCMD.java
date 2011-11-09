@@ -14,10 +14,12 @@ public class ClientCMD implements ClientUI {
 
 	private String _username;
 	private Client _client;
+	private Thread _clientThread;
 
-	public ClientCMD(Client client, String username) {
+	public ClientCMD(Client client, Thread clientThread, String username) {
 		_username = username;
 		_client = client;
+		_clientThread = clientThread;
 	}
 
 	/**
@@ -32,7 +34,7 @@ public class ClientCMD implements ClientUI {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		try {
-			while (true) {
+			while (_clientThread.isAlive()) {
 
 				String line = br.readLine();
 
@@ -62,8 +64,7 @@ public class ClientCMD implements ClientUI {
 
 	@Override
 	public void pushChatMessage(String message) {
-		// TODO Auto-generated method stub
-
+		System.out.println(message);
 	}
 
 }

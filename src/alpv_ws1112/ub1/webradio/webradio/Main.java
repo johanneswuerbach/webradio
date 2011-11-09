@@ -8,6 +8,12 @@ import alpv_ws1112.ub1.webradio.communication.protobuf.ClientProtoBuf;
 import alpv_ws1112.ub1.webradio.communication.protobuf.ServerProtoBuf;
 import alpv_ws1112.ub1.webradio.communication.tcp.ClientTCP;
 import alpv_ws1112.ub1.webradio.communication.tcp.ServerTCP;
+import alpv_ws1112.ub1.webradio.ui.ClientUI;
+import alpv_ws1112.ub1.webradio.ui.ServerUI;
+import alpv_ws1112.ub1.webradio.ui.cmd.ClientCMD;
+import alpv_ws1112.ub1.webradio.ui.cmd.ServerCMD;
+import alpv_ws1112.ub1.webradio.ui.swing.ClientSwing;
+import alpv_ws1112.ub1.webradio.ui.swing.ServerSwing;
 
 public class Main {
 	private static final String USAGE = String
@@ -15,6 +21,9 @@ public class Main {
 					+ "         (to start a server)%n"
 					+ "or:    java -jar UB%%X_%%NAMEN [-options] client tcp|udp|mc SERVERIPADDRESS SERVERPORT USERNAME%n"
 					+ "         (to start a client)");
+	
+	public static ServerUI serverUI = null;
+	public static ClientUI clientUI = null;
 
 	/**
 	 * Starts a server/client according to the given arguments, using a GUI or
@@ -48,9 +57,9 @@ public class Main {
 				int port = Integer.parseInt(args[argumentIndex + 2]);
 
 				if (protocol.equals("tcp")) {
-					server = new ServerTCP(port, useGUI);
+					server = new ServerTCP(port);
 				} else if (protocol.equals("protobuf")) {
-					server = new ServerProtoBuf(port, useGUI);
+					server = new ServerProtoBuf(port);
 				} else {
 					System.err.println("protcol " + protocol
 							+ " is not supported.");
@@ -58,8 +67,16 @@ public class Main {
 				}
 				Thread serverThread = new Thread(server);
 				serverThread.start();
-				startServerUi(useGUI, server);
-
+				
+				// Run UI
+				if (useGUI) {
+					serverUI = new ServerSwing(server, serverThread);
+				} else {
+					serverUI = new ServerCMD(server, serverThread);
+				}
+				Thread serverUIThread = new Thread(serverUI);
+				serverUIThread.start();
+				
 			} else if (args[argumentIndex].equals("client")) {
 				String protocol = args[argumentIndex + 1];
 				String host = args[argumentIndex + 2];
@@ -68,9 +85,9 @@ public class Main {
 				Client client = null;
 
 				if (protocol.equals("tcp")) {
-					client = new ClientTCP(host, port, username, useGUI);
+					client = new ClientTCP(host, port);
 				} else if (protocol.equals("protobuf")) {
-					client = new ClientProtoBuf(host, port, username, useGUI);
+					client = new ClientProtoBuf(host, port);
 				} else {
 					System.err.println("protcol " + protocol
 							+ " is not supported.");
@@ -78,6 +95,17 @@ public class Main {
 				}
 				Thread clientThread = new Thread(client);
 				clientThread.start();
+				
+				// Run UI
+				clientUI = null;
+				if (useGUI) {
+					clientUI = new ClientSwing(client, clientThread, username);
+				} else {
+					clientUI = new ClientCMD(client, clientThread, username);
+				}
+				Thread clientUIThread = new Thread(clientUI);
+				clientUIThread.start();
+				
 			} else {
 				throw new IllegalArgumentException();
 			}
@@ -93,9 +121,5 @@ public class Main {
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 		}
-	}
-
-	private static void startServerUi(boolean useGUI, Server server) {
-
 	}
 }
