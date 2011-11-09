@@ -56,7 +56,7 @@ public class ServerSwing extends JFrame implements ServerUI {
 	 * Starts the GUI.
 	 */
 	public void run() {
-		this.setSize(400, 200);
+		this.setSize(160, 100);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		addWindowListener(new Exit());
 
@@ -65,7 +65,7 @@ public class ServerSwing extends JFrame implements ServerUI {
 
 		_selectSoundFileButton = new JButton("Select Sound File");
 		_selectSoundFileButton.addActionListener(_buttonListener);
-		panel.add(_selectSoundFileButton);
+		panel.add(_selectSoundFileButton, BorderLayout.CENTER);
 
 		setVisible(true);
 	}

@@ -7,7 +7,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -26,6 +28,15 @@ public class ClientSwing extends JFrame implements ClientUI {
 
 	protected JTextField inputTextField;
 	protected JTextArea textArea;
+	private JButton _changeUsernameButton;
+	private ActionListener _changeUsernameButtonListener = new ActionListener() {
+		public void actionPerformed(ActionEvent ae) {
+			String newUserName = JOptionPane.showInputDialog(null,
+					"new user name: ", "New user name", 1);
+			if (newUserName != null)
+				_username = newUserName;
+		}
+	};
 
 	public ClientSwing(Client client, String username) {
 		super();
@@ -61,16 +72,23 @@ public class ClientSwing extends JFrame implements ClientUI {
 		this.setSize(400, 600);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		addWindowListener(new Exit());
-
 		JPanel panel = new JPanel(new BorderLayout());
 		add(panel);
 
-		textArea = new JTextArea(5, 20);
+		textArea = new JTextArea();
 		textArea.setEditable(false);
-		panel.add(textArea);
+		panel.add(textArea, BorderLayout.CENTER);
+
+		JPanel down = new JPanel(new BorderLayout());
+		panel.add(down, BorderLayout.SOUTH);
+
 		inputTextField = new JTextField(2);
 		inputTextField.addActionListener(sendMessageListener);
-		panel.add(inputTextField, BorderLayout.PAGE_END);
+		down.add(inputTextField, BorderLayout.CENTER);
+
+		_changeUsernameButton = new JButton("Change user name");
+		_changeUsernameButton.addActionListener(_changeUsernameButtonListener);
+		down.add(_changeUsernameButton, BorderLayout.SOUTH);
 
 		setVisible(true);
 	}
