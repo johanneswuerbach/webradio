@@ -6,6 +6,8 @@ import alpv_ws1112.ub1.webradio.communication.Client;
 import alpv_ws1112.ub1.webradio.communication.Server;
 import alpv_ws1112.ub1.webradio.communication.tcp.ClientTCP;
 import alpv_ws1112.ub1.webradio.communication.tcp.ServerTCP;
+import alpv_ws1112.ub1.webradio.communication.udp.ClientUDP;
+import alpv_ws1112.ub1.webradio.communication.udp.ServerUDP;
 import alpv_ws1112.ub1.webradio.ui.ClientUI;
 import alpv_ws1112.ub1.webradio.ui.ServerUI;
 import alpv_ws1112.ub1.webradio.ui.cmd.ClientCMD;
@@ -21,7 +23,7 @@ public class Main {
 					+ "         (to start a client)");
 
 	public static ClientUI clientUI;
-	
+
 	/**
 	 * Starts a server/client according to the given arguments, using a GUI or
 	 * just the command-line according to the given arguments.
@@ -55,6 +57,8 @@ public class Main {
 
 				if (protocol.equals("tcp")) {
 					server = new ServerTCP(port);
+				} else if (protocol.equals("udp")) {
+					server = new ServerUDP(port);
 				} else {
 					System.err.println("protcol " + protocol
 							+ " is not supported.");
@@ -62,7 +66,7 @@ public class Main {
 				}
 				Thread serverThread = new Thread(server);
 				serverThread.start();
-				
+
 				// Run UI
 				ServerUI serverUI = null;
 				if (useGUI) {
@@ -72,7 +76,7 @@ public class Main {
 				}
 				Thread serverUIThread = new Thread(serverUI);
 				serverUIThread.start();
-				
+
 			} else if (args[argumentIndex].equals("client")) {
 				String protocol = args[argumentIndex + 1];
 				String host = args[argumentIndex + 2];
@@ -82,6 +86,8 @@ public class Main {
 
 				if (protocol.equals("tcp")) {
 					client = new ClientTCP(host, port);
+				} else if (protocol.equals("udp")) {
+					client = new ClientUDP(host, port);
 				} else {
 					System.err.println("protcol " + protocol
 							+ " is not supported.");
@@ -89,7 +95,7 @@ public class Main {
 				}
 				Thread clientThread = new Thread(client);
 				clientThread.start();
-				
+
 				// Run UI
 				clientUI = null;
 				if (useGUI) {
@@ -99,7 +105,7 @@ public class Main {
 				}
 				Thread clientUIThread = new Thread(clientUI);
 				clientUIThread.start();
-				
+
 			} else {
 				throw new IllegalArgumentException();
 			}
