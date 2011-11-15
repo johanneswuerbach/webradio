@@ -60,13 +60,8 @@ public class ServerUDP implements Server {
 				}
 			} else {
 				audioBuffer = null;
-				// Fixed heavy CPU load
-				try {
-					Thread.sleep(5);
-				} catch (InterruptedException e) {
-				}
-
 			}
+			
 			// Receive data
 			try {
 				byte[] buffer = new byte[1024];
