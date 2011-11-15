@@ -18,6 +18,5 @@ message ServerMessage {
 message ClientMessage {
 	optional string username = 1;
 	optional string text = 2;
-	optional bool connect = 3;
-	optional bool disconnect = 4;
+	optional bool connection = 3;
 }

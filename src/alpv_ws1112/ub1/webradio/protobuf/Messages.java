@@ -712,13 +712,9 @@ public final class Messages {
     boolean hasText();
     String getText();
     
-    // optional bool connect = 3;
-    boolean hasConnect();
-    boolean getConnect();
-    
-    // optional bool disconnect = 4;
-    boolean hasDisconnect();
-    boolean getDisconnect();
+    // optional bool connection = 3;
+    boolean hasConnection();
+    boolean getConnection();
   }
   public static final class ClientMessage extends
       com.google.protobuf.GeneratedMessage
@@ -813,31 +809,20 @@ public final class Messages {
       }
     }
     
-    // optional bool connect = 3;
-    public static final int CONNECT_FIELD_NUMBER = 3;
-    private boolean connect_;
-    public boolean hasConnect() {
+    // optional bool connection = 3;
+    public static final int CONNECTION_FIELD_NUMBER = 3;
+    private boolean connection_;
+    public boolean hasConnection() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
-    public boolean getConnect() {
-      return connect_;
-    }
-    
-    // optional bool disconnect = 4;
-    public static final int DISCONNECT_FIELD_NUMBER = 4;
-    private boolean disconnect_;
-    public boolean hasDisconnect() {
-      return ((bitField0_ & 0x00000008) == 0x00000008);
-    }
-    public boolean getDisconnect() {
-      return disconnect_;
+    public boolean getConnection() {
+      return connection_;
     }
     
     private void initFields() {
       username_ = "";
       text_ = "";
-      connect_ = false;
-      disconnect_ = false;
+      connection_ = false;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -858,10 +843,7 @@ public final class Messages {
         output.writeBytes(2, getTextBytes());
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeBool(3, connect_);
-      }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        output.writeBool(4, disconnect_);
+        output.writeBool(3, connection_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -882,11 +864,7 @@ public final class Messages {
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(3, connect_);
-      }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(4, disconnect_);
+          .computeBoolSize(3, connection_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -1016,10 +994,8 @@ public final class Messages {
         bitField0_ = (bitField0_ & ~0x00000001);
         text_ = "";
         bitField0_ = (bitField0_ & ~0x00000002);
-        connect_ = false;
+        connection_ = false;
         bitField0_ = (bitField0_ & ~0x00000004);
-        disconnect_ = false;
-        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
       
@@ -1069,11 +1045,7 @@ public final class Messages {
         if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
-        result.connect_ = connect_;
-        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
-          to_bitField0_ |= 0x00000008;
-        }
-        result.disconnect_ = disconnect_;
+        result.connection_ = connection_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -1096,11 +1068,8 @@ public final class Messages {
         if (other.hasText()) {
           setText(other.getText());
         }
-        if (other.hasConnect()) {
-          setConnect(other.getConnect());
-        }
-        if (other.hasDisconnect()) {
-          setDisconnect(other.getDisconnect());
+        if (other.hasConnection()) {
+          setConnection(other.getConnection());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -1145,12 +1114,7 @@ public final class Messages {
             }
             case 24: {
               bitField0_ |= 0x00000004;
-              connect_ = input.readBool();
-              break;
-            }
-            case 32: {
-              bitField0_ |= 0x00000008;
-              disconnect_ = input.readBool();
+              connection_ = input.readBool();
               break;
             }
           }
@@ -1231,44 +1195,23 @@ public final class Messages {
         onChanged();
       }
       
-      // optional bool connect = 3;
-      private boolean connect_ ;
-      public boolean hasConnect() {
+      // optional bool connection = 3;
+      private boolean connection_ ;
+      public boolean hasConnection() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
-      public boolean getConnect() {
-        return connect_;
+      public boolean getConnection() {
+        return connection_;
       }
-      public Builder setConnect(boolean value) {
+      public Builder setConnection(boolean value) {
         bitField0_ |= 0x00000004;
-        connect_ = value;
+        connection_ = value;
         onChanged();
         return this;
       }
-      public Builder clearConnect() {
+      public Builder clearConnection() {
         bitField0_ = (bitField0_ & ~0x00000004);
-        connect_ = false;
-        onChanged();
-        return this;
-      }
-      
-      // optional bool disconnect = 4;
-      private boolean disconnect_ ;
-      public boolean hasDisconnect() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
-      }
-      public boolean getDisconnect() {
-        return disconnect_;
-      }
-      public Builder setDisconnect(boolean value) {
-        bitField0_ |= 0x00000008;
-        disconnect_ = value;
-        onChanged();
-        return this;
-      }
-      public Builder clearDisconnect() {
-        bitField0_ = (bitField0_ & ~0x00000008);
-        disconnect_ = false;
+        connection_ = false;
         onChanged();
         return this;
       }
@@ -1308,10 +1251,9 @@ public final class Messages {
       "adio.protobuf\"k\n\rServerMessage\022\025\n\risAudi" +
       "oFormat\030\001 \002(\010\022\025\n\risDataMessage\030\002 \002(\010\022\014\n\004" +
       "data\030\003 \001(\014\022\020\n\010username\030\004 \003(\t\022\014\n\004text\030\005 \003" +
-      "(\t\"T\n\rClientMessage\022\020\n\010username\030\001 \001(\t\022\014\n" +
-      "\004text\030\002 \001(\t\022\017\n\007connect\030\003 \001(\010\022\022\n\ndisconne" +
-      "ct\030\004 \001(\010B-\n!alpv_ws1112.ub1.webradio.pro" +
-      "tobufB\010Messages"
+      "(\t\"C\n\rClientMessage\022\020\n\010username\030\001 \001(\t\022\014\n" +
+      "\004text\030\002 \001(\t\022\022\n\nconnection\030\003 \001(\010B-\n!alpv_" +
+      "ws1112.ub1.webradio.protobufB\010Messages"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1331,7 +1273,7 @@ public final class Messages {
           internal_static_alpv_ws1112_ub1_webradio_protobuf_ClientMessage_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_alpv_ws1112_ub1_webradio_protobuf_ClientMessage_descriptor,
-              new java.lang.String[] { "Username", "Text", "Connect", "Disconnect", },
+              new java.lang.String[] { "Username", "Text", "Connection", },
               alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage.class,
               alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage.Builder.class);
           return null;

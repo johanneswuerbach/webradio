@@ -68,23 +68,28 @@ public class ServerTCPClient {
 		ServerMessage.Builder builder = ServerMessage.newBuilder();
 		builder.setIsDataMessage(true);
 		builder.setIsAudioFormat(false);
+		boolean hasData = false;
 
 		// Add available audio data
 		if (buffer != null) {
+			hasData = true;
 			builder.setData(ByteString.copyFrom(buffer));
 		}
 
 		// Add chat messages
 		while (!_chats.isEmpty()) {
+			hasData = true;
 			Chat chat = _chats.poll();
 			builder.addUsername(chat.getUsername());
 			builder.addText(chat.getText());
 		}
 
 		// Send
-		ServerMessage message = builder.build();
-		assert (message.isInitialized());
-		message.writeDelimitedTo(_os);
+		if(hasData) {
+			ServerMessage message = builder.build();
+			assert (message.isInitialized());
+			message.writeDelimitedTo(_os);
+		}
 	}
 
 	/**

@@ -67,21 +67,36 @@ public class ServerUDPClient {
 		ServerMessage.Builder builder = ServerMessage.newBuilder();
 		builder.setIsDataMessage(true);
 		builder.setIsAudioFormat(false);
+		boolean hasData = false;
 
 		// Add available audio data
 		if (buffer != null) {
+			hasData = true;
 			builder.setData(ByteString.copyFrom(buffer));
 		}
 
 		// Add chat messages
 		while (!_chats.isEmpty()) {
+			hasData = true;
 			Chat chat = _chats.poll();
 			builder.addUsername(chat.getUsername());
 			builder.addText(chat.getText());
 		}
 
 		// Send
-		sendPacket(builder);
+		if(hasData) {
+			sendPacket(builder);
+		}
+	}
+	
+	/**
+	 * Receive a chat message
+	 * 
+	 * @throws IOException
+	 */
+	public Chat receiveChatMessage(String username, String message) throws IOException {
+		System.out.println("Message from \"" + username + "\"");
+		return new Chat(this, username, message);
 	}
 	
 	private void sendPacket(ServerMessage.Builder builder) throws IOException {
@@ -129,6 +144,14 @@ public class ServerUDPClient {
 		public String getUsername() {
 			return _username;
 		}
+	}
+	
+	public boolean equals(Object o) {
+		if(o instanceof ServerUDPClient) {
+			ServerUDPClient other = (ServerUDPClient) o;
+			return this._host.equals(other._host) && (other._port == this._port);
+		}
+		return false;
 	}
 
 }

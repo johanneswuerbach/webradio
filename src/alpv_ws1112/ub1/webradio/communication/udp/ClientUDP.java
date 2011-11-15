@@ -27,8 +27,8 @@ public class ClientUDP implements Client {
 
 	public ClientUDP(String host, int port) {
 		try {
-			connect(InetSocketAddress.createUnresolved(host, port));
 			_socket = new DatagramSocket();
+			connect(InetSocketAddress.createUnresolved(host, port));
 		} catch (IOException e) {
 			System.err.println("Can't connect to host " + host + " on port "
 					+ port);
@@ -41,35 +41,32 @@ public class ClientUDP implements Client {
 		while (!_close) {
 			try {
 				
-				byte[] bytes = new byte[2000];
 				
-				DatagramPacket packet = new DatagramPacket(bytes, bytes.length);
-				
+				byte[] buffer = new byte[1024];
+				DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 				_socket.receive(packet);
 				
-				// Receive audioFormat
-				// If not, reconnect
-
-				// Receive audio and chat data
+				byte[] bytes = new byte[packet.getLength()];
+				for (int i = 0; i < packet.getLength(); i++) {
+					bytes[i] = buffer[i];
+				}
 				
 				ServerMessage message = ServerMessage.parseFrom(bytes);
 				if (message.getIsAudioFormat()) {
+					// Receive audioFormat
 					receiveAudioFormat(message);
-				} else if (_audioPlayer == null) {
-					disconnect();
-					connect();
 				} else if(message.getIsDataMessage()) {
+					// Receive audio and chat data
 					receiveDataMessage(message);
 				}
-			} catch (Exception e) {
+			} catch (IOException e) {
+				e.printStackTrace();
 				System.err.println("Can't receive message from server.");
-				System.exit(0);
+				//System.exit(0);
 			}
 		}
-		
 		disconnect();
 		_socket.close();
-
 	}
 	
 	/**
@@ -103,22 +100,27 @@ public class ClientUDP implements Client {
 	
 	private void connect() throws IOException {
 		
-		_socket.connect(_host, _port);
+		//_socket.connect(_host, _port);
 
 		System.out
 				.println("Client sending to \"" + _host + ":" + _port + "\".");
 		
 		// Send connect message
 		ClientMessage.Builder builder = ClientMessage.newBuilder();
-		builder.setConnect(true);
+		builder.setConnection(true);
 		
 		sendPacket(builder);
 	}
 	
 	private void disconnect() {
+		
+		if(_socket.isClosed()) {
+			return;
+		}
+		
 		// Send disconnect message
 		ClientMessage.Builder builder = ClientMessage.newBuilder();
-		builder.setDisconnect(true);
+		builder.setConnection(false);
 		
 		try {
 			sendPacket(builder);
@@ -129,6 +131,7 @@ public class ClientUDP implements Client {
 
 	public void close() {
 		_close = true;
+		disconnect();
 	}
 
 	public void sendChatMessage(String message) throws IOException {
@@ -137,7 +140,7 @@ public class ClientUDP implements Client {
 
 		// Send message
 		ClientMessage.Builder builder = ClientMessage.newBuilder();
-		builder.setText("Test");
+		builder.setText(message);
 		builder.setUsername(clientUI().getUserName());
 		
 		sendPacket(builder);
@@ -148,8 +151,7 @@ public class ClientUDP implements Client {
 		ClientMessage clientMessage = builder.build();
 		byte[] bytes = clientMessage.toByteArray();
 
-		DatagramPacket packet = new DatagramPacket(bytes, bytes.length, _host,
-				_port);
+		DatagramPacket packet = new DatagramPacket(bytes, bytes.length, _host, _port);
 		_socket.send(packet);
 
 		System.out.println("ClientMessage send. (Size: " + bytes.length + ")");
@@ -164,8 +166,9 @@ public class ClientUDP implements Client {
 	
 	/**
 	 * Receive and handle a data message
+	 * @throws IOException 
 	 */
-	private void receiveDataMessage(ServerMessage message) {
+	private void receiveDataMessage(ServerMessage message) throws IOException {
 		// Receive chat messages
 		int numberOfMessages = message.getUsernameCount();
 		for (int i = 0; i < numberOfMessages; i++) {
@@ -173,9 +176,16 @@ public class ClientUDP implements Client {
 		}
 
 		// Play audio
-		if(message.hasData() && _audioPlayer != null) {
-			_audioPlayer.start();
-			_audioPlayer.writeBytes(message.getData().toByteArray());
+		if(message.hasData()) {
+			if(_audioPlayer == null) {
+				// If not, reconnect
+				disconnect();
+				connect();
+			}
+			else {
+				_audioPlayer.start();
+				_audioPlayer.writeBytes(message.getData().toByteArray());
+			}
 		}
 	}
 
