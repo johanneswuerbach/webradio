@@ -4,7 +4,7 @@ option java_package = "alpv_ws1112.ub1.webradio.protobuf";
 option java_outer_classname = "Messages";
 
 // Message from server -> client
-message WebradioMessage {
+message ServerMessage {
 	required bool isAudioFormat = 1;
 	required bool isDataMessage = 2;
 	// Use for sending bytes
@@ -15,7 +15,9 @@ message WebradioMessage {
 }
 
 // Message from client -> server
-message ChatMessage {
-	required string username = 1;
-	required string text = 2;
+message ClientMessage {
+	optional string username = 1;
+	optional string text = 2;
+	optional bool connect = 3;
+	optional bool disconnect = 4;
 }

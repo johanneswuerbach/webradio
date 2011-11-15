@@ -12,8 +12,8 @@ import alpv_ws1112.ub1.webradio.audioplayer.AudioFormatTransport;
 import alpv_ws1112.ub1.webradio.audioplayer.AudioPlayer;
 import alpv_ws1112.ub1.webradio.communication.ByteArray;
 import alpv_ws1112.ub1.webradio.communication.Client;
-import alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage;
-import alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage;
+import alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage;
+import alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage;
 import alpv_ws1112.ub1.webradio.ui.ClientUI;
 import alpv_ws1112.ub1.webradio.webradio.Main;
 
@@ -43,7 +43,7 @@ public class ClientTCP implements Client {
 	public void run() {
 		while (!_close) {
 			try {
-				WebradioMessage message = WebradioMessage
+				ServerMessage message = ServerMessage
 						.parseDelimitedFrom(_inputStream);
 				if (message.getIsAudioFormat()) {
 					receiveAudioFormat(message);
@@ -64,7 +64,7 @@ public class ClientTCP implements Client {
 	/**
 	 * Receive and handle a data message
 	 */
-	private void receiveDataMessage(WebradioMessage message) {
+	private void receiveDataMessage(ServerMessage message) {
 		// Receive chat messages
 		int numberOfMessages = message.getUsernameCount();
 		for (int i = 0; i < numberOfMessages; i++) {
@@ -115,11 +115,11 @@ public class ClientTCP implements Client {
 		displayMessage(clientUI().getUserName(), message);
 
 		System.out.println("Sending chat message to server.");
-		ChatMessage.Builder builder = ChatMessage.newBuilder();
+		ClientMessage.Builder builder = ClientMessage.newBuilder();
 		builder.setText(message);
 		builder.setUsername(clientUI().getUserName());
 
-		ChatMessage chatMessage = builder.build();
+		ClientMessage chatMessage = builder.build();
 		chatMessage.writeDelimitedTo(_outputStream);
 
 	}
@@ -129,7 +129,7 @@ public class ClientTCP implements Client {
 	 * 
 	 * @throws IOException
 	 */
-	private void receiveAudioFormat(WebradioMessage audioFormatMessage)
+	private void receiveAudioFormat(ServerMessage audioFormatMessage)
 			throws IOException {
 		try {
 			AudioFormat audioFormat = ((AudioFormatTransport) ByteArray

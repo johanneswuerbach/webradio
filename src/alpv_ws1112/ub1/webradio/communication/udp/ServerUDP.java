@@ -5,6 +5,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 
@@ -18,17 +19,21 @@ public class ServerUDP implements Server {
 	public ServerUDP(int port) throws IOException {
 		// Create socket
 		_socket = new DatagramSocket(port);
+		_socket.setSoTimeout(20);
 		System.out.println("Starting server using port \"" + port + "\".");
 	}
 
 	public void run() {
 		while (!_close) {
-			// Auf Anfrage warten
+			
+			// Accept clients
+			// Send data to all connected clients
+			
 			DatagramPacket packet = new DatagramPacket(new byte[1024], 1024);
 			try {
 				_socket.receive(packet);
+			} catch (SocketTimeoutException e) {
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			// Empfänger auslesen
@@ -39,7 +44,7 @@ public class ServerUDP implements Server {
 			System.out.println("Anfrage von " + address + " vom Port " + port
 					+ " Länge " + len + "\n" + new String(data, 0, len));
 		}
-		
+
 		_socket.close();
 	}
 

@@ -1,9 +1,9 @@
-package alpv_ws1112.ub1.webradio.communication.tcp;
+package alpv_ws1112.ub1.webradio.communication.udp;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.Socket;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
@@ -11,7 +11,6 @@ import javax.sound.sampled.AudioFormat;
 
 import alpv_ws1112.ub1.webradio.audioplayer.AudioFormatTransport;
 import alpv_ws1112.ub1.webradio.communication.ByteArray;
-import alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage;
 import alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage;
 
 import com.google.protobuf.ByteString;
@@ -19,17 +18,17 @@ import com.google.protobuf.ByteString;
 /**
  * A client
  */
-public class ServerTCPClient {
+public class ServerUDPClient {
 
-	private Socket _socket;
-	private InputStream _is;
-	private OutputStream _os;
+	private InetAddress _host;
+	private int _port;
+	private DatagramSocket _socket;
 	private Queue<Chat> _chats;
 
-	ServerTCPClient(Socket socket) throws IOException {
+	ServerUDPClient(DatagramSocket socket, InetAddress host, int port) throws IOException {
+		_host = host;
+		_port = port;
 		_socket = socket;
-		_is = socket.getInputStream();
-		_os = socket.getOutputStream();
 		_chats = new ArrayDeque<Chat>();
 	}
 
@@ -52,8 +51,8 @@ public class ServerTCPClient {
 		builder.setIsAudioFormat(true);
 		builder.setIsDataMessage(false);
 		builder.setData(ByteString.copyFrom(format));
-		ServerMessage message = builder.build();
-		message.writeDelimitedTo(_os);
+		
+		sendPacket(builder);
 
 		System.out.println("AudioFormat transmitted.");
 	}
@@ -82,50 +81,29 @@ public class ServerTCPClient {
 		}
 
 		// Send
-		ServerMessage message = builder.build();
-		assert (message.isInitialized());
-		message.writeDelimitedTo(_os);
+		sendPacket(builder);
 	}
+	
+	private void sendPacket(ServerMessage.Builder builder) throws IOException {
 
-	/**
-	 * Check, whether a new chat message is available
-	 * 
-	 * @throws IOException
-	 */
-	public boolean hasChatMessage() throws IOException {
-		return _is.available() > 0;
-	}
+		ServerMessage serverMessage = builder.build();
+		byte[] bytes = serverMessage.toByteArray();
 
-	/**
-	 * Receive a chat message
-	 * 
-	 * @throws IOException
-	 */
-	public Chat receiveChatMessage() throws IOException {
-		ClientMessage message = ClientMessage.parseDelimitedFrom(_is);
-		System.out.println("Message from \"" + message.getUsername() + "\"");
-		return new Chat(this, message.getUsername(), message.getText());
-	}
+		DatagramPacket packet = new DatagramPacket(bytes, bytes.length, _host,
+				_port);
+		_socket.send(packet);
 
-	/**
-	 * Close client socket
-	 */
-	public void close() {
-		try {
-			_socket.close();
-		} catch (IOException e) {
-			System.err.println("Can't close client connection.");
-		}
+		System.out.println("ServerMessage send. (Size: " + bytes.length + ")");
 	}
 
 	/**
 	 * A chat line
 	 */
 	protected class Chat {
-		private ServerTCPClient _source;
+		private ServerUDPClient _source;
 		private String _username, _text;
 
-		Chat(ServerTCPClient source, String username, String text) {
+		Chat(ServerUDPClient source, String username, String text) {
 			_source = source;
 			_username = username;
 			_text = text;
@@ -134,7 +112,7 @@ public class ServerTCPClient {
 		/**
 		 * Is the client to source of this message?
 		 */
-		public boolean isSource(ServerTCPClient client) {
+		public boolean isSource(ServerUDPClient client) {
 			return _source.equals(client);
 		}
 

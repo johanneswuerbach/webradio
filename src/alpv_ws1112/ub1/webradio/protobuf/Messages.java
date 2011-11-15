@@ -8,7 +8,7 @@ public final class Messages {
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
   }
-  public interface WebradioMessageOrBuilder
+  public interface ServerMessageOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
     
     // required bool isAudioFormat = 1;
@@ -33,32 +33,32 @@ public final class Messages {
     int getTextCount();
     String getText(int index);
   }
-  public static final class WebradioMessage extends
+  public static final class ServerMessage extends
       com.google.protobuf.GeneratedMessage
-      implements WebradioMessageOrBuilder {
-    // Use WebradioMessage.newBuilder() to construct.
-    private WebradioMessage(Builder builder) {
+      implements ServerMessageOrBuilder {
+    // Use ServerMessage.newBuilder() to construct.
+    private ServerMessage(Builder builder) {
       super(builder);
     }
-    private WebradioMessage(boolean noInit) {}
+    private ServerMessage(boolean noInit) {}
     
-    private static final WebradioMessage defaultInstance;
-    public static WebradioMessage getDefaultInstance() {
+    private static final ServerMessage defaultInstance;
+    public static ServerMessage getDefaultInstance() {
       return defaultInstance;
     }
     
-    public WebradioMessage getDefaultInstanceForType() {
+    public ServerMessage getDefaultInstanceForType() {
       return defaultInstance;
     }
     
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_WebradioMessage_descriptor;
+      return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_ServerMessage_descriptor;
     }
     
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_WebradioMessage_fieldAccessorTable;
+      return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_ServerMessage_fieldAccessorTable;
     }
     
     private int bitField0_;
@@ -213,41 +213,41 @@ public final class Messages {
       return super.writeReplace();
     }
     
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage parseFrom(
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage parseFrom(
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage parseFrom(byte[] data)
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage parseFrom(
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage parseFrom(java.io.InputStream input)
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage parseFrom(
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage parseDelimitedFrom(java.io.InputStream input)
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       Builder builder = newBuilder();
       if (builder.mergeDelimitedFrom(input)) {
@@ -256,7 +256,7 @@ public final class Messages {
         return null;
       }
     }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage parseDelimitedFrom(
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -267,12 +267,12 @@ public final class Messages {
         return null;
       }
     }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage parseFrom(
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage parseFrom(
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -282,7 +282,7 @@ public final class Messages {
     
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage prototype) {
+    public static Builder newBuilder(alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -295,18 +295,18 @@ public final class Messages {
     }
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessageOrBuilder {
+       implements alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessageOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_WebradioMessage_descriptor;
+        return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_ServerMessage_descriptor;
       }
       
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_WebradioMessage_fieldAccessorTable;
+        return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_ServerMessage_fieldAccessorTable;
       }
       
-      // Construct using alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage.newBuilder()
+      // Construct using alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -344,24 +344,24 @@ public final class Messages {
       
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage.getDescriptor();
+        return alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage.getDescriptor();
       }
       
-      public alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage getDefaultInstanceForType() {
-        return alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage.getDefaultInstance();
+      public alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage getDefaultInstanceForType() {
+        return alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage.getDefaultInstance();
       }
       
-      public alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage build() {
-        alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage result = buildPartial();
+      public alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage build() {
+        alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
       
-      private alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage buildParsed()
+      private alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage result = buildPartial();
+        alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
@@ -369,8 +369,8 @@ public final class Messages {
         return result;
       }
       
-      public alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage buildPartial() {
-        alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage result = new alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage(this);
+      public alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage buildPartial() {
+        alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage result = new alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -403,16 +403,16 @@ public final class Messages {
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage) {
-          return mergeFrom((alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage)other);
+        if (other instanceof alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage) {
+          return mergeFrom((alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
       
-      public Builder mergeFrom(alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage other) {
-        if (other == alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage.getDefaultInstance()) return this;
+      public Builder mergeFrom(alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage other) {
+        if (other == alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage.getDefaultInstance()) return this;
         if (other.hasIsAudioFormat()) {
           setIsAudioFormat(other.getIsAudioFormat());
         }
@@ -690,58 +690,66 @@ public final class Messages {
         onChanged();
       }
       
-      // @@protoc_insertion_point(builder_scope:alpv_ws1112.ub1.webradio.protobuf.WebradioMessage)
+      // @@protoc_insertion_point(builder_scope:alpv_ws1112.ub1.webradio.protobuf.ServerMessage)
     }
     
     static {
-      defaultInstance = new WebradioMessage(true);
+      defaultInstance = new ServerMessage(true);
       defaultInstance.initFields();
     }
     
-    // @@protoc_insertion_point(class_scope:alpv_ws1112.ub1.webradio.protobuf.WebradioMessage)
+    // @@protoc_insertion_point(class_scope:alpv_ws1112.ub1.webradio.protobuf.ServerMessage)
   }
   
-  public interface ChatMessageOrBuilder
+  public interface ClientMessageOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
     
-    // required string username = 1;
+    // optional string username = 1;
     boolean hasUsername();
     String getUsername();
     
-    // required string text = 2;
+    // optional string text = 2;
     boolean hasText();
     String getText();
+    
+    // optional bool connect = 3;
+    boolean hasConnect();
+    boolean getConnect();
+    
+    // optional bool disconnect = 4;
+    boolean hasDisconnect();
+    boolean getDisconnect();
   }
-  public static final class ChatMessage extends
+  public static final class ClientMessage extends
       com.google.protobuf.GeneratedMessage
-      implements ChatMessageOrBuilder {
-    // Use ChatMessage.newBuilder() to construct.
-    private ChatMessage(Builder builder) {
+      implements ClientMessageOrBuilder {
+    // Use ClientMessage.newBuilder() to construct.
+    private ClientMessage(Builder builder) {
       super(builder);
     }
-    private ChatMessage(boolean noInit) {}
+    private ClientMessage(boolean noInit) {}
     
-    private static final ChatMessage defaultInstance;
-    public static ChatMessage getDefaultInstance() {
+    private static final ClientMessage defaultInstance;
+    public static ClientMessage getDefaultInstance() {
       return defaultInstance;
     }
     
-    public ChatMessage getDefaultInstanceForType() {
+    public ClientMessage getDefaultInstanceForType() {
       return defaultInstance;
     }
     
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_ChatMessage_descriptor;
+      return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_ClientMessage_descriptor;
     }
     
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_ChatMessage_fieldAccessorTable;
+      return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_ClientMessage_fieldAccessorTable;
     }
     
     private int bitField0_;
-    // required string username = 1;
+    // optional string username = 1;
     public static final int USERNAME_FIELD_NUMBER = 1;
     private java.lang.Object username_;
     public boolean hasUsername() {
@@ -773,7 +781,7 @@ public final class Messages {
       }
     }
     
-    // required string text = 2;
+    // optional string text = 2;
     public static final int TEXT_FIELD_NUMBER = 2;
     private java.lang.Object text_;
     public boolean hasText() {
@@ -805,23 +813,37 @@ public final class Messages {
       }
     }
     
+    // optional bool connect = 3;
+    public static final int CONNECT_FIELD_NUMBER = 3;
+    private boolean connect_;
+    public boolean hasConnect() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    public boolean getConnect() {
+      return connect_;
+    }
+    
+    // optional bool disconnect = 4;
+    public static final int DISCONNECT_FIELD_NUMBER = 4;
+    private boolean disconnect_;
+    public boolean hasDisconnect() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    public boolean getDisconnect() {
+      return disconnect_;
+    }
+    
     private void initFields() {
       username_ = "";
       text_ = "";
+      connect_ = false;
+      disconnect_ = false;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized != -1) return isInitialized == 1;
       
-      if (!hasUsername()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasText()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -834,6 +856,12 @@ public final class Messages {
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeBytes(2, getTextBytes());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBool(3, connect_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeBool(4, disconnect_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -852,6 +880,14 @@ public final class Messages {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(2, getTextBytes());
       }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(3, connect_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(4, disconnect_);
+      }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
@@ -864,41 +900,41 @@ public final class Messages {
       return super.writeReplace();
     }
     
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage parseFrom(
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage parseFrom(
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage parseFrom(byte[] data)
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage parseFrom(
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage parseFrom(java.io.InputStream input)
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage parseFrom(
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage parseDelimitedFrom(java.io.InputStream input)
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       Builder builder = newBuilder();
       if (builder.mergeDelimitedFrom(input)) {
@@ -907,7 +943,7 @@ public final class Messages {
         return null;
       }
     }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage parseDelimitedFrom(
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -918,12 +954,12 @@ public final class Messages {
         return null;
       }
     }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage parseFrom(
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage parseFrom(
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -933,7 +969,7 @@ public final class Messages {
     
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage prototype) {
+    public static Builder newBuilder(alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -946,18 +982,18 @@ public final class Messages {
     }
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessageOrBuilder {
+       implements alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessageOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_ChatMessage_descriptor;
+        return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_ClientMessage_descriptor;
       }
       
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_ChatMessage_fieldAccessorTable;
+        return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_ClientMessage_fieldAccessorTable;
       }
       
-      // Construct using alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage.newBuilder()
+      // Construct using alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -980,6 +1016,10 @@ public final class Messages {
         bitField0_ = (bitField0_ & ~0x00000001);
         text_ = "";
         bitField0_ = (bitField0_ & ~0x00000002);
+        connect_ = false;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        disconnect_ = false;
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
       
@@ -989,24 +1029,24 @@ public final class Messages {
       
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage.getDescriptor();
+        return alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage.getDescriptor();
       }
       
-      public alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage getDefaultInstanceForType() {
-        return alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage.getDefaultInstance();
+      public alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage getDefaultInstanceForType() {
+        return alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage.getDefaultInstance();
       }
       
-      public alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage build() {
-        alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage result = buildPartial();
+      public alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage build() {
+        alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
       
-      private alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage buildParsed()
+      private alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage result = buildPartial();
+        alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
@@ -1014,8 +1054,8 @@ public final class Messages {
         return result;
       }
       
-      public alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage buildPartial() {
-        alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage result = new alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage(this);
+      public alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage buildPartial() {
+        alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage result = new alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -1026,41 +1066,47 @@ public final class Messages {
           to_bitField0_ |= 0x00000002;
         }
         result.text_ = text_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.connect_ = connect_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.disconnect_ = disconnect_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage) {
-          return mergeFrom((alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage)other);
+        if (other instanceof alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage) {
+          return mergeFrom((alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
       
-      public Builder mergeFrom(alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage other) {
-        if (other == alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage.getDefaultInstance()) return this;
+      public Builder mergeFrom(alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage other) {
+        if (other == alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage.getDefaultInstance()) return this;
         if (other.hasUsername()) {
           setUsername(other.getUsername());
         }
         if (other.hasText()) {
           setText(other.getText());
         }
+        if (other.hasConnect()) {
+          setConnect(other.getConnect());
+        }
+        if (other.hasDisconnect()) {
+          setDisconnect(other.getDisconnect());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
       
       public final boolean isInitialized() {
-        if (!hasUsername()) {
-          
-          return false;
-        }
-        if (!hasText()) {
-          
-          return false;
-        }
         return true;
       }
       
@@ -1097,13 +1143,23 @@ public final class Messages {
               text_ = input.readBytes();
               break;
             }
+            case 24: {
+              bitField0_ |= 0x00000004;
+              connect_ = input.readBool();
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000008;
+              disconnect_ = input.readBool();
+              break;
+            }
           }
         }
       }
       
       private int bitField0_;
       
-      // required string username = 1;
+      // optional string username = 1;
       private java.lang.Object username_ = "";
       public boolean hasUsername() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
@@ -1139,7 +1195,7 @@ public final class Messages {
         onChanged();
       }
       
-      // required string text = 2;
+      // optional string text = 2;
       private java.lang.Object text_ = "";
       public boolean hasText() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
@@ -1175,27 +1231,69 @@ public final class Messages {
         onChanged();
       }
       
-      // @@protoc_insertion_point(builder_scope:alpv_ws1112.ub1.webradio.protobuf.ChatMessage)
+      // optional bool connect = 3;
+      private boolean connect_ ;
+      public boolean hasConnect() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      public boolean getConnect() {
+        return connect_;
+      }
+      public Builder setConnect(boolean value) {
+        bitField0_ |= 0x00000004;
+        connect_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearConnect() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        connect_ = false;
+        onChanged();
+        return this;
+      }
+      
+      // optional bool disconnect = 4;
+      private boolean disconnect_ ;
+      public boolean hasDisconnect() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      public boolean getDisconnect() {
+        return disconnect_;
+      }
+      public Builder setDisconnect(boolean value) {
+        bitField0_ |= 0x00000008;
+        disconnect_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearDisconnect() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        disconnect_ = false;
+        onChanged();
+        return this;
+      }
+      
+      // @@protoc_insertion_point(builder_scope:alpv_ws1112.ub1.webradio.protobuf.ClientMessage)
     }
     
     static {
-      defaultInstance = new ChatMessage(true);
+      defaultInstance = new ClientMessage(true);
       defaultInstance.initFields();
     }
     
-    // @@protoc_insertion_point(class_scope:alpv_ws1112.ub1.webradio.protobuf.ChatMessage)
+    // @@protoc_insertion_point(class_scope:alpv_ws1112.ub1.webradio.protobuf.ClientMessage)
   }
   
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_alpv_ws1112_ub1_webradio_protobuf_WebradioMessage_descriptor;
+    internal_static_alpv_ws1112_ub1_webradio_protobuf_ServerMessage_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_alpv_ws1112_ub1_webradio_protobuf_WebradioMessage_fieldAccessorTable;
+      internal_static_alpv_ws1112_ub1_webradio_protobuf_ServerMessage_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_alpv_ws1112_ub1_webradio_protobuf_ChatMessage_descriptor;
+    internal_static_alpv_ws1112_ub1_webradio_protobuf_ClientMessage_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_alpv_ws1112_ub1_webradio_protobuf_ChatMessage_fieldAccessorTable;
+      internal_static_alpv_ws1112_ub1_webradio_protobuf_ClientMessage_fieldAccessorTable;
   
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -1207,34 +1305,35 @@ public final class Messages {
     java.lang.String[] descriptorData = {
       "\n8src/alpv_ws1112/ub1/webradio/protobuf/" +
       "chatAndAudio.proto\022!alpv_ws1112.ub1.webr" +
-      "adio.protobuf\"m\n\017WebradioMessage\022\025\n\risAu" +
-      "dioFormat\030\001 \002(\010\022\025\n\risDataMessage\030\002 \002(\010\022\014" +
-      "\n\004data\030\003 \001(\014\022\020\n\010username\030\004 \003(\t\022\014\n\004text\030\005" +
-      " \003(\t\"-\n\013ChatMessage\022\020\n\010username\030\001 \002(\t\022\014\n" +
-      "\004text\030\002 \002(\tB-\n!alpv_ws1112.ub1.webradio." +
-      "protobufB\010Messages"
+      "adio.protobuf\"k\n\rServerMessage\022\025\n\risAudi" +
+      "oFormat\030\001 \002(\010\022\025\n\risDataMessage\030\002 \002(\010\022\014\n\004" +
+      "data\030\003 \001(\014\022\020\n\010username\030\004 \003(\t\022\014\n\004text\030\005 \003" +
+      "(\t\"T\n\rClientMessage\022\020\n\010username\030\001 \001(\t\022\014\n" +
+      "\004text\030\002 \001(\t\022\017\n\007connect\030\003 \001(\010\022\022\n\ndisconne" +
+      "ct\030\004 \001(\010B-\n!alpv_ws1112.ub1.webradio.pro" +
+      "tobufB\010Messages"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(
             com.google.protobuf.Descriptors.FileDescriptor root) {
           descriptor = root;
-          internal_static_alpv_ws1112_ub1_webradio_protobuf_WebradioMessage_descriptor =
+          internal_static_alpv_ws1112_ub1_webradio_protobuf_ServerMessage_descriptor =
             getDescriptor().getMessageTypes().get(0);
-          internal_static_alpv_ws1112_ub1_webradio_protobuf_WebradioMessage_fieldAccessorTable = new
+          internal_static_alpv_ws1112_ub1_webradio_protobuf_ServerMessage_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_alpv_ws1112_ub1_webradio_protobuf_WebradioMessage_descriptor,
+              internal_static_alpv_ws1112_ub1_webradio_protobuf_ServerMessage_descriptor,
               new java.lang.String[] { "IsAudioFormat", "IsDataMessage", "Data", "Username", "Text", },
-              alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage.class,
-              alpv_ws1112.ub1.webradio.protobuf.Messages.WebradioMessage.Builder.class);
-          internal_static_alpv_ws1112_ub1_webradio_protobuf_ChatMessage_descriptor =
+              alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage.class,
+              alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage.Builder.class);
+          internal_static_alpv_ws1112_ub1_webradio_protobuf_ClientMessage_descriptor =
             getDescriptor().getMessageTypes().get(1);
-          internal_static_alpv_ws1112_ub1_webradio_protobuf_ChatMessage_fieldAccessorTable = new
+          internal_static_alpv_ws1112_ub1_webradio_protobuf_ClientMessage_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_alpv_ws1112_ub1_webradio_protobuf_ChatMessage_descriptor,
-              new java.lang.String[] { "Username", "Text", },
-              alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage.class,
-              alpv_ws1112.ub1.webradio.protobuf.Messages.ChatMessage.Builder.class);
+              internal_static_alpv_ws1112_ub1_webradio_protobuf_ClientMessage_descriptor,
+              new java.lang.String[] { "Username", "Text", "Connect", "Disconnect", },
+              alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage.class,
+              alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage.Builder.class);
           return null;
         }
       };
