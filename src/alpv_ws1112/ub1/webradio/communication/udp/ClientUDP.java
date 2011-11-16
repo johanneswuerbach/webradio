@@ -37,6 +37,9 @@ public class ClientUDP implements Client {
 		}
 	}
 
+	/**
+	 * Receive data
+	 */
 	public void run() {
 		
 		while (!_close) {
@@ -90,8 +93,9 @@ public class ClientUDP implements Client {
 	}
 	
 	
-	
-	
+	/**
+	 * Connect to a server and send connect message
+	 */
 	public void connect(InetSocketAddress serverAddress) throws IOException {
 
 		_host = InetAddress.getByName(serverAddress.getHostName());
@@ -100,6 +104,9 @@ public class ClientUDP implements Client {
 		connect();
 	}
 	
+	/**
+	 * Send connect message
+	 */
 	private void connect() throws IOException {
 		
 		//_socket.connect(_host, _port);
@@ -114,6 +121,9 @@ public class ClientUDP implements Client {
 		sendPacket(builder);
 	}
 	
+	/**
+	 * Send disconnect message
+	 */
 	private void disconnect() {
 		
 		if(_socket.isClosed()) {
@@ -131,11 +141,17 @@ public class ClientUDP implements Client {
 		}
 	}
 
+	/**
+	 * Close socket and send disconnect message
+	 */
 	public void close() {
 		_close = true;
 		disconnect();
 	}
 
+	/**
+	 * Send chatmessage to server and publish on GUI
+	 */
 	public void sendChatMessage(String message) throws IOException {
 		// Display in GUI
 		displayMessage(clientUI().getUserName(), message);
@@ -148,6 +164,9 @@ public class ClientUDP implements Client {
 		sendPacket(builder);
 	}
 
+	/**
+	 * Send a message to a server
+	 */
 	private void sendPacket(ClientMessage.Builder builder) throws IOException {
 
 		ClientMessage clientMessage = builder.build();
@@ -192,6 +211,9 @@ public class ClientUDP implements Client {
 		}
 	}
 
+	/**
+	 * Current client GUI
+	 */
 	private ClientUI clientUI() {
 		return Main.clientUI;
 	}

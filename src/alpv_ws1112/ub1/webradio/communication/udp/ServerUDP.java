@@ -40,6 +40,9 @@ public class ServerUDP implements Server {
 		System.out.println("Starting server using port \"" + port + "\".");
 	}
 
+	/**
+	 * Handle incoming and outgoing messages
+	 */
 	public void run() {
 		byte[] audioBuffer;
 		while (!_close) {
@@ -137,6 +140,9 @@ public class ServerUDP implements Server {
 		_socket.close();
 	}
 
+	/**
+	 * Close the server
+	 */
 	public void close() {
 		_close = true;
 	}
@@ -164,11 +170,17 @@ public class ServerUDP implements Server {
 		}
 	}
 	
+	/**
+	 * Returns send buffer size
+	 */
 	public int getBufferSize() {
 		return getAudioBufferSize() + 1000;
 	}
 	
 
+	/**
+	 * Returns audio buffer sizr
+	 */
 	private int getAudioBufferSize() {
 		if (_audioFormat == null) {
 			return 0;
@@ -178,6 +190,9 @@ public class ServerUDP implements Server {
 		}
 	}
 	
+	/**
+	 * Return current socket
+	 */
 	public DatagramSocket getSocket() {
 		return _socket;
 	}

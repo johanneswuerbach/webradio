@@ -102,6 +102,9 @@ public class ServerUDPClient {
 		return new Chat(this, username, message);
 	}
 	
+	/**
+	 * Send message to client
+	 */
 	private void sendPacket(ServerMessage.Builder builder) throws IOException {
 
 		ServerMessage serverMessage = builder.build();
@@ -147,6 +150,9 @@ public class ServerUDPClient {
 		}
 	}
 	
+	/**
+	 * Compare clients
+	 */
 	public boolean equals(Object o) {
 		if(o instanceof ServerUDPClient) {
 			ServerUDPClient other = (ServerUDPClient) o;
