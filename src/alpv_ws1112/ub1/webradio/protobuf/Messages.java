@@ -32,6 +32,10 @@ public final class Messages {
     java.util.List<String> getTextList();
     int getTextCount();
     String getText(int index);
+    
+    // optional int32 bufferSize = 6;
+    boolean hasBufferSize();
+    int getBufferSize();
   }
   public static final class ServerMessage extends
       com.google.protobuf.GeneratedMessage
@@ -120,12 +124,23 @@ public final class Messages {
       return text_.get(index);
     }
     
+    // optional int32 bufferSize = 6;
+    public static final int BUFFERSIZE_FIELD_NUMBER = 6;
+    private int bufferSize_;
+    public boolean hasBufferSize() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    public int getBufferSize() {
+      return bufferSize_;
+    }
+    
     private void initFields() {
       isAudioFormat_ = false;
       isDataMessage_ = false;
       data_ = com.google.protobuf.ByteString.EMPTY;
       username_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       text_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      bufferSize_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -161,6 +176,9 @@ public final class Messages {
       }
       for (int i = 0; i < text_.size(); i++) {
         output.writeBytes(5, text_.getByteString(i));
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeInt32(6, bufferSize_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -200,6 +218,10 @@ public final class Messages {
         }
         size += dataSize;
         size += 1 * getTextList().size();
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(6, bufferSize_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -335,6 +357,8 @@ public final class Messages {
         bitField0_ = (bitField0_ & ~0x00000008);
         text_ = com.google.protobuf.LazyStringArrayList.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000010);
+        bufferSize_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000020);
         return this;
       }
       
@@ -397,6 +421,10 @@ public final class Messages {
           bitField0_ = (bitField0_ & ~0x00000010);
         }
         result.text_ = text_;
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.bufferSize_ = bufferSize_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -441,6 +469,9 @@ public final class Messages {
             text_.addAll(other.text_);
           }
           onChanged();
+        }
+        if (other.hasBufferSize()) {
+          setBufferSize(other.getBufferSize());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -504,6 +535,11 @@ public final class Messages {
             case 42: {
               ensureTextIsMutable();
               text_.add(input.readBytes());
+              break;
+            }
+            case 48: {
+              bitField0_ |= 0x00000020;
+              bufferSize_ = input.readInt32();
               break;
             }
           }
@@ -688,6 +724,27 @@ public final class Messages {
         ensureTextIsMutable();
         text_.add(value);
         onChanged();
+      }
+      
+      // optional int32 bufferSize = 6;
+      private int bufferSize_ ;
+      public boolean hasBufferSize() {
+        return ((bitField0_ & 0x00000020) == 0x00000020);
+      }
+      public int getBufferSize() {
+        return bufferSize_;
+      }
+      public Builder setBufferSize(int value) {
+        bitField0_ |= 0x00000020;
+        bufferSize_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearBufferSize() {
+        bitField0_ = (bitField0_ & ~0x00000020);
+        bufferSize_ = 0;
+        onChanged();
+        return this;
       }
       
       // @@protoc_insertion_point(builder_scope:alpv_ws1112.ub1.webradio.protobuf.ServerMessage)
@@ -1248,12 +1305,13 @@ public final class Messages {
     java.lang.String[] descriptorData = {
       "\n8src/alpv_ws1112/ub1/webradio/protobuf/" +
       "chatAndAudio.proto\022!alpv_ws1112.ub1.webr" +
-      "adio.protobuf\"k\n\rServerMessage\022\025\n\risAudi" +
+      "adio.protobuf\"\177\n\rServerMessage\022\025\n\risAudi" +
       "oFormat\030\001 \002(\010\022\025\n\risDataMessage\030\002 \002(\010\022\014\n\004" +
       "data\030\003 \001(\014\022\020\n\010username\030\004 \003(\t\022\014\n\004text\030\005 \003" +
-      "(\t\"C\n\rClientMessage\022\020\n\010username\030\001 \001(\t\022\014\n" +
-      "\004text\030\002 \001(\t\022\022\n\nconnection\030\003 \001(\010B-\n!alpv_" +
-      "ws1112.ub1.webradio.protobufB\010Messages"
+      "(\t\022\022\n\nbufferSize\030\006 \001(\005\"C\n\rClientMessage\022" +
+      "\020\n\010username\030\001 \001(\t\022\014\n\004text\030\002 \001(\t\022\022\n\nconne" +
+      "ction\030\003 \001(\010B-\n!alpv_ws1112.ub1.webradio." +
+      "protobufB\010Messages"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1265,7 +1323,7 @@ public final class Messages {
           internal_static_alpv_ws1112_ub1_webradio_protobuf_ServerMessage_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_alpv_ws1112_ub1_webradio_protobuf_ServerMessage_descriptor,
-              new java.lang.String[] { "IsAudioFormat", "IsDataMessage", "Data", "Username", "Text", },
+              new java.lang.String[] { "IsAudioFormat", "IsDataMessage", "Data", "Username", "Text", "BufferSize", },
               alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage.class,
               alpv_ws1112.ub1.webradio.protobuf.Messages.ServerMessage.Builder.class);
           internal_static_alpv_ws1112_ub1_webradio_protobuf_ClientMessage_descriptor =

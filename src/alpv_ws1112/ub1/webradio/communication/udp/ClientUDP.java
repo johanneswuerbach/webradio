@@ -24,6 +24,7 @@ public class ClientUDP implements Client {
 	private InetAddress _host;
 	private int _port;
 	private AudioPlayer _audioPlayer;
+	private int _bufferSize = 1000;
 
 	public ClientUDP(String host, int port) {
 		try {
@@ -42,7 +43,7 @@ public class ClientUDP implements Client {
 			try {
 				
 				
-				byte[] buffer = new byte[1024];
+				byte[] buffer = new byte[_bufferSize];
 				DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 				_socket.receive(packet);
 				
@@ -81,6 +82,7 @@ public class ClientUDP implements Client {
 					.toObject(audioFormatMessage.getData().toByteArray()))
 					.getAudioFormat();
 			System.out.println("Audio Format: " + audioFormat.toString());
+			_bufferSize = audioFormatMessage.getBufferSize();
 			_audioPlayer = new AudioPlayer(audioFormat);
 		} catch (ClassNotFoundException e) {
 			throw new IOException(e);
@@ -177,6 +179,7 @@ public class ClientUDP implements Client {
 
 		// Play audio
 		if(message.hasData()) {
+			
 			if(_audioPlayer == null) {
 				// If not, reconnect
 				disconnect();

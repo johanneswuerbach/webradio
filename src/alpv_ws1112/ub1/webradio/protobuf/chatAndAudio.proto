@@ -12,6 +12,8 @@ message ServerMessage {
 	repeated string username = 4;
 	// Used for sending multiple messages
 	repeated string text = 5;
+	// Used for transmitting buffer size
+	optional int32 bufferSize = 6;
 }
 
 // Message from client -> server

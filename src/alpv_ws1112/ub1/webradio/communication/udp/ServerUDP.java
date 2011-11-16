@@ -22,7 +22,7 @@ import alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage;
 
 public class ServerUDP implements Server {
 
-	private static final int BUFFER_SIZE = 256;
+	private static final int DELAY = 100;
 
 	private AudioInputStream _ais;
 	private AudioFormat _audioFormat;
@@ -34,7 +34,7 @@ public class ServerUDP implements Server {
 	public ServerUDP(int port) throws IOException {
 		// Create socket
 		_socket = new DatagramSocket(port);
-		_socket.setSoTimeout(1000);
+		_socket.setSoTimeout(DELAY);
 
 		_clients = new ArrayList<ServerUDPClient>();
 		System.out.println("Starting server using port \"" + port + "\".");
@@ -45,7 +45,7 @@ public class ServerUDP implements Server {
 		while (!_close) {
 			// Read audio data, if available
 			if (_ais != null) {
-				audioBuffer = new byte[BUFFER_SIZE];
+				audioBuffer = new byte[getAudioBufferSize()];
 				try {
 					if (_ais.read(audioBuffer) <= 0) {
 						_ais = AudioPlayer.getAudioInputStream(_path);
@@ -61,11 +61,12 @@ public class ServerUDP implements Server {
 			} else {
 				audioBuffer = null;
 			}
-			
+
 			// Receive data
 			try {
-				byte[] buffer = new byte[1024];
-				DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+				byte[] buffer = new byte[getBufferSize()];
+				DatagramPacket packet = new DatagramPacket(buffer,
+						buffer.length);
 				_socket.receive(packet);
 
 				byte[] bytes = new byte[packet.getLength()];
@@ -77,9 +78,9 @@ public class ServerUDP implements Server {
 
 				try {
 					ClientMessage message = ClientMessage.parseFrom(bytes);
-					ServerUDPClient client = new ServerUDPClient(_socket,
+					ServerUDPClient client = new ServerUDPClient(this,
 							packet.getAddress(), packet.getPort());
-					
+
 					try {
 						if (message.hasConnection()) {
 							// Connection status change
@@ -101,7 +102,8 @@ public class ServerUDP implements Server {
 							}
 						} else {
 							// Chat message
-							Chat chat = client.receiveChatMessage(message.getUsername(), message.getText());
+							Chat chat = client.receiveChatMessage(
+									message.getUsername(), message.getText());
 							for (ServerUDPClient chatClient : _clients) {
 								if (!chat.isSource(chatClient)) {
 									chatClient.addChat(chat);
@@ -120,15 +122,14 @@ public class ServerUDP implements Server {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+
 			// Send data
 			try {
-				for(ServerUDPClient client : _clients) {
+				for (ServerUDPClient client : _clients) {
 					client.sendDataMessage(audioBuffer);
 				}
-				
-			}
-			catch(IOException e) {
+
+			} catch (IOException e) {
 			}
 
 		}
@@ -161,6 +162,24 @@ public class ServerUDP implements Server {
 				_clients.remove(client);
 			}
 		}
+	}
+	
+	public int getBufferSize() {
+		return getAudioBufferSize() + 1000;
+	}
+	
+
+	private int getAudioBufferSize() {
+		if (_audioFormat == null) {
+			return 0;
+		} else {
+			return (int) (_audioFormat.getFrameSize()
+					* _audioFormat.getFrameRate() / (1000 / DELAY));
+		}
+	}
+	
+	public DatagramSocket getSocket() {
+		return _socket;
 	}
 
 }

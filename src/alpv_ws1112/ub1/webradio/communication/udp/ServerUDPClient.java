@@ -22,13 +22,15 @@ public class ServerUDPClient {
 
 	private InetAddress _host;
 	private int _port;
+	private ServerUDP _server;
 	private DatagramSocket _socket;
 	private Queue<Chat> _chats;
 
-	ServerUDPClient(DatagramSocket socket, InetAddress host, int port) throws IOException {
+	ServerUDPClient(ServerUDP server, InetAddress host, int port) throws IOException {
 		_host = host;
 		_port = port;
-		_socket = socket;
+		_socket = server.getSocket();
+		_server = server;
 		_chats = new ArrayDeque<Chat>();
 	}
 
@@ -51,6 +53,7 @@ public class ServerUDPClient {
 		builder.setIsAudioFormat(true);
 		builder.setIsDataMessage(false);
 		builder.setData(ByteString.copyFrom(format));
+		builder.setBufferSize(_server.getBufferSize());
 		
 		sendPacket(builder);
 
@@ -107,8 +110,6 @@ public class ServerUDPClient {
 		DatagramPacket packet = new DatagramPacket(bytes, bytes.length, _host,
 				_port);
 		_socket.send(packet);
-
-		System.out.println("ServerMessage send. (Size: " + bytes.length + ")");
 	}
 
 	/**
