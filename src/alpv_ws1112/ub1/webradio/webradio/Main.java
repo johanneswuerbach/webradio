@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import alpv_ws1112.ub1.webradio.communication.Client;
 import alpv_ws1112.ub1.webradio.communication.Server;
+import alpv_ws1112.ub1.webradio.communication.mc.ClientMC;
+import alpv_ws1112.ub1.webradio.communication.mc.ServerMC;
 import alpv_ws1112.ub1.webradio.communication.tcp.ClientTCP;
 import alpv_ws1112.ub1.webradio.communication.tcp.ServerTCP;
 import alpv_ws1112.ub1.webradio.communication.udp.ClientUDP;
@@ -59,7 +61,11 @@ public class Main {
 					server = new ServerTCP(port);
 				} else if (protocol.equals("udp")) {
 					server = new ServerUDP(port);
-				} else {
+				}
+				else if (protocol.equals("mc")) {
+						server = new ServerMC(port);
+					} 
+				else {
 					System.err.println("protcol " + protocol
 							+ " is not supported.");
 					return;
@@ -88,6 +94,8 @@ public class Main {
 					client = new ClientTCP(host, port);
 				} else if (protocol.equals("udp")) {
 					client = new ClientUDP(host, port);
+				} else if (protocol.equals("mc")) {
+					client = new ClientMC(host, port);
 				} else {
 					System.err.println("protcol " + protocol
 							+ " is not supported.");

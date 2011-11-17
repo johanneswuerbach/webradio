@@ -22,3 +22,20 @@ message ClientMessage {
 	optional string text = 2;
 	optional bool connection = 3;
 }
+
+// Message from server -> client (audioFormat and connection info)
+message StartMessage {
+	required bytes data = 1;
+	required int32 bufferSize = 2;
+	required string networkGroup = 3;
+	required int32 networkGroupPort = 4;
+}
+
+// Message from client -> client (audio or chat)
+message Message {
+	optional bool isAudioFormat = 1;
+	optional int32 bufferSize = 2;
+	optional bytes data = 3;
+	optional string username = 4;
+	optional string text = 5;
+}

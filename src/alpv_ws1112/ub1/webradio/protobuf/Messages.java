@@ -1284,6 +1284,1230 @@ public final class Messages {
     // @@protoc_insertion_point(class_scope:alpv_ws1112.ub1.webradio.protobuf.ClientMessage)
   }
   
+  public interface StartMessageOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // required bytes data = 1;
+    boolean hasData();
+    com.google.protobuf.ByteString getData();
+    
+    // required int32 bufferSize = 2;
+    boolean hasBufferSize();
+    int getBufferSize();
+    
+    // required string networkGroup = 3;
+    boolean hasNetworkGroup();
+    String getNetworkGroup();
+    
+    // required int32 networkGroupPort = 4;
+    boolean hasNetworkGroupPort();
+    int getNetworkGroupPort();
+  }
+  public static final class StartMessage extends
+      com.google.protobuf.GeneratedMessage
+      implements StartMessageOrBuilder {
+    // Use StartMessage.newBuilder() to construct.
+    private StartMessage(Builder builder) {
+      super(builder);
+    }
+    private StartMessage(boolean noInit) {}
+    
+    private static final StartMessage defaultInstance;
+    public static StartMessage getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public StartMessage getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_StartMessage_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_StartMessage_fieldAccessorTable;
+    }
+    
+    private int bitField0_;
+    // required bytes data = 1;
+    public static final int DATA_FIELD_NUMBER = 1;
+    private com.google.protobuf.ByteString data_;
+    public boolean hasData() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public com.google.protobuf.ByteString getData() {
+      return data_;
+    }
+    
+    // required int32 bufferSize = 2;
+    public static final int BUFFERSIZE_FIELD_NUMBER = 2;
+    private int bufferSize_;
+    public boolean hasBufferSize() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    public int getBufferSize() {
+      return bufferSize_;
+    }
+    
+    // required string networkGroup = 3;
+    public static final int NETWORKGROUP_FIELD_NUMBER = 3;
+    private java.lang.Object networkGroup_;
+    public boolean hasNetworkGroup() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    public String getNetworkGroup() {
+      java.lang.Object ref = networkGroup_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          networkGroup_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getNetworkGroupBytes() {
+      java.lang.Object ref = networkGroup_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        networkGroup_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    
+    // required int32 networkGroupPort = 4;
+    public static final int NETWORKGROUPPORT_FIELD_NUMBER = 4;
+    private int networkGroupPort_;
+    public boolean hasNetworkGroupPort() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    public int getNetworkGroupPort() {
+      return networkGroupPort_;
+    }
+    
+    private void initFields() {
+      data_ = com.google.protobuf.ByteString.EMPTY;
+      bufferSize_ = 0;
+      networkGroup_ = "";
+      networkGroupPort_ = 0;
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      if (!hasData()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasBufferSize()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasNetworkGroup()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasNetworkGroupPort()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, data_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeInt32(2, bufferSize_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBytes(3, getNetworkGroupBytes());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeInt32(4, networkGroupPort_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, data_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, bufferSize_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(3, getNetworkGroupBytes());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, networkGroupPort_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+    
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessage parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessage parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessage parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessage parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessage parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessage parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessage parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessage parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessage parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessage parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessage prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessageOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_StartMessage_descriptor;
+      }
+      
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_StartMessage_fieldAccessorTable;
+      }
+      
+      // Construct using alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessage.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+      
+      public Builder clear() {
+        super.clear();
+        data_ = com.google.protobuf.ByteString.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        bufferSize_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        networkGroup_ = "";
+        bitField0_ = (bitField0_ & ~0x00000004);
+        networkGroupPort_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessage.getDescriptor();
+      }
+      
+      public alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessage getDefaultInstanceForType() {
+        return alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessage.getDefaultInstance();
+      }
+      
+      public alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessage build() {
+        alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessage result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+      
+      private alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessage buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessage result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return result;
+      }
+      
+      public alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessage buildPartial() {
+        alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessage result = new alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessage(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.data_ = data_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.bufferSize_ = bufferSize_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.networkGroup_ = networkGroup_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.networkGroupPort_ = networkGroupPort_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessage) {
+          return mergeFrom((alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessage)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessage other) {
+        if (other == alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessage.getDefaultInstance()) return this;
+        if (other.hasData()) {
+          setData(other.getData());
+        }
+        if (other.hasBufferSize()) {
+          setBufferSize(other.getBufferSize());
+        }
+        if (other.hasNetworkGroup()) {
+          setNetworkGroup(other.getNetworkGroup());
+        }
+        if (other.hasNetworkGroupPort()) {
+          setNetworkGroupPort(other.getNetworkGroupPort());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public final boolean isInitialized() {
+        if (!hasData()) {
+          
+          return false;
+        }
+        if (!hasBufferSize()) {
+          
+          return false;
+        }
+        if (!hasNetworkGroup()) {
+          
+          return false;
+        }
+        if (!hasNetworkGroupPort()) {
+          
+          return false;
+        }
+        return true;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              onChanged();
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                onChanged();
+                return this;
+              }
+              break;
+            }
+            case 10: {
+              bitField0_ |= 0x00000001;
+              data_ = input.readBytes();
+              break;
+            }
+            case 16: {
+              bitField0_ |= 0x00000002;
+              bufferSize_ = input.readInt32();
+              break;
+            }
+            case 26: {
+              bitField0_ |= 0x00000004;
+              networkGroup_ = input.readBytes();
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000008;
+              networkGroupPort_ = input.readInt32();
+              break;
+            }
+          }
+        }
+      }
+      
+      private int bitField0_;
+      
+      // required bytes data = 1;
+      private com.google.protobuf.ByteString data_ = com.google.protobuf.ByteString.EMPTY;
+      public boolean hasData() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      public com.google.protobuf.ByteString getData() {
+        return data_;
+      }
+      public Builder setData(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        data_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearData() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        data_ = getDefaultInstance().getData();
+        onChanged();
+        return this;
+      }
+      
+      // required int32 bufferSize = 2;
+      private int bufferSize_ ;
+      public boolean hasBufferSize() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      public int getBufferSize() {
+        return bufferSize_;
+      }
+      public Builder setBufferSize(int value) {
+        bitField0_ |= 0x00000002;
+        bufferSize_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearBufferSize() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        bufferSize_ = 0;
+        onChanged();
+        return this;
+      }
+      
+      // required string networkGroup = 3;
+      private java.lang.Object networkGroup_ = "";
+      public boolean hasNetworkGroup() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      public String getNetworkGroup() {
+        java.lang.Object ref = networkGroup_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          networkGroup_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      public Builder setNetworkGroup(String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        networkGroup_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearNetworkGroup() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        networkGroup_ = getDefaultInstance().getNetworkGroup();
+        onChanged();
+        return this;
+      }
+      void setNetworkGroup(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000004;
+        networkGroup_ = value;
+        onChanged();
+      }
+      
+      // required int32 networkGroupPort = 4;
+      private int networkGroupPort_ ;
+      public boolean hasNetworkGroupPort() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      public int getNetworkGroupPort() {
+        return networkGroupPort_;
+      }
+      public Builder setNetworkGroupPort(int value) {
+        bitField0_ |= 0x00000008;
+        networkGroupPort_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearNetworkGroupPort() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        networkGroupPort_ = 0;
+        onChanged();
+        return this;
+      }
+      
+      // @@protoc_insertion_point(builder_scope:alpv_ws1112.ub1.webradio.protobuf.StartMessage)
+    }
+    
+    static {
+      defaultInstance = new StartMessage(true);
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:alpv_ws1112.ub1.webradio.protobuf.StartMessage)
+  }
+  
+  public interface MessageOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // optional bool isAudioFormat = 1;
+    boolean hasIsAudioFormat();
+    boolean getIsAudioFormat();
+    
+    // optional int32 bufferSize = 2;
+    boolean hasBufferSize();
+    int getBufferSize();
+    
+    // optional bytes data = 3;
+    boolean hasData();
+    com.google.protobuf.ByteString getData();
+    
+    // optional string username = 4;
+    boolean hasUsername();
+    String getUsername();
+    
+    // optional string text = 5;
+    boolean hasText();
+    String getText();
+  }
+  public static final class Message extends
+      com.google.protobuf.GeneratedMessage
+      implements MessageOrBuilder {
+    // Use Message.newBuilder() to construct.
+    private Message(Builder builder) {
+      super(builder);
+    }
+    private Message(boolean noInit) {}
+    
+    private static final Message defaultInstance;
+    public static Message getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public Message getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_Message_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_Message_fieldAccessorTable;
+    }
+    
+    private int bitField0_;
+    // optional bool isAudioFormat = 1;
+    public static final int ISAUDIOFORMAT_FIELD_NUMBER = 1;
+    private boolean isAudioFormat_;
+    public boolean hasIsAudioFormat() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public boolean getIsAudioFormat() {
+      return isAudioFormat_;
+    }
+    
+    // optional int32 bufferSize = 2;
+    public static final int BUFFERSIZE_FIELD_NUMBER = 2;
+    private int bufferSize_;
+    public boolean hasBufferSize() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    public int getBufferSize() {
+      return bufferSize_;
+    }
+    
+    // optional bytes data = 3;
+    public static final int DATA_FIELD_NUMBER = 3;
+    private com.google.protobuf.ByteString data_;
+    public boolean hasData() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    public com.google.protobuf.ByteString getData() {
+      return data_;
+    }
+    
+    // optional string username = 4;
+    public static final int USERNAME_FIELD_NUMBER = 4;
+    private java.lang.Object username_;
+    public boolean hasUsername() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    public String getUsername() {
+      java.lang.Object ref = username_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          username_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getUsernameBytes() {
+      java.lang.Object ref = username_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        username_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    
+    // optional string text = 5;
+    public static final int TEXT_FIELD_NUMBER = 5;
+    private java.lang.Object text_;
+    public boolean hasText() {
+      return ((bitField0_ & 0x00000010) == 0x00000010);
+    }
+    public String getText() {
+      java.lang.Object ref = text_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          text_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getTextBytes() {
+      java.lang.Object ref = text_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        text_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    
+    private void initFields() {
+      isAudioFormat_ = false;
+      bufferSize_ = 0;
+      data_ = com.google.protobuf.ByteString.EMPTY;
+      username_ = "";
+      text_ = "";
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      memoizedIsInitialized = 1;
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBool(1, isAudioFormat_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeInt32(2, bufferSize_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBytes(3, data_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeBytes(4, getUsernameBytes());
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        output.writeBytes(5, getTextBytes());
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(1, isAudioFormat_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, bufferSize_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(3, data_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(4, getUsernameBytes());
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(5, getTextBytes());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+    
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.Message parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.Message parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.Message parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.Message parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.Message parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.Message parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.Message parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.Message parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.Message parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static alpv_ws1112.ub1.webradio.protobuf.Messages.Message parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(alpv_ws1112.ub1.webradio.protobuf.Messages.Message prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements alpv_ws1112.ub1.webradio.protobuf.Messages.MessageOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_Message_descriptor;
+      }
+      
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return alpv_ws1112.ub1.webradio.protobuf.Messages.internal_static_alpv_ws1112_ub1_webradio_protobuf_Message_fieldAccessorTable;
+      }
+      
+      // Construct using alpv_ws1112.ub1.webradio.protobuf.Messages.Message.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+      
+      public Builder clear() {
+        super.clear();
+        isAudioFormat_ = false;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        bufferSize_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        data_ = com.google.protobuf.ByteString.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        username_ = "";
+        bitField0_ = (bitField0_ & ~0x00000008);
+        text_ = "";
+        bitField0_ = (bitField0_ & ~0x00000010);
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return alpv_ws1112.ub1.webradio.protobuf.Messages.Message.getDescriptor();
+      }
+      
+      public alpv_ws1112.ub1.webradio.protobuf.Messages.Message getDefaultInstanceForType() {
+        return alpv_ws1112.ub1.webradio.protobuf.Messages.Message.getDefaultInstance();
+      }
+      
+      public alpv_ws1112.ub1.webradio.protobuf.Messages.Message build() {
+        alpv_ws1112.ub1.webradio.protobuf.Messages.Message result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+      
+      private alpv_ws1112.ub1.webradio.protobuf.Messages.Message buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        alpv_ws1112.ub1.webradio.protobuf.Messages.Message result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return result;
+      }
+      
+      public alpv_ws1112.ub1.webradio.protobuf.Messages.Message buildPartial() {
+        alpv_ws1112.ub1.webradio.protobuf.Messages.Message result = new alpv_ws1112.ub1.webradio.protobuf.Messages.Message(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.isAudioFormat_ = isAudioFormat_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.bufferSize_ = bufferSize_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.data_ = data_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.username_ = username_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
+        }
+        result.text_ = text_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof alpv_ws1112.ub1.webradio.protobuf.Messages.Message) {
+          return mergeFrom((alpv_ws1112.ub1.webradio.protobuf.Messages.Message)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(alpv_ws1112.ub1.webradio.protobuf.Messages.Message other) {
+        if (other == alpv_ws1112.ub1.webradio.protobuf.Messages.Message.getDefaultInstance()) return this;
+        if (other.hasIsAudioFormat()) {
+          setIsAudioFormat(other.getIsAudioFormat());
+        }
+        if (other.hasBufferSize()) {
+          setBufferSize(other.getBufferSize());
+        }
+        if (other.hasData()) {
+          setData(other.getData());
+        }
+        if (other.hasUsername()) {
+          setUsername(other.getUsername());
+        }
+        if (other.hasText()) {
+          setText(other.getText());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public final boolean isInitialized() {
+        return true;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              onChanged();
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                onChanged();
+                return this;
+              }
+              break;
+            }
+            case 8: {
+              bitField0_ |= 0x00000001;
+              isAudioFormat_ = input.readBool();
+              break;
+            }
+            case 16: {
+              bitField0_ |= 0x00000002;
+              bufferSize_ = input.readInt32();
+              break;
+            }
+            case 26: {
+              bitField0_ |= 0x00000004;
+              data_ = input.readBytes();
+              break;
+            }
+            case 34: {
+              bitField0_ |= 0x00000008;
+              username_ = input.readBytes();
+              break;
+            }
+            case 42: {
+              bitField0_ |= 0x00000010;
+              text_ = input.readBytes();
+              break;
+            }
+          }
+        }
+      }
+      
+      private int bitField0_;
+      
+      // optional bool isAudioFormat = 1;
+      private boolean isAudioFormat_ ;
+      public boolean hasIsAudioFormat() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      public boolean getIsAudioFormat() {
+        return isAudioFormat_;
+      }
+      public Builder setIsAudioFormat(boolean value) {
+        bitField0_ |= 0x00000001;
+        isAudioFormat_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearIsAudioFormat() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        isAudioFormat_ = false;
+        onChanged();
+        return this;
+      }
+      
+      // optional int32 bufferSize = 2;
+      private int bufferSize_ ;
+      public boolean hasBufferSize() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      public int getBufferSize() {
+        return bufferSize_;
+      }
+      public Builder setBufferSize(int value) {
+        bitField0_ |= 0x00000002;
+        bufferSize_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearBufferSize() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        bufferSize_ = 0;
+        onChanged();
+        return this;
+      }
+      
+      // optional bytes data = 3;
+      private com.google.protobuf.ByteString data_ = com.google.protobuf.ByteString.EMPTY;
+      public boolean hasData() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      public com.google.protobuf.ByteString getData() {
+        return data_;
+      }
+      public Builder setData(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        data_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearData() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        data_ = getDefaultInstance().getData();
+        onChanged();
+        return this;
+      }
+      
+      // optional string username = 4;
+      private java.lang.Object username_ = "";
+      public boolean hasUsername() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      public String getUsername() {
+        java.lang.Object ref = username_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          username_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      public Builder setUsername(String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        username_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearUsername() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        username_ = getDefaultInstance().getUsername();
+        onChanged();
+        return this;
+      }
+      void setUsername(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000008;
+        username_ = value;
+        onChanged();
+      }
+      
+      // optional string text = 5;
+      private java.lang.Object text_ = "";
+      public boolean hasText() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
+      }
+      public String getText() {
+        java.lang.Object ref = text_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          text_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      public Builder setText(String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        text_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearText() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        text_ = getDefaultInstance().getText();
+        onChanged();
+        return this;
+      }
+      void setText(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000010;
+        text_ = value;
+        onChanged();
+      }
+      
+      // @@protoc_insertion_point(builder_scope:alpv_ws1112.ub1.webradio.protobuf.Message)
+    }
+    
+    static {
+      defaultInstance = new Message(true);
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:alpv_ws1112.ub1.webradio.protobuf.Message)
+  }
+  
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_alpv_ws1112_ub1_webradio_protobuf_ServerMessage_descriptor;
   private static
@@ -1294,6 +2518,16 @@ public final class Messages {
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_alpv_ws1112_ub1_webradio_protobuf_ClientMessage_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_alpv_ws1112_ub1_webradio_protobuf_StartMessage_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_alpv_ws1112_ub1_webradio_protobuf_StartMessage_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_alpv_ws1112_ub1_webradio_protobuf_Message_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_alpv_ws1112_ub1_webradio_protobuf_Message_fieldAccessorTable;
   
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -1310,8 +2544,13 @@ public final class Messages {
       "data\030\003 \001(\014\022\020\n\010username\030\004 \003(\t\022\014\n\004text\030\005 \003" +
       "(\t\022\022\n\nbufferSize\030\006 \001(\005\"C\n\rClientMessage\022" +
       "\020\n\010username\030\001 \001(\t\022\014\n\004text\030\002 \001(\t\022\022\n\nconne" +
-      "ction\030\003 \001(\010B-\n!alpv_ws1112.ub1.webradio." +
-      "protobufB\010Messages"
+      "ction\030\003 \001(\010\"`\n\014StartMessage\022\014\n\004data\030\001 \002(" +
+      "\014\022\022\n\nbufferSize\030\002 \002(\005\022\024\n\014networkGroup\030\003 " +
+      "\002(\t\022\030\n\020networkGroupPort\030\004 \002(\005\"b\n\007Message",
+      "\022\025\n\risAudioFormat\030\001 \001(\010\022\022\n\nbufferSize\030\002 " +
+      "\001(\005\022\014\n\004data\030\003 \001(\014\022\020\n\010username\030\004 \001(\t\022\014\n\004t" +
+      "ext\030\005 \001(\tB-\n!alpv_ws1112.ub1.webradio.pr" +
+      "otobufB\010Messages"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1334,6 +2573,22 @@ public final class Messages {
               new java.lang.String[] { "Username", "Text", "Connection", },
               alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage.class,
               alpv_ws1112.ub1.webradio.protobuf.Messages.ClientMessage.Builder.class);
+          internal_static_alpv_ws1112_ub1_webradio_protobuf_StartMessage_descriptor =
+            getDescriptor().getMessageTypes().get(2);
+          internal_static_alpv_ws1112_ub1_webradio_protobuf_StartMessage_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_alpv_ws1112_ub1_webradio_protobuf_StartMessage_descriptor,
+              new java.lang.String[] { "Data", "BufferSize", "NetworkGroup", "NetworkGroupPort", },
+              alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessage.class,
+              alpv_ws1112.ub1.webradio.protobuf.Messages.StartMessage.Builder.class);
+          internal_static_alpv_ws1112_ub1_webradio_protobuf_Message_descriptor =
+            getDescriptor().getMessageTypes().get(3);
+          internal_static_alpv_ws1112_ub1_webradio_protobuf_Message_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_alpv_ws1112_ub1_webradio_protobuf_Message_descriptor,
+              new java.lang.String[] { "IsAudioFormat", "BufferSize", "Data", "Username", "Text", },
+              alpv_ws1112.ub1.webradio.protobuf.Messages.Message.class,
+              alpv_ws1112.ub1.webradio.protobuf.Messages.Message.Builder.class);
           return null;
         }
       };
