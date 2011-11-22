@@ -26,7 +26,7 @@ public class ClientMC implements Client {
 	private boolean _close = false;
 	private Socket _socket;
 	private MulticastSocket _mcSocket;
-	private InetAddress _networkGroup; 
+	private InetAddress _networkGroup;
 	private int _bufferSize;
 	private AudioPlayer _audioPlayer;
 
@@ -39,21 +39,23 @@ public class ClientMC implements Client {
 		}
 	}
 
+	/**
+	 * Establish connection
+	 */
 	public void run() {
 
-		// First TCP
+		// First TCP to establish connection
 		while (!_close && _mcSocket == null) {
 			try {
 				StartMessage message = StartMessage.parseDelimitedFrom(_socket
 						.getInputStream());
 
 				_mcSocket = new MulticastSocket(message.getNetworkGroupPort());
-				_networkGroup = InetAddress.getByName(message
-						.getNetworkGroup());
+				_networkGroup = InetAddress
+						.getByName(message.getNetworkGroup());
 				_mcSocket.joinGroup(_networkGroup);
 				_bufferSize = message.getBufferSize();
 				receiveAudioFormat(message.getData());
-				
 
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -74,16 +76,15 @@ public class ClientMC implements Client {
 
 				_mcSocket.receive(packet);
 
+				// Trim package
 				byte[] bytes = new byte[packet.getLength()];
 				for (int i = 0; i < packet.getLength(); i++) {
 					bytes[i] = buffer[i];
 				}
 
-				// Play audio
-
 				Message message = Message.parseFrom(bytes);
 				if (message.hasData()) {
-					
+					// Play audio
 					if (message.getIsAudioFormat()) {
 						// New audio format
 						receiveAudioFormat(message.getData());
@@ -94,20 +95,20 @@ public class ClientMC implements Client {
 						_audioPlayer
 								.writeBytes(message.getData().toByteArray());
 					}
-				}
-				else if(message.hasText() && message.hasUsername()) {
+				} else if (message.hasText() && message.hasUsername()) {
+					// Show chat message
 					displayMessage(message.getUsername(), message.getText());
 				}
 
 			} catch (InvalidProtocolBufferException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.err.print("Can't receive message.");
+				System.exit(0);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.err.print("Can't receive message.");
+				System.exit(0);
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.err.print("Can't receive message.");
+				System.exit(0);
 			}
 		}
 
@@ -119,7 +120,10 @@ public class ClientMC implements Client {
 		}
 
 	}
-
+	
+	/**
+	 * Connect to a host via TCP
+	 */
 	public void connect(InetSocketAddress serverAddress) throws IOException {
 		String host = serverAddress.getHostName();
 		int port = serverAddress.getPort();
@@ -133,20 +137,25 @@ public class ClientMC implements Client {
 	public void close() {
 		_close = true;
 	}
-	
+
 	/**
 	 * Displays a chat message in the current UI
 	 */
 	private void displayMessage(String username, String message) {
 		clientUI().pushChatMessage(username + ": " + message);
 	}
-
+	
+	/**
+	 * Send chat message to multicast group
+	 */
 	public void sendChatMessage(String text) throws IOException {
-		if(_mcSocket == null) {
+		
+		// Server not playing -> no multicast group
+		if (_mcSocket == null) {
 			displayMessage("Error", "Server not ready");
 			return;
 		}
-		
+
 		System.out.println("Sending chat message to server.");
 		Message.Builder builder = Message.newBuilder();
 		builder.setIsAudioFormat(false);
@@ -156,25 +165,30 @@ public class ClientMC implements Client {
 		Message message = builder.build();
 		byte[] bytes = message.toByteArray();
 
-		DatagramPacket packet = new DatagramPacket(bytes, bytes.length, _networkGroup, _mcSocket.getLocalPort());
+		DatagramPacket packet = new DatagramPacket(bytes, bytes.length,
+				_networkGroup, _mcSocket.getLocalPort());
 		try {
 			_mcSocket.send(packet);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.err.print("Can't send chat message.");
 		}
 	}
-	
+
 	private ClientUI clientUI() {
 		return Main.clientUI;
 	}
-	
-	private void receiveAudioFormat(ByteString data) throws IOException, ClassNotFoundException {
+
+	/**
+	 * Parse AudioFormat from a byte array and set audioPlayer
+	 * @param data
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	private void receiveAudioFormat(ByteString data) throws IOException,
+			ClassNotFoundException {
 		AudioFormat audioFormat = ((AudioFormatTransport) ByteArray
-				.toObject(data.toByteArray()))
-				.getAudioFormat();
-		System.out.println("Audio Format: "
-				+ audioFormat.toString());
+				.toObject(data.toByteArray())).getAudioFormat();
+		System.out.println("Audio Format: " + audioFormat.toString());
 		_audioPlayer = new AudioPlayer(audioFormat);
 	}
 

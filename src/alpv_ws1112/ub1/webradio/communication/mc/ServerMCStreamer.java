@@ -30,6 +30,9 @@ public class ServerMCStreamer implements Runnable {
 	private MulticastSocket _socket;
 	private boolean _close = false;
 
+	/**
+	 * Construct streamer and start streaming, if file was found
+	 */
 	public ServerMCStreamer(String path, int networkGroupPort)
 			throws MalformedURLException, UnsupportedAudioFileException,
 			IOException {
@@ -39,7 +42,9 @@ public class ServerMCStreamer implements Runnable {
 		_socket = new MulticastSocket();
 	}
 
-	@Override
+	/**
+	 * Handle streaming
+	 */
 	public void run() {
 		byte[] audioBuffer;
 		while (!_close) {
@@ -85,6 +90,9 @@ public class ServerMCStreamer implements Runnable {
 
 	}
 
+	/**
+	 * Read audio file from path
+	 */
 	public void changePath(String path) throws MalformedURLException,
 			UnsupportedAudioFileException, IOException {
 		_path = path;
@@ -92,7 +100,7 @@ public class ServerMCStreamer implements Runnable {
 		_audioFormat = _ais.getFormat();
 		// Not first start
 		if (_socket != null) {
-			// Transmitte audio format
+			// Transmitte new audio format via multicast
 			AudioFormatTransport aft = new AudioFormatTransport(_audioFormat);
 			byte[] format = ByteArray.toBytes(aft);
 			Message.Builder builder = Message.newBuilder();
@@ -104,6 +112,9 @@ public class ServerMCStreamer implements Runnable {
 		}
 	}
 
+	/**
+	 * Send UDP package
+	 */
 	private void sendPackage(Message.Builder builder) throws IOException {
 		Message message = builder.build();
 		byte[] bytes = message.toByteArray();
@@ -134,7 +145,7 @@ public class ServerMCStreamer implements Runnable {
 	}
 
 	/**
-	 * Returns audio buffer sizr
+	 * Returns audio buffer size
 	 */
 	private int getAudioBufferSize() {
 		if (_audioFormat == null) {
