@@ -39,14 +39,12 @@ public class Main {
 
 			// Parse options. Add additional options here if you have to. Do not
 			// forget to mention their usage in the help-string!
+			if(args.length == 0) {
+				help();
+			}
 			while (args[++argumentIndex].startsWith("-")) {
 				if (args[argumentIndex].equals("-help")) {
-					System.out.println(USAGE
-							+ String.format("%n%nwhere options include:"));
-					System.out.println("  -help      Show this text.");
-					System.out
-							.println("  -gui       Show a graphical user interface.");
-					System.exit(0);
+					help();
 				} else if (args[argumentIndex].equals("-gui")) {
 					useGUI = true;
 				}
@@ -129,5 +127,14 @@ public class Main {
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 		}
+	}
+	
+	private static void help() {
+		System.out.println(USAGE
+				+ String.format("%n%nwhere options include:"));
+		System.out.println("  -help      Show this text.");
+		System.out
+				.println("  -gui       Show a graphical user interface.");
+		System.exit(0);
 	}
 }
