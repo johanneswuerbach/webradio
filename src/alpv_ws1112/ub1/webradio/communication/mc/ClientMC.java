@@ -58,11 +58,11 @@ public class ClientMC implements Client {
 				receiveAudioFormat(message.getData());
 
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.err.println("Can't connect to server.");
+				System.exit(0);
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.err.println("Can't connect to server.");
+				System.exit(0);
 			}
 		}
 

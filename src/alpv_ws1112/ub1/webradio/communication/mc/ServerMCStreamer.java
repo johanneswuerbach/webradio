@@ -75,8 +75,7 @@ public class ServerMCStreamer implements Runnable {
 				try {
 					sendPackage(builder);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					System.err.println("Can't send package.");
 				}
 			}
 
